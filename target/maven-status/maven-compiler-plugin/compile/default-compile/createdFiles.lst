@@ -1,4 +1,4 @@
-main\SecondaryController.class
 main\App.class
-main\PrimaryController.class
 module-info.class
+main\RegisterController.class
+main\LoginController.class

@@ -1,0 +1,128 @@
+.Login_Card
+{
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-border: thin solid black;
+    -fx-background-color:  grey;
+    -fx-padding: 20;
+    -fx-spacing: 20;
+}
+
+.eye-button {
+    -fx-font-size: 18;
+    -fx-min-width: 50;
+    -fx-max-width: 50;
+    -fx-min-height: 34;
+    -fx-padding: 0;
+    -fx-background-color: transparent;
+    -fx-text-fill: #666;
+    -fx-border-width: 0;
+    -fx-alignment: CENTER;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.eye-button:hover {
+    -fx-text-fill: #4CAF50;
+}
+
+.eye-button:pressed {
+    -fx-text-fill: #2e7d32;
+}
+
+
+/* Username field */
+#usernameField {
+    -fx-padding: 0;
+    -fx-font-size: 14;
+    -fx-border-color: #ddd;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #000000;
+    -fx-min-height: 40;
+    -fx-pref-height: 40;
+    -fx-max-height: 40;
+}
+
+/* Password Container (HBox) */
+.password-container {
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-border-color: #ddd;
+    -fx-border-width: 1;
+    -fx-background-color: #ffffff;
+    -fx-padding: 0;
+    -fx-spacing: 0;
+    -fx-alignment: CENTER_LEFT;
+    -fx-min-height: 40;
+    -fx-pref-height: 40;
+    -fx-max-height: 40;
+}
+
+/* PasswordField specific styling */
+PasswordField {
+    -fx-border-width: 0;
+    -fx-border-color: transparent;
+    -fx-padding: 10 10 10 10;
+    -fx-background-color: transparent;
+    -fx-text-fill: #000000;
+    -fx-prompt-text-fill: #999999;
+    -fx-font-size: 14;
+    -fx-control-inner-background: transparent;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-min-height: 40;
+    -fx-pref-height: 40;
+    -fx-max-height: 40;
+}
+
+PasswordField:focused {
+    -fx-border-width: 0;
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+    -fx-padding: 10 10 10 10;
+    -fx-control-inner-background: transparent;
+    -fx-min-height: 40;
+    -fx-pref-height: 40;
+    -fx-max-height: 40;
+}
+
+/* TextField specific styling */
+TextField {
+    -fx-border-width: 0;
+    -fx-border-color: transparent;
+    -fx-padding: 10 10 10 10;
+    -fx-background-color: transparent;
+    -fx-text-fill: #000000;
+    -fx-prompt-text-fill: #999999;
+    -fx-font-size: 14;
+    -fx-background-radius: 0;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-min-height: 40;
+    -fx-pref-height: 40;
+    -fx-max-height: 40;
+}
+
+TextField:focused {
+    -fx-border-width: 0;
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+    -fx-padding: 10 10 10 10;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-min-height: 40;
+    -fx-pref-height: 40;
+    -fx-max-height: 40;
+}
+
+.root {
+    -fx-background-color: #f5f5f5;
+}
+
+.label {
+    -fx-font-size: 16;
+    -fx-text-fill: #333;
+}
