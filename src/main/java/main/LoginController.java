@@ -6,6 +6,15 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField; 
 
 
+// JDBC imports 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.ResultSet;
+
+
+
 public class LoginController {
 
 
@@ -17,7 +26,15 @@ public class LoginController {
     private TextField passwordFieldVisible;
 
     private boolean isPasswordVisible = false; 
+
     
+    // Link to database in the database folder
+    String url = "database link here";
+
+    // SQL statement for checking if the account exists by comparing it to the database
+    String check_account = "SQLite statement to check whether account exists here";  
+
+
 
     @FXML
     private void switchToRegister() throws IOException {
@@ -39,6 +56,9 @@ public class LoginController {
             isPasswordVisible = true;
         }
     }
+
+
+    // Store password and username to compare with database before allowing to login 
 
 
 
