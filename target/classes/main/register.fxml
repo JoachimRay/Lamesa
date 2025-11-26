@@ -1,43 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!-- FXML imports for JavaFX components -->
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Button?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.PasswordField?>
+<?import javafx.geometry.Insets?>
 
-
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.RegisterController" stylesheets = "@../styles/register.css">
+<!-- Main container for register page -->
+<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.RegisterController" stylesheets="@../styles/register.css">
     <children>
+        <!-- Page title label -->
         <Label text="Register Page"/>
 
-        <VBox alignment = "CENTER" styleClass = "Register_Card" prefWidth="400" minWidth="400" maxWidth="400"> 
-        <TextField fx:id="usernameField" promptText = "Username" prefHeight="40" minHeight="40" maxHeight="40"/>
-        
-         <HBox spacing="0" styleClass="password-container">
-            <StackPane HBox.hgrow="ALWAYS" prefHeight="40" minHeight="40" maxHeight="40">
-                <PasswordField fx:id="passwordField" promptText = "Enter Password" HBox.hgrow="ALWAYS" prefHeight="40" minHeight="40" maxHeight="40"/>
-                <TextField fx:id="passwordFieldVisible" promptText = "Enter Password" visible="false" HBox.hgrow="ALWAYS" prefHeight="40" minHeight="40" maxHeight="40"/>
-            </StackPane>
-            <Button fx:id = "PasswordToggle" text = "👁" onAction = "#togglePasswordVisibility" styleClass="eye-button" focusTraversable="false"/>
-        </HBox>
-        
-        <HBox spacing="0" styleClass="password-container">
-            <StackPane HBox.hgrow="ALWAYS" prefHeight="40" minHeight="40" maxHeight="40">
-                <PasswordField fx:id="confirmPasswordField" promptText = "Confirm Password" HBox.hgrow="ALWAYS" prefHeight="40" minHeight="40" maxHeight="40"/>
-                <TextField fx:id = "confirmPasswordFieldVisible" promptText = "Confirm Password" visible="false" HBox.hgrow="ALWAYS" prefHeight="40" minHeight="40" maxHeight="40"/>
-            </StackPane>
-            <Button fx:id =  "ConfirmPasswordToggle" text = "👁" onAction = "#toggleConfirmPasswordVisibility" styleClass="eye-button" focusTraversable="false"/>
-        </HBox>
+        <!-- Grey card box containing all registration form fields -->
+        <VBox alignment="CENTER" styleClass="Register_Card" prefWidth="400" minWidth="400" maxWidth="400">
+            <!-- Username input field -->
+            <TextField fx:id="usernameField" promptText="Username" prefHeight="40" minHeight="40" maxHeight="40"/>
+            
+            <!-- Password field container with show/hide toggle button -->
+            <HBox spacing="0" styleClass="password-container">
+                <!-- StackPane keeps PasswordField and TextField in same position to prevent text shift on toggle -->
+                <StackPane HBox.hgrow="ALWAYS" prefHeight="40" minHeight="40" maxHeight="40">
+                    <!-- Hidden by default - shows bullet points for password -->
+                    <PasswordField fx:id="passwordField" promptText="Enter Password" HBox.hgrow="ALWAYS" prefHeight="40" minHeight="40" maxHeight="40"/>
+                    <!-- Visible when eye button clicked - shows password as plain text -->
+                    <TextField fx:id="passwordFieldVisible" promptText="Enter Password" visible="false" HBox.hgrow="ALWAYS" prefHeight="40" minHeight="40" maxHeight="40"/>
+                </StackPane>
+                <!-- Eye icon button to toggle between password and plain text visibility -->
+                <Button fx:id="PasswordToggle" text="👁" onAction="#togglePasswordVisibility" styleClass="eye-button" focusTraversable="false"/>
+            </HBox>
+            
+            <!-- Confirm password field container with show/hide toggle button -->
+            <HBox spacing="0" styleClass="password-container">
+                <!-- StackPane keeps PasswordField and TextField in same position to prevent text shift on toggle -->
+                <StackPane HBox.hgrow="ALWAYS" prefHeight="40" minHeight="40" maxHeight="40">
+                    <!-- Hidden by default - shows bullet points for password -->
+                    <PasswordField fx:id="confirmPasswordField" promptText="Confirm Password" HBox.hgrow="ALWAYS" prefHeight="40" minHeight="40" maxHeight="40"/>
+                    <!-- Visible when eye button clicked - shows password as plain text -->
+                    <TextField fx:id="confirmPasswordFieldVisible" promptText="Confirm Password" visible="false" HBox.hgrow="ALWAYS" prefHeight="40" minHeight="40" maxHeight="40"/>
+                </StackPane>
+                <!-- Eye icon button to toggle between password and plain text visibility -->
+                <Button fx:id="ConfirmPasswordToggle" text="👁" onAction="#toggleConfirmPasswordVisibility" styleClass="eye-button" focusTraversable="false"/>
+            </HBox>
 
-        <Button fx:id="secondaryButton" text="Login" onAction="#switchToLogin" />
-
+            <!-- Button to navigate back to login page -->
+            <Button fx:id="secondaryButton" text="Login" onAction="#switchToLogin"/>
         </VBox>
-       
     </children>
+    
+    <!-- Outer padding for the whole register page -->
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
