@@ -1,5 +1,8 @@
 package main;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
@@ -48,9 +51,11 @@ public class InventoryController {
     // Initializing
 
     @FXML
-    public void initialize() {
-        // Called automatically after FXML loads
-        System.out.println("Inventory page loaded!");
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        inventoryTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        productColumn.setMaxWidth(Double.MAX_VALUE);
+        instructionColumn.setMaxWidth(Double.MAX_VALUE);
     }
 
     // Event handling
