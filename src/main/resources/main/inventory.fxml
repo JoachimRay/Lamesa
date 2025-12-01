@@ -14,7 +14,14 @@
 
 <!-- Layout for the Inventory page with TableView for displaying inventory items -->
 
-<VBox alignment="TOP_LEFT" spacing="16" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.InventoryController">
+<VBox 
+    alignment="TOP_LEFT" 
+    spacing="16" 
+    xmlns="http://javafx.com/javafx/25" 
+    xmlns:fx="http://javafx.com/fxml/1" 
+    fx:controller="main.InventoryController"
+    stylesheets="@../styles/inventory.css"
+    styleClass="inventory-root">
 
     <padding>
         <Insets bottom="20" left="20" right="20" top="20" />
@@ -24,32 +31,32 @@
     <HBox alignment="CENTER_LEFT" spacing="12">
         <children>
             <!-- Page title-->
-            <Label style="-fx-font-size: 28; -fx-font-weight: bold;" text="Inventory" />
+            <Label text="Inventory" styleClass="inventory-title"/>
 
             <!-- Spacer to push button to the right -->
             <Region HBox.hgrow="ALWAYS" />
 
             <!-- New Stock button -->
-            <Button fx:id="newStockButton" onAction="#handleNewStock" style="-fx-background-color: #114F3A; -fx-text-fill: white; -fx-font-size: 12; -fx-padding: 8 16 8 16; -fx-border-radius: 4; -fx-background-radius: 4;" text="+ New Stock" />
+            <Button fx:id="newStockButton" onAction="#handleNewStock"  text="+ New Stock" styleClass="new-stock-btn" />
         </children>
     </HBox>
 
     <HBox alignment="CENTER_LEFT" spacing="12">
         <children>
             <!-- Quick search input -->
-            <TextField fx:id="searchField" prefWidth="250" promptText="Quick search" style="-fx-font-size: 12; -fx-padding: 8; -fx-border-radius: 4;" />
+            <TextField fx:id="searchField" prefWidth="250" promptText="Quick search" styleClass="search-field" />
 
             <!-- Spacer -->
             <Region HBox.hgrow="ALWAYS" />
 
             <!-- Status Button -->
-            <Label style="-fx-font-size: 12;" text="Status" />
-            <Button fx:id="statusFilterButton" onAction="#handleStatusFilter" style="-fx-background-color: transparent; -fx-font-size: 12; -fx-text-fill: #666; -fx-padding: 4 8 4 8;" text="All ▼" />
+            <Label text="Status" styleClass="status-label" />
+            <Button fx:id="statusFilterButton" onAction="#handleStatusFilter" text="All ▼" styleClass="status-filter-btn"/>
         </children>
     </HBox>
 
     <!-- Table view for inventory items -->
-    <TableView fx:id="inventoryTable" style="-fx-font-size: 12;" VBox.vgrow="ALWAYS">
+    <TableView fx:id="inventoryTable" VBox.vgrow="ALWAYS" styleClass="inventory-table">
         <columns>
             <!-- Checkbox column -->
             <TableColumn prefWidth="40" text="" />
