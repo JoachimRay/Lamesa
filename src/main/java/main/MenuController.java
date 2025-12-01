@@ -16,14 +16,14 @@ import java.util.List;
 /**
  * Controller for the sidebar menu.
  * Responsibilities:
- *  - Expanding and collapsing the sidebar with animation
- *  - Changing button display (icon only vs icon + text)
- *  - Loading pages by calling MainController when menu items are clicked
+ * - Expanding and collapsing the sidebar with animation
+ * - Changing button display (icon only vs icon + text)
+ * - Loading pages by calling MainController when menu items are clicked
  */
 public class MenuController {
 
     @FXML
-    private VBox sidebarRoot;   // The whole sidebar area
+    private VBox sidebarRoot; // The whole sidebar area
 
     @FXML
     private Button toggleButton; // Button used to collapse/expand the sidebar
@@ -36,6 +36,21 @@ public class MenuController {
     private final Duration animationDuration = Duration.millis(180);
 
     @FXML
+    private Button dashboardButton; // add fx:id in FXML
+    @FXML
+    private Button inventoryButton;
+    @FXML
+    private Button ordersButton;
+    @FXML
+    private Button feedbacksButton;
+    @FXML
+    private Button employeesButton;
+    @FXML
+    private Button settingsButton;
+    
+
+
+    @FXML
     private void initialize() {
         // Set the default sidebar width (expanded)
         if (sidebarRoot != null) {
@@ -44,6 +59,16 @@ public class MenuController {
             // Show icons + text (normal expanded view)
             setButtonsContentDisplay(false);
         }
+
+        // ================= RBAC: Role-based access control =================
+        // Hide manager-only menu items if current user is employee
+        if (SessionManager.isEmployee()) {
+            if (employeesButton != null)
+                employeesButton.setVisible(false);
+            if (settingsButton != null)
+                settingsButton.setVisible(false);
+        }
+        // ==================================================================
     }
 
     /**
@@ -52,7 +77,8 @@ public class MenuController {
      */
     @FXML
     private void onToggleSidebar() {
-        if (sidebarRoot == null) return;
+        if (sidebarRoot == null)
+            return;
 
         // Check current state using a CSS class
         final boolean isCollapsed = sidebarRoot.getStyleClass().contains("collapsed");
@@ -74,7 +100,8 @@ public class MenuController {
      * Smoothly animates the sidebar’s width change.
      */
     private void animateWidth(double from, double to) {
-        if (sidebarRoot == null) return;
+        if (sidebarRoot == null)
+            return;
 
         Timeline tl = new Timeline();
         KeyValue kv = new KeyValue(sidebarRoot.prefWidthProperty(), to);
@@ -89,13 +116,14 @@ public class MenuController {
 
     /**
      * Controls how menu buttons display their content:
-     *  - graphicOnly = true  → show only icons
-     *  - graphicOnly = false → show icons + text
+     * - graphicOnly = true → show only icons
+     * - graphicOnly = false → show icons + text
      *
      * Also hides the brand label when collapsed.
      */
     private void setButtonsContentDisplay(boolean graphicOnly) {
-        if (sidebarRoot == null) return;
+        if (sidebarRoot == null)
+            return;
 
         List<Node> children = sidebarRoot.getChildren();
         for (Node n : children) {
@@ -119,21 +147,48 @@ public class MenuController {
             }
 
             // Handle the sidebar brand label (app name/logo text)
-            else if (n instanceof Label && ((Label)n).getStyleClass().contains("brand")) {
-                ((Label)n).setVisible(!graphicOnly);
-                ((Label)n).setManaged(!graphicOnly); // Remove spacing when hidden
+            else if (n instanceof Label && ((Label) n).getStyleClass().contains("brand")) {
+                ((Label) n).setVisible(!graphicOnly);
+                ((Label) n).setManaged(!graphicOnly); // Remove spacing when hidden
             }
         }
     }
 
     // Menu item handlers — these call loadOrShow() to load the correct page
-    @FXML private void onDashboard() { loadOrShow("dashboard"); }
-    @FXML private void onInventory() { loadOrShow("inventory"); }
-    @FXML private void onOrders() { loadOrShow("orders"); }
-    @FXML private void onReports() { loadOrShow("reports"); }
-    @FXML private void onFeedback() { loadOrShow("feedback"); }
-    @FXML private void onEmployees() { loadOrShow("employees"); }
-    @FXML private void onSettings() { loadOrShow("settings"); }
+    @FXML
+    private void onDashboard() {
+        loadOrShow("dashboard");
+    }
+
+    @FXML
+    private void onInventory() {
+        loadOrShow("inventory");
+    }
+
+    @FXML
+    private void onOrders() {
+        loadOrShow("orders");
+    }
+
+    @FXML
+    private void onReports() {
+        loadOrShow("reports");
+    }
+
+    @FXML
+    private void onFeedback() {
+        loadOrShow("feedback");
+    }
+
+    @FXML
+    private void onEmployees() {
+        loadOrShow("employees");
+    }
+
+    @FXML
+    private void onSettings() {
+        loadOrShow("settings");
+    }
 
     /**
      * Logs out by switching the root to login.fxml
@@ -149,7 +204,8 @@ public class MenuController {
 
     /**
      * Loads a page using MainController.
-     * If MainController is not ready yet, it loads main.fxml first and then retries.
+     * If MainController is not ready yet, it loads main.fxml first and then
+     * retries.
      */
     private void loadOrShow(String page) {
         try {
