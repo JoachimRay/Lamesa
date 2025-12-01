@@ -37,34 +37,25 @@ public class RegisterController {
     private boolean isConfirmPasswordVisible = false;
 
     // Database configuration and table DDL
-    private static final String DB_URL = "jdbc:sqlite:lamesa.db";
-    private static final String CREATE_USERS_TABLE =
-            "CREATE TABLE IF NOT EXISTS users (" +
-                    "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    "username TEXT UNIQUE NOT NULL," +
-                    "password_hash TEXT NOT NULL" +
-                    ");";
-
+    private static final String DB_URL = "jdbc:sqlite:database/lamesa.db";
+  
     /**
-     * Constructor runs before the UI is shown.
-     * Ensures the database and users table exist so registration can run safely.
+     * Constructor - checks if database exists on controller load.
      */
     public RegisterController() {
-        try {
-            ensureDatabase();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        checkDatabase();
     }
 
     /**
-     * Creates the users table if it doesn't exist.
-     * Uses try-with-resources to automatically close DB resources.
+     * Checks if the database file exists.
      */
-    private void ensureDatabase() throws SQLException {
-        try (Connection conn = DriverManager.getConnection(DB_URL);
-             PreparedStatement stmt = conn.prepareStatement(CREATE_USERS_TABLE)) {
-            stmt.execute();
+    private void checkDatabase() {
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL);
+            conn.close();
+            System.out.println("[RegisterController] Database exists.");
+        } catch (SQLException e) {
+            System.err.println("[RegisterController] Database check failed: " + e.getMessage());
         }
     }
 

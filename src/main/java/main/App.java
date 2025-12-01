@@ -16,14 +16,12 @@ import java.net.URL;
  * Entry point for the JavaFX application.
  *
  * Responsibilities:
- * - Seed a development test user on startup (DatabaseSeeder.seedTestUser()).
  * - Load the initial FXML (login screen) and manage scene root swaps.
  *
  * Notes for the team:
  * - setRoot(...) returns a boolean indicating whether navigation succeeded.
  * - loadFXML(...) throws a clear IOException when an FXML resource is missing.
- * - For production, remove the DatabaseSeeder call and replace SHA-256 password hashing
- *   with a stronger algorithm (bcrypt/argon2).
+ * - For production, replace SHA-256 password hashing with a stronger algorithm (bcrypt/argon2).
  */
 public class App extends javafx.application.Application {
 
@@ -33,17 +31,20 @@ public class App extends javafx.application.Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        // ---- Development helper (remove for production) ----
-        // Ensure there is a known test user available for quick testing and debugging.
-        DatabaseSeeder.seedTestUser();
-
         // ---- Initial UI setup ----
         // Load the login screen FXML and create the primary Scene with a starting size.
-        scene = new Scene(loadFXML("login"), 1200, 700);
+        try {
+            scene = new Scene(loadFXML("login"), 1200, 800);
+        } catch (IOException e) {
+            System.err.println("[App] FXML loading failed!");
+            e.printStackTrace();
+            throw e;
+        }
 
         // Set window title and show the stage.
         stage.setTitle("Lamesa");
         stage.setScene(scene);
+        stage.setMaximized(true);
         stage.show();
 
         // Small console trace to help debug navigation/startup problems.
