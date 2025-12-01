@@ -1,80 +1,218 @@
 package main;
 
-import java.io.IOException;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
-
-// JDBC imports 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.ResultSet;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.nio.charset.StandardCharsets;
+import java.sql.*;
 
 /**
- * Alternate/experimental login controller used during development
- * Renamed to avoid conflicting with the main `LoginController` class.
-*/
+ * Login controller.
+ * - Handles login form actions (login button, register button, show/hide password).
+ * - Validates input, checks credentials in DB, and navigates to the main UI on success.
+ */
 public class LoginController {
 
-    // ============ FXML FIELD BINDINGS ============
-    /** Username input field from login.fxml */
-    @FXML 
-    private TextField usernameField; 
-    
-    /** Password input field (shows as bullet points) */
-    @FXML
-    private PasswordField passwordField; 
-    
-    /** Password input field alternative (shows plain text when toggled) */
-    @FXML
-    private TextField passwordFieldVisible;
+    // FXML-linked UI components
+    @FXML private TextField usernameField;
+    @FXML private PasswordField passwordField;       // Hidden password input
+    @FXML private TextField passwordFieldVisible;    // Visible password input (when "show" is enabled)
 
-    // ============ STATE VARIABLES ============
-    /** Tracks whether password is currently visible as plain text */
-    private boolean isPasswordVisible = false; 
+    // Used to track if password should be visible to the user
+    private boolean isPasswordVisible = false;
 
-    // ============ DATABASE CONFIGURATION ============
-    // TODO: Add database URL and SQL statements here when wiring JDBC
+    // SQLite database file location
+    private static final String DB_URL = "jdbc:sqlite:lamesa.db";
 
-    // ============ NAVIGATION METHODS ============
+    // Create users table if it does not exist yet
+    private static final String CREATE_USERS_TABLE =
+            "CREATE TABLE IF NOT EXISTS users (" +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "username TEXT UNIQUE NOT NULL," +
+                    "password_hash TEXT NOT NULL" +
+                    ");";
+
     /**
-     * Switches the scene from login page to register page
-     * Called when user clicks "Register" button
+     * Constructor.
+     * Runs before the UI is fully loaded.
+     * Ensures the database and users table are available.
      */
-    @FXML
-    private void switchToRegister() throws IOException {
-        App.setRoot("register");
+    public LoginController() {
+        try {
+            ensureDatabase();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    // ============ PASSWORD VISIBILITY TOGGLE METHOD ============
     /**
-     * Toggles password field between visible (plain text) and hidden (bullet points)
-     * Uses StackPane overlay to keep both fields in exact same position
-     * Synchronizes text when switching between PasswordField and TextField
+     * Creates the users table if needed.
+     * Called only once during controller construction.
+     */
+    private void ensureDatabase() throws SQLException {
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement stmt = conn.prepareStatement(CREATE_USERS_TABLE)) {
+
+            stmt.execute(); // Ensure table is ready
+        }
+    }
+
+    /**
+     * Switches the UI to the registration screen.
+     * Triggered when user clicks the "Register" button.
      */
     @FXML
-    private void togglePasswordVisibility(){
-        if(isPasswordVisible){
-            // Hide plain text version, show password bullets
-            passwordFieldVisible.setVisible(false); 
-            passwordField.setVisible(true); 
-            passwordField.setText(passwordFieldVisible.getText()); 
+    private void switchToRegister() {
+        System.out.println("[LoginController] switchToRegister()");
+        App.setRoot("register"); // Navigate to register.fxml
+    }
+
+    /**
+     * Toggles between hidden and visible password fields.
+     * This allows the user to see what they typed.
+     */
+    @FXML
+    private void togglePasswordVisibility() {
+
+        // If currently visible, switch back to hidden
+        if (isPasswordVisible) {
+            passwordFieldVisible.setVisible(false);
+            passwordField.setVisible(true);
+
+            // Copy the text back to hidden field
+            passwordField.setText(passwordFieldVisible.getText());
             isPasswordVisible = false;
-        }   
-        else {
-            // Show plain text version, hide password bullets
+
+        } else { // If currently hidden, switch to visible
             passwordFieldVisible.setVisible(true);
             passwordField.setVisible(false);
+
+            // Copy the text to the visible field
             passwordFieldVisible.setText(passwordField.getText());
             isPasswordVisible = true;
         }
     }
 
-    // ============ TODO: DATABASE METHODS ============
-    // TODO: Store username and password to validate against database
-    // TODO: Add login authentication method here
-    // TODO: Add error handling for invalid credentials
+    /**
+     * Handles the login button.
+     * Steps:
+     * 1. Read username and password from UI
+     * 2. Validate user input
+     * 3. Check database for matching credentials
+     * 4. If valid, navigate to main UI
+     * 5. Otherwise, show an error message
+     */
+    @FXML
+    private void handleLogin() {
+        // Safely get username
+        String username = (usernameField == null) ? "" : usernameField.getText().trim();
+        String password = getPasswordInput(); // Handles visible or hidden field
+
+        System.out.println("[LoginController] handleLogin for user='" + username + "'");
+
+        // Basic validation
+        if (username.isEmpty() || password.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, "Validation error", "Username and password must not be empty.");
+            return;
+        }
+
+        // Database lookup
+        try (Connection conn = DriverManager.getConnection(DB_URL)) {
+
+            String sql = "SELECT password_hash FROM users WHERE username = ?";
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+
+                ps.setString(1, username);
+
+                // Query the DB for stored password hash
+                try (ResultSet rs = ps.executeQuery()) {
+
+                    if (rs.next()) {
+                        // User exists → check password
+                        String storedHash = rs.getString("password_hash");
+                        String providedHash = hashPassword(password);
+
+                        if (storedHash.equals(providedHash)) {
+                            // Login success
+                            System.out.println("[LoginController] Authentication success for '" + username + "'");
+
+                            // Attempt to navigate to main UI
+                            boolean navigated = App.setRoot("main");
+                            if (!navigated) {
+                                showAlert(Alert.AlertType.ERROR, "Navigation failed", "Could not open main UI. See console.");
+                            }
+                            return;
+
+                        } else {
+                            // Wrong password
+                            showAlert(Alert.AlertType.ERROR, "Login failed", "Invalid username or password.");
+                            return;
+                        }
+                    } else {
+                        // No such user
+                        showAlert(Alert.AlertType.ERROR, "Login failed", "Invalid username or password.");
+                        return;
+                    }
+                }
+            }
+
+        } catch (SQLException e) {
+            // Database connection or query failed
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Database error", e.getMessage());
+
+        } catch (NoSuchAlgorithmException e) {
+            // Hashing algorithm failed (very rare)
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Encryption error", e.getMessage());
+        }
+    }
+
+    /**
+     * Gets the password depending on which input field is currently active.
+     */
+    private String getPasswordInput() {
+        if (passwordFieldVisible != null && passwordFieldVisible.isVisible())
+            return passwordFieldVisible.getText();
+
+        if (passwordField != null)
+            return passwordField.getText();
+
+        return "";
+    }
+
+    /**
+     * Hashes a password using SHA-256.
+     * Returns a 64-character hex string.
+     */
+    private String hashPassword(String password) throws NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+
+        byte[] digest = md.digest(password.getBytes(StandardCharsets.UTF_8));
+        BigInteger n = new BigInteger(1, digest);
+        String hex = n.toString(16);
+
+        // Ensure hash is always 64 characters
+        while (hex.length() < 64) hex = "0" + hex;
+
+        return hex;
+    }
+
+    /**
+     * Small helper method to show alerts safely on the JavaFX thread.
+     */
+    private void showAlert(Alert.AlertType type, String title, String content) {
+        javafx.application.Platform.runLater(() -> {
+            Alert alert = new Alert(type);
+            alert.setTitle(title);
+            alert.setHeaderText(null);
+            alert.setContentText(content);
+            alert.show();
+        });
+    }
 }

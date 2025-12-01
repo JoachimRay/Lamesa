@@ -50,9 +50,12 @@
                     <!-- Eye icon button to toggle between password and plain text visibility -->
                     <Button fx:id="passwordToggle" text="👁" onAction="#togglePasswordVisibility" styleClass="eye-button" focusTraversable="false"/>
                 </HBox>
-                
-                <!-- Button to navigate to register page -->
-                <Button fx:id="primaryButton" text="Register" onAction="#switchToRegister"/>
+
+                <!-- Buttons row: Login and Register -->
+                <HBox spacing="10">
+                    <Button fx:id="loginButton" text="Login" onAction="#handleLogin"/>
+                    <Button fx:id="primaryButton" text="Register" onAction="#switchToRegister"/>
+                </HBox>
             </VBox>
             
             <!-- Spacer that grows to fill remaining horizontal space, pushing card to left -->
@@ -65,4 +68,3 @@
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
    </padding>
 </VBox>
- 
