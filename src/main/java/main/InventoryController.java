@@ -13,6 +13,9 @@ public class InventoryController {
     private TableView<?> inventoryTable;
 
     @FXML
+    private TableColumn<?, ?> checkBoxColumn;
+
+    @FXML
     private TableColumn<?, String> productIdColumn;
 
     @FXML
