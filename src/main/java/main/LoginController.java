@@ -13,15 +13,20 @@ import java.sql.*;
 
 /**
  * Login controller.
- * - Handles login form actions (login button, register button, show/hide password).
- * - Validates input, checks credentials in DB, and navigates to the main UI on success.
+ * - Handles login form actions (login button, register button, show/hide
+ * password).
+ * - Validates input, checks credentials in DB, and navigates to the main UI on
+ * success.
  */
 public class LoginController {
 
     // FXML-linked UI components
-    @FXML private TextField usernameField;
-    @FXML private PasswordField passwordField;       // Hidden password input
-    @FXML private TextField passwordFieldVisible;    // Visible password input (when "show" is enabled)
+    @FXML
+    private TextField usernameField;
+    @FXML
+    private PasswordField passwordField; // Hidden password input
+    @FXML
+    private TextField passwordFieldVisible; // Visible password input (when "show" is enabled)
 
     // Used to track if password should be visible to the user
     private boolean isPasswordVisible = false;
@@ -128,11 +133,25 @@ public class LoginController {
                             // Login success
                             System.out.println("[LoginController] Authentication success for '" + username + "'");
 
-                            // Attempt to navigate to main UI
-                            boolean navigated = App.setRoot("main");
-                            if (!navigated) {
-                                showAlert(Alert.AlertType.ERROR, "Navigation failed", "Could not open main UI. See console.");
+                        
+                            // --- RBAC: fetch user role and store in session ---
+                            String roleSql = "SELECT role FROM users WHERE username = ?";
+                            try (PreparedStatement rolePs = conn.prepareStatement(roleSql)) {
+                                rolePs.setString(1, username);
+                                try (ResultSet roleRs = rolePs.executeQuery()) {
+                                    if (roleRs.next()) {
+                                        String role = roleRs.getString("role");
+                                        System.out.println("[LoginController] User role: " + role);
+
+                                        // Store username and role in SessionManager for RBAC
+                                        SessionManager.setCurrentUser(username, role);
+
+                                        // Navigate to main UI (same FXML, buttons will hide based on role)
+                                        App.setRoot("main");
+                                    }
+                                }
                             }
+
                             return;
 
                         } else {
@@ -185,7 +204,8 @@ public class LoginController {
         String hex = n.toString(16);
 
         // Ensure hash is always 64 characters
-        while (hex.length() < 64) hex = "0" + hex;
+        while (hex.length() < 64)
+            hex = "0" + hex;
 
         return hex;
     }
