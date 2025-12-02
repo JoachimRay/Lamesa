@@ -2,96 +2,31 @@
 
 <!-- Importing JavaFX components used in this layout -->
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.geometry.Insets?>
 
-<!-- Layout for the Inventory page with TableView for displaying inventory items -->
+<!--
+    Layout for the Inventory page.
+    Currently shows placeholder text.
+    Replace this with a TableView to display items and inventory management UI.
+-->
 <VBox
-        alignment="TOP_LEFT"
-        spacing="16"
+        alignment="CENTER"
+        spacing="12"
         xmlns="http://javafx.com/javafx/8.0.171"
         xmlns:fx="http://javafx.com/fxml/1"
-        fx:controller="main.InventoryController">
+        stylesheets="@../styles/inventory.css">
 
-    <padding>
-        <Insets top="20" right="20" bottom="20" left="20" />
-    </padding>
+    <children>
 
-    <!-- Header section with title and button -->
-    <HBox spacing="12" alignment="CENTER_LEFT">
-        <children>
-            <!-- Page title-->
-            <Label text="Inventory" style="-fx-font-size: 28; -fx-font-weight: bold;" />
+        <!-- Page title -->
+        <Label
+            text="Inventory"
+            style="-fx-font-size:24; -fx-font-weight:bold;" />
 
-            <!-- Spacer to push button to the right -->
-            <Region HBox.hgrow="ALWAYS" />
+        <!-- Placeholder text for future inventory UI -->
+        <Label
+            text="Inventory page placeholder. Replace with TableView for items."
+            wrapText="true" />
 
-            <!-- New Stock button -->
-            <Button
-                fx:id="newStockButton"
-                text="+ New Stock"
-                style="-fx-background-color: #114F3A; -fx-text-fill: white; -fx-font-size: 12; -fx-padding: 8 16 8 16; -fx-border-radius: 4; -fx-background-radius: 4;"
-                onAction="#handleNewStock"
-            />
-        </children>
-    </HBox>
-
-    <HBox spacing="12" alignment="CENTER_LEFT">
-        <children>
-            <!-- Quick search input -->
-            <TextField
-                fx:id="searchField"
-                promptText="Quick search"
-                prefWidth="250"
-                style="-fx-font-size: 12; -fx-padding: 8; -fx-border-radius: 4;" 
-            />
-
-            <!-- Status Button -->
-            <Label text="Status" style="-fx-font-size: 12;" />
-            <Button
-                fx:id="statusFilterButton"
-                text="All ▼"
-                style="-fx-background-color: transparent; -fx-font-size: 12; -fx-text-fill: #666; -fx-padding: 4 8 4 8;"
-                onAction="#handleStatusFilter"
-            />
-
-            <!-- Spacer -->
-            <Region HBox.hgrow="ALWAYS" />
-        </children>
-    </HBox>
-
-    <!-- Table view for inventory items -->
-    <TableView fx:id="inventoryTable" VBox.vgrow="ALWAYS" style="-fx-font-size: 12;">
-        <columns>
-            <!-- Checkbox column -->
-            <TableColumn text="" prefWidth="40" />
-
-            <!-- Product ID column -->
-            <TableColumn fx:id="productIdColumn" text="Product ID" prefWidth="80" />
-        
-            <!-- Product column -->
-            <TableColumn fx:id="productColumn" text="Product" prefWidth="180" />
-
-            <!-- Category column -->
-            <TableColumn fx:id="categoryColumn" text="Category" prefWidth="100" />
-
-            <!-- Type column -->
-            <TableColumn fx:id="typeColumn" text="Type" prefWidth="100" />
-
-            <!-- Instruction column -->
-            <TableColumn fx:id="instructionColumn" text="Instruction" prefWidth="140" />
-
-            <!-- Items column -->
-            <TableColumn fx:id="itemsColumn" text="Items" prefWidth="80" />
-
-            <!-- Status column -->
-            <TableColumn fx:id="statusColumn" text="Status" prefWidth="110" />
-        </columns>
-    </TableView>
+    </children>
 </VBox>

@@ -14,7 +14,7 @@
         xmlns="http://javafx.com/javafx/8.0.171"
         xmlns:fx="http://javafx.com/fxml/1"
         fx:controller="main.MainController"
-        stylesheets="@../styles/menu.css">
+        stylesheets="@../styles/main.css,@../styles/menu.css">
 
     <!-- Sidebar menu included from a separate FXML file -->
     <left>
@@ -25,6 +25,6 @@
     <center>
         <StackPane
                 fx:id="contentPane"
-                style="-fx-background-color: white; -fx-padding: 16;"/>
+                style="-fx-background-color: #f5f5f5; -fx-padding: 16;"/>
     </center>
 </BorderPane>
