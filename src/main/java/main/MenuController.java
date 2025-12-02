@@ -1,23 +1,18 @@
 package main;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import javafx.util.Duration;
 
 import java.util.List;
 
 /**
  * Controller for the sidebar menu.
  * Responsibilities:
- *  - Expanding and collapsing the sidebar with animation
- *  - Changing button display (icon only vs icon + text)
+ *  - Managing menu button display and layout
  *  - Loading pages by calling MainController when menu items are clicked
  */
 public class MenuController {
@@ -26,102 +21,44 @@ public class MenuController {
     private VBox sidebarRoot;   // The whole sidebar area
 
     @FXML
-    private Button toggleButton; // Button used to collapse/expand the sidebar
-
-    // Sidebar widths for expanded and collapsed modes
-    private final double expandedWidth = 220;
-    private final double collapsedWidth = 64;
-
-    // Animation speed
-    private final Duration animationDuration = Duration.millis(180);
+    private Button toggleButton; // Toggle button (currently unused)
 
     @FXML
     private void initialize() {
         // Set the default sidebar width (expanded)
         if (sidebarRoot != null) {
-            sidebarRoot.setPrefWidth(expandedWidth);
-
-            // Show icons + text (normal expanded view)
-            setButtonsContentDisplay(false);
+            sidebarRoot.setPrefWidth(300);
+            setButtonsContentDisplay();
         }
     }
 
     /**
      * Called when the toggle button (hamburger menu) is clicked.
-     * Expands or collapses the sidebar.
+     * Currently disabled - sidebar stays at full width.
      */
     @FXML
     private void onToggleSidebar() {
-        if (sidebarRoot == null) return;
-
-        // Check current state using a CSS class
-        final boolean isCollapsed = sidebarRoot.getStyleClass().contains("collapsed");
-
-        if (isCollapsed) {
-            // Expand sidebar
-            sidebarRoot.getStyleClass().remove("collapsed");
-            animateWidth(collapsedWidth, expandedWidth);
-            setButtonsContentDisplay(false); // Show text again
-        } else {
-            // Collapse sidebar
-            sidebarRoot.getStyleClass().add("collapsed");
-            animateWidth(expandedWidth, collapsedWidth);
-            setButtonsContentDisplay(true); // Hide text, show icons only
-        }
+        // Collapse functionality removed
     }
 
     /**
-     * Smoothly animates the sidebar’s width change.
+     * Controls how menu buttons display their content.
      */
-    private void animateWidth(double from, double to) {
-        if (sidebarRoot == null) return;
-
-        Timeline tl = new Timeline();
-        KeyValue kv = new KeyValue(sidebarRoot.prefWidthProperty(), to);
-        KeyFrame kf = new KeyFrame(animationDuration, kv);
-
-        // Set the starting width
-        sidebarRoot.setPrefWidth(from);
-
-        tl.getKeyFrames().add(kf);
-        tl.play(); // Play animation
-    }
-
-    /**
-     * Controls how menu buttons display their content:
-     *  - graphicOnly = true  → show only icons
-     *  - graphicOnly = false → show icons + text
-     *
-     * Also hides the brand label when collapsed.
-     */
-    private void setButtonsContentDisplay(boolean graphicOnly) {
+    private void setButtonsContentDisplay() {
         if (sidebarRoot == null) return;
 
         List<Node> children = sidebarRoot.getChildren();
         for (Node n : children) {
-
-            // Handle regular menu buttons
+            // Handle regular menu buttons - always show text and left alignment
             if (n instanceof Button && n.getStyleClass().contains("menu-button")) {
                 Button b = (Button) n;
-
-                if (graphicOnly) {
-                    // Collapse mode: icons only
-                    b.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
-
-                    // Store text in accessibility text so it's not lost
-                    if (b.getText() != null && !b.getText().isEmpty()) {
-                        b.setAccessibleText(b.getText());
-                    }
-                } else {
-                    // Expanded mode: show icon + text
-                    b.setContentDisplay(ContentDisplay.LEFT);
-                }
+                b.setContentDisplay(ContentDisplay.LEFT);
             }
 
-            // Handle the sidebar brand label (app name/logo text)
+            // Handle the sidebar brand label
             else if (n instanceof Label && ((Label)n).getStyleClass().contains("brand")) {
-                ((Label)n).setVisible(!graphicOnly);
-                ((Label)n).setManaged(!graphicOnly); // Remove spacing when hidden
+                ((Label)n).setVisible(true);
+                ((Label)n).setManaged(true);
             }
         }
     }

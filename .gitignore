@@ -1,17 +1,2 @@
-# Build directories
 target/
-
-# IDE
-.idea/
-*.iml
-*.iws
-*.ipr
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Maven
-*.jar
-*.war
-*.ear
+    

@@ -27,38 +27,25 @@ public class LoginController {
     private boolean isPasswordVisible = false;
 
     // SQLite database file location
-    private static final String DB_URL = "jdbc:sqlite:lamesa.db";
-
-    // Create users table if it does not exist yet
-    private static final String CREATE_USERS_TABLE =
-            "CREATE TABLE IF NOT EXISTS users (" +
-                    "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    "username TEXT UNIQUE NOT NULL," +
-                    "password_hash TEXT NOT NULL" +
-                    ");";
+    private static final String DB_URL = "jdbc:sqlite:Database/lamesa.db";
 
     /**
-     * Constructor.
-     * Runs before the UI is fully loaded.
-     * Ensures the database and users table are available.
+     * Constructor - checks if database exists on controller load.
      */
     public LoginController() {
-        try {
-            ensureDatabase();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        checkDatabase();
     }
 
     /**
-     * Creates the users table if needed.
-     * Called only once during controller construction.
+     * Checks if the database file exists.
      */
-    private void ensureDatabase() throws SQLException {
-        try (Connection conn = DriverManager.getConnection(DB_URL);
-             PreparedStatement stmt = conn.prepareStatement(CREATE_USERS_TABLE)) {
-
-            stmt.execute(); // Ensure table is ready
+    private void checkDatabase() {
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL);
+            conn.close();
+            System.out.println("[LoginController] Database exists.");
+        } catch (SQLException e) {
+            System.err.println("[LoginController] Database check failed: " + e.getMessage());
         }
     }
 
