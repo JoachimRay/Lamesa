@@ -16,7 +16,7 @@
 
 <VBox 
     alignment="TOP_LEFT" 
-    
+    spacing="16" 
     xmlns="http://javafx.com/javafx/25" 
     xmlns:fx="http://javafx.com/fxml/1" 
     fx:controller="main.InventoryController"
@@ -43,8 +43,8 @@
         <Region HBox.hgrow="ALWAYS" />
 
         <!-- Status Button -->
-        <Label text="Status" styleClass="status-label" />
-        <Button fx:id="statusFilterButton" onAction="#handleStatusFilter" text="All ▼" styleClass="status-filter-btn"/>
+            <Label text="Status" styleClass="status-label" />
+            <Button fx:id="statusFilterButton" onAction="#handleStatusFilter" text="All ▼" styleClass="status-filter-btn"/>
     </HBox>
 
     <!-- Table view for inventory items -->
@@ -68,8 +68,8 @@
             <!-- Instruction column -->
             <TableColumn fx:id="instructionColumn" prefWidth="140" text="Instruction" />
 
-            <!-- Items column -->
-            <TableColumn fx:id="itemsColumn" prefWidth="80" text="Items" />
+            <!-- Stock column -->
+            <TableColumn fx:id="stockColumn" prefWidth="80" text="Stock" />
 
             <!-- Status column -->
             <TableColumn fx:id="statusColumn" prefWidth="110" text="Status" />

@@ -16,6 +16,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.converter.IntegerStringConverter;
 
 public class InventoryController {
 
@@ -43,7 +45,7 @@ public class InventoryController {
     private TableColumn<InventoryItem, String> instructionColumn;
 
     @FXML
-    private TableColumn<InventoryItem, Integer> itemsColumn;
+    private TableColumn<InventoryItem, Integer> stockColumn;
 
     @FXML
     private TableColumn<InventoryItem, String> statusColumn;
@@ -66,8 +68,12 @@ public class InventoryController {
         categoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
         instructionColumn.setCellValueFactory(new PropertyValueFactory<>("instruction"));
-        itemsColumn.setCellValueFactory(new PropertyValueFactory<>("stockQuantity"));
+        stockColumn.setCellValueFactory(new PropertyValueFactory<>("stockQuantity"));
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
+
+
+        inventoryTable.setEditable(true);
+        stockColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
 
         loadInventoryData();
     }   
@@ -77,16 +83,8 @@ public class InventoryController {
             
             String dbUrl = "jdbc:sqlite:database/lamesa.db";
             System.out.println("[InventoryController] Connecting to: " + dbUrl);
-            try(Connection conn = DriverManager.getConnection(dbUrl)) {
+            try(Connection conn = DriverManager.getConnection(dbUrl)) {             
                 System.out.println("[InventoryController] Connected successfully!");
-                
-                // Debug: Check what tables exist
-                try (ResultSet tables = conn.getMetaData().getTables(null, null, "%", null)) {
-                    System.out.println("[InventoryController] Tables in database:");
-                    while (tables.next()) {
-                        System.out.println("  - " + tables.getString("TABLE_NAME"));
-                    }
-                }
             
                 String sql = "SELECT * FROM inventory";
                 try(PreparedStatement ps = conn.prepareStatement(sql);
@@ -105,7 +103,6 @@ public class InventoryController {
 
                             InventoryItem item = new InventoryItem(id, productName, category, type, instruction, stockQuantity, status);
                             items.add(item);
-                            System.out.println("[InventoryController] Loaded: " + productName);
                         }
                 }
             } catch (SQLException e) {
