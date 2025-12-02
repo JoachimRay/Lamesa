@@ -35,8 +35,7 @@ public class App extends javafx.application.Application {
     public void start(Stage stage) throws IOException {
         // ---- Development helper (remove for production) ----
         // Ensure there is a known test user available for quick testing and debugging.
-        DatabaseSeeder.seedTestUser();
-        DatabaseSeeder.seedInventory();
+
         
         // ---- Initial UI setup ----
         // Load the login screen FXML and create the primary Scene with a starting size.
