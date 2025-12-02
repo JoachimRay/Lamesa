@@ -9,61 +9,83 @@ import javafx.scene.layout.VBox;
 
 import java.util.List;
 
-/**
- * Controller for the sidebar menu.
- * Responsibilities:
- *  - Managing menu button display and layout
- *  - Loading pages by calling MainController when menu items are clicked
- */
 public class MenuController {
 
-    @FXML
-    private VBox sidebarRoot;   // The whole sidebar area
+    @FXML private VBox sidebarRoot;
 
-    @FXML
-    private Button toggleButton; // Toggle button (currently unused)
-
-    @FXML
-    private void initialize() {
-        // Set the default sidebar width (expanded)
-        if (sidebarRoot != null) {
-            sidebarRoot.setPrefWidth(300);
-            setButtonsContentDisplay();
-        }
-    }
+    // Reference to all sidebar buttons
+    // (Used for showing/hiding certain buttons depending on user role)
+    @FXML private Button dashboardBtn;
+    @FXML private Button inventoryBtn;
+    @FXML private Button ordersBtn;
+    @FXML private Button reportsBtn;
+    @FXML private Button feedbackBtn;
+    @FXML private Button employeesBtn;
+    @FXML private Button settingsBtn;
+    @FXML private Button logoutBtn;
 
     /**
-     * Called when the toggle button (hamburger menu) is clicked.
-     * Currently disabled - sidebar stays at full width.
+     * This method runs automatically when the Menu FXML is loaded.
+     * We use it to:
+     * 1. Set UI formatting for all menu buttons
+     * 2. Apply role-based access control (RBAC)
      */
     @FXML
-    private void onToggleSidebar() {
-        // Collapse functionality removed
+    private void initialize() {
+        // Fixed width for the sidebar
+        sidebarRoot.setPrefWidth(300);
+
+        setButtonsContentDisplay(); // Format button layout (icon + text)
+        applyRoleRestrictions();    // Hide restricted menu items
     }
 
     /**
-     * Controls how menu buttons display their content.
+     * Ensures all sidebar buttons show their icon on the left side of the text.
      */
     private void setButtonsContentDisplay() {
         if (sidebarRoot == null) return;
 
-        List<Node> children = sidebarRoot.getChildren();
-        for (Node n : children) {
-            // Handle regular menu buttons - always show text and left alignment
+        for (Node n : sidebarRoot.getChildren()) {
+            // Only affect styled sidebar buttons
             if (n instanceof Button && n.getStyleClass().contains("menu-button")) {
-                Button b = (Button) n;
-                b.setContentDisplay(ContentDisplay.LEFT);
-            }
-
-            // Handle the sidebar brand label
-            else if (n instanceof Label && ((Label)n).getStyleClass().contains("brand")) {
-                ((Label)n).setVisible(true);
-                ((Label)n).setManaged(true);
+                ((Button) n).setContentDisplay(ContentDisplay.LEFT);
             }
         }
     }
 
-    // Menu item handlers — these call loadOrShow() to load the correct page
+    /**
+     * Applies Role-Based Access Control (RBAC).
+     * - If the user is NOT a manager, hide pages they should not access.
+     * - Managers see everything.
+     */
+    private void applyRoleRestrictions() {
+        String role = SessionManager.getRole();
+        System.out.println("[MenuController] Applying RBAC for role: " + role);
+
+        // Only managers should see Reports, Employees, and Settings
+        if (!SessionManager.isManager()) {
+            hideButton(reportsBtn);
+            hideButton(employeesBtn);
+            hideButton(settingsBtn);
+        }
+    }
+
+    /**
+     * Utility method to hide a button completely.
+     * setVisible(false)  -> removes it from display
+     * setManaged(false)  -> prevents layout space from being reserved for it
+     */
+    private void hideButton(Button btn) {
+        if (btn != null) {
+            btn.setVisible(false);
+            btn.setManaged(false);
+        }
+    }
+
+    // ---------------------------------------------------------
+    // MENU BUTTON CLICK EVENTS
+    // Each method loads a page into the MainController's center pane
+    // ---------------------------------------------------------
     @FXML private void onDashboard() { loadOrShow("dashboard"); }
     @FXML private void onInventory() { loadOrShow("inventory"); }
     @FXML private void onOrders() { loadOrShow("orders"); }
@@ -73,40 +95,35 @@ public class MenuController {
     @FXML private void onSettings() { loadOrShow("settings"); }
 
     /**
-     * Logs out by switching the root to login.fxml
+     * Logs the user out:
+     * - Clears all session data (username & role)
+     * - Redirects user back to login screen
      */
     @FXML
     private void onLogout() {
-        try {
-            App.setRoot("login");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        SessionManager.clear();   // Wipes login session
+        App.setRoot("login");     // Go back to login page
     }
 
     /**
-     * Loads a page using MainController.
-     * If MainController is not ready yet, it loads main.fxml first and then retries.
+     * A smart page loader:
+     * 1. If MainController already exists, load the page into it.
+     * 2. If not (e.g., after login), load main.fxml first, then load the page.
      */
     private void loadOrShow(String page) {
         try {
-            // Try using the existing MainController
             MainController mc = MainController.getInstance();
             if (mc != null) {
                 mc.loadPage(page);
-                return;
+                return; // Done
             }
-        } catch (Throwable t) {
-            t.printStackTrace();
-        }
+        } catch (Throwable ignored) {}
 
-        // If MainController was not loaded yet → load main shell then try again
+        // If no MainController yet (fresh login), load main.fxml first
         try {
             App.setRoot("main");
             MainController mc2 = MainController.getInstance();
-            if (mc2 != null) {
-                mc2.loadPage(page);
-            }
+            if (mc2 != null) mc2.loadPage(page);
         } catch (Exception e) {
             e.printStackTrace();
         }
