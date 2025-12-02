@@ -56,7 +56,7 @@ public class InventoryController {
 
     @FXML
     private Button statusFilterButton;
-
+    
     // Initializing the columns which getter to use from InventoryItem.java
 
     @FXML
@@ -75,8 +75,18 @@ public class InventoryController {
     private void loadInventoryData() {
             ObservableList<InventoryItem> items = FXCollections.observableArrayList();
             
-            String dbUrl = "jdbc:sqlite:lamesa.db";
+            String dbUrl = "jdbc:sqlite:database/lamesa.db";
+            System.out.println("[InventoryController] Connecting to: " + dbUrl);
             try(Connection conn = DriverManager.getConnection(dbUrl)) {
+                System.out.println("[InventoryController] Connected successfully!");
+                
+                // Debug: Check what tables exist
+                try (ResultSet tables = conn.getMetaData().getTables(null, null, "%", null)) {
+                    System.out.println("[InventoryController] Tables in database:");
+                    while (tables.next()) {
+                        System.out.println("  - " + tables.getString("TABLE_NAME"));
+                    }
+                }
             
                 String sql = "SELECT * FROM inventory";
                 try(PreparedStatement ps = conn.prepareStatement(sql);
@@ -85,7 +95,7 @@ public class InventoryController {
                         // Loop through each row
                         while (rs.next()) {
                             // Get each
-                            int id = rs.getInt("id");
+                            int id = rs.getInt("product_id");
                             String productName = rs.getString("product_name");
                             String category = rs.getString("category");
                             String type = rs.getString("type");
@@ -95,12 +105,15 @@ public class InventoryController {
 
                             InventoryItem item = new InventoryItem(id, productName, category, type, instruction, stockQuantity, status);
                             items.add(item);
+                            System.out.println("[InventoryController] Loaded: " + productName);
                         }
                 }
             } catch (SQLException e) {
+                System.out.println("[InventoryController] ERROR: " + e.getMessage());
                 e.printStackTrace();
             }
 
+            System.out.println("[InventoryController] Total items loaded: " + items.size());
             inventoryTable.setItems(items);
         }
 
