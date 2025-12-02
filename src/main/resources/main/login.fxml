@@ -5,6 +5,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextField?>
@@ -13,28 +14,69 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 
-<!-- Main container for login page -->
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.LoginController" stylesheets="@../styles/login.css">
+<!-- Main container for login page using StackPane for overlay -->
+<StackPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.LoginController" stylesheets="@../styles/login.css">
    <children>
-        <!-- Page title label -->
-        <Label text="Login Page"/>
 
-        <!-- Kusina logo image displayed at top center -->
-        <ImageView fitWidth="200" fitHeight="200" preserveRatio="true">
-            <image>
-                <Image url="@../assets/kusina_logo.png" />
-            </image>
-        </ImageView>
 
-        <!-- Card container positioned with left padding to move it right -->
-        <HBox VBox.vgrow="NEVER">
+   
+      <!-- Food image 9 -->
+    <VBox alignment="CENTER_RIGHT" StackPane.alignment="CENTER_RIGHT" mouseTransparent="true">
+      <padding>
+         <Insets top="750" bottom="0" left="0" right="1100" />
+      </padding>
+      <ImageView fitWidth="350" fitHeight="350" preserveRatio="true">
+         <image>
+            <Image url="@../assets/food9.png" />
+         </image>
+      </ImageView>
+   </VBox>
+
+   <!-- Food image 4 - upper middle right -->
+   <VBox alignment="TOP_RIGHT" StackPane.alignment="TOP_RIGHT" mouseTransparent="true">
+      <padding>
+         <Insets top="0" bottom="340" left="0" right="1060" />
+      </padding>
+      <ImageView fitWidth="350" fitHeight="350" preserveRatio="true">
+         <image>
+            <Image url="@../assets/food4.png" />
+         </image>
+      </ImageView>
+   </VBox>
+
+   
+   <!-- Background: Card centered -->
+   <BorderPane>
+   
+   <!-- Card centered in the middle -->
+   <center>
+      <VBox alignment="CENTER">
+      <HBox alignment="CENTER">
             <padding>
-                <!-- Left padding of 50px - adjust this number to move card left/right -->
-                <Insets left="50" />
+                <Insets left="0" />
             </padding>
 
             <!-- Grey card box containing all login form fields -->
-            <VBox alignment="CENTER" styleClass="Login_Card" prefWidth="400" minWidth="400" maxWidth="400">
+            <VBox alignment="TOP_LEFT" styleClass="Login_Card" >
+
+             <!-- lamesa logo image displayed at top center -->
+        <HBox alignment="CENTER">
+            <ImageView fitWidth="250" fitHeight="250" preserveRatio="true" styleClass="responsive-image">
+                <image>
+                    <Image url="@../assets/lamesa.png" />
+                </image>
+            </ImageView>
+        </HBox>
+        
+        <!-- Centered fields container -->
+        <HBox alignment="CENTER">
+            <VBox alignment="TOP_LEFT" spacing="15">
+                    <!-- Page title label -->
+                    <Label text="Log in" styleClass="Login_title" alignment="TOP_LEFT">
+                        <VBox.margin>
+                            <Insets bottom="0" top="0" left="0" right="0"/>
+                        </VBox.margin>
+                    </Label>
                 <!-- Username input field -->
                 <TextField fx:id="usernameField" promptText="Username" prefHeight="40" minHeight="40" maxHeight="40"/>
                 
@@ -50,19 +92,117 @@
                     <!-- Eye icon button to toggle between password and plain text visibility -->
                     <Button fx:id="passwordToggle" text="👁" onAction="#togglePasswordVisibility" styleClass="eye-button" focusTraversable="false"/>
                 </HBox>
-                
-                <!-- Button to navigate to register page -->
-                <Button fx:id="primaryButton" text="Register" onAction="#switchToRegister"/>
+
+                <!-- Register button - left aligned below password -->
+                <HBox spacing="0" alignment="CENTER_LEFT">
+                    <Button fx:id="registerButton" styleClass="registerButton" text="Register?" onAction="#switchToRegister"/>
+                </HBox>
+            </VBox>
+        </HBox>
+                <HBox alignment="CENTER"> 
+                     <Button fx:id="loginButton" text="Login" onAction="#handleLogin" styleClass = "login_button"/>
+                </HBox> 
+               
             </VBox>
             
             <!-- Spacer that grows to fill remaining horizontal space, pushing card to left -->
             <Region HBox.hgrow="ALWAYS"/>
         </HBox>
-   </children>
+      </VBox>
+   </center>
    
-   <!-- Outer padding for the whole login page -->
+   <!-- Outer padding for the whole page -->
    <padding>
-      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+      <Insets bottom="20.0" left="20.0" right="20.0" top="0" />
    </padding>
-</VBox>
- 
+   </BorderPane>
+   
+   <!-- Food image 1 - top right area -->
+   <VBox alignment="TOP_RIGHT" StackPane.alignment="TOP_RIGHT" mouseTransparent="true">
+      <padding>
+         <Insets top="700" bottom="0" left="0" right="180" />
+      </padding>
+      <ImageView fitWidth="350" fitHeight="350" preserveRatio="true">
+         <image>
+            <Image url="@../assets/food1.png" />
+         </image>
+      </ImageView>
+   </VBox>
+
+   <!-- Food image 2 - middle right area -->
+   <VBox alignment="CENTER_RIGHT" StackPane.alignment="CENTER_RIGHT" mouseTransparent="true">
+      <padding>
+         <Insets top="0" bottom="0" left="50" right="0" />
+      </padding>
+      <ImageView fitWidth="350" fitHeight="350" preserveRatio="true">
+         <image>
+            <Image url="@../assets/food2.png" />
+         </image>
+      </ImageView>
+   </VBox>
+
+   <!-- Food image 3 - bottom right area -->
+   <VBox alignment="BOTTOM_RIGHT" StackPane.alignment="BOTTOM_RIGHT" mouseTransparent="true">
+      <padding>
+         <Insets top="0" bottom="300" left="0" right="450" />
+      </padding>
+      <ImageView fitWidth="350" fitHeight="350" preserveRatio="true">
+         <image>
+            <Image url="@../assets/food3.png" />
+         </image>
+      </ImageView>
+   </VBox>
+
+
+
+   <!-- Food image 5 - lower middle right -->
+   <VBox alignment="BOTTOM_RIGHT" StackPane.alignment="BOTTOM_RIGHT" mouseTransparent="true">
+      <padding>
+         <Insets top="0" bottom="720" left="0" right="150" />
+      </padding>
+      <ImageView fitWidth="350" fitHeight="350" preserveRatio="true">
+         <image>
+            <Image url="@../assets/food5.png" />
+         </image>
+      </ImageView>
+   </VBox>
+
+   <!-- Food image 6 - far right middle -->
+   <VBox alignment="CENTER_RIGHT" StackPane.alignment="CENTER_RIGHT" mouseTransparent="true">
+      <padding>
+         <Insets top="700" bottom="0" left="0" right="600" />
+      </padding>
+      <ImageView fitWidth="350" fitHeight="350" preserveRatio="true">
+         <image>
+            <Image url="@../assets/food6.png" />
+         </image>
+      </ImageView>
+   </VBox>
+
+   <!-- Food image 7 -->
+   <VBox alignment="CENTER_RIGHT" StackPane.alignment="CENTER_RIGHT" mouseTransparent="true">
+      <padding>
+         <Insets top="0" bottom="700" left="0" right="600" />
+      </padding>
+      <ImageView fitWidth="350" fitHeight="350" preserveRatio="true">
+         <image>
+            <Image url="@../assets/food7.png" />
+         </image>
+      </ImageView>
+   </VBox>
+
+   <!-- Food image 8 -->
+    <VBox alignment="CENTER_RIGHT" StackPane.alignment="CENTER_RIGHT" mouseTransparent="true">
+      <padding>
+         <Insets top="60" bottom="0" left="0" right="900" />
+      </padding>
+      <ImageView fitWidth="350" fitHeight="350" preserveRatio="true">
+         <image>
+            <Image url="@../assets/food8.png" />
+         </image>
+      </ImageView>
+   </VBox>
+
+   
+   </children>
+</StackPane>

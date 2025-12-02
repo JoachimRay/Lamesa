@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Importing JavaFX UI components used in this layout -->
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+
+<!-- 
+    This is the main layout for the Dashboard page.
+    It currently shows placeholder text.
+    You can replace the labels with real dashboard widgets later.
+-->
+<VBox
+        alignment="CENTER"
+        spacing="12"
+        xmlns="http://javafx.com/javafx/8.0.171"
+        xmlns:fx="http://javafx.com/fxml/1"
+        stylesheets="@../styles/dashboard.css">
+
+    <children>
+
+        <!-- Main title of the page -->
+        <Label 
+            text="Dashboard"
+            style="-fx-font-size:24; -fx-font-weight:bold;" />
+
+        <!-- Description/placeholder text -->
+        <Label 
+            text="Welcome to the dashboard. Replace this placeholder with real widgets."
+            wrapText="true" />
+
+    </children>
+</VBox>

@@ -3,10 +3,13 @@
     -fx-border-radius: 10;
     -fx-background-radius: 10;
     -fx-border: thin solid black;
-    -fx-background-color:  grey;
-    -fx-padding: 20;
+    -fx-background-color:  white;
+    -fx-padding: 30;
     -fx-spacing: 20;
-     -fx-margin: 0 0 0 40; 
+    -fx-min-height: 600;
+    -fx-pref-height: 700;
+    -fx-min-width: 400;
+    -fx-pref-width: 500;
 }
 
 .eye-button {
@@ -35,39 +38,40 @@
 
 /* Username field */
 #usernameField {
-    -fx-padding: 0;
+    -fx-padding: 10 10 10 10;
     -fx-font-size: 14;
-    -fx-border-color: #ddd;
+    -fx-border-color: #ffffff;
     -fx-border-width: 1;
     -fx-border-radius: 5;
     -fx-background-radius: 5;
-    -fx-background-color: #ffffff;
+    -fx-background-color: #ebebeb;
     -fx-text-fill: #000000;
-    -fx-min-height: 40;
-    -fx-pref-height: 40;
-    -fx-max-height: 40;
+    -fx-min-height: 45;
+    -fx-pref-height: 50;
+    -fx-min-width: 280;
+    -fx-pref-width: 350;
 }
 
 /* Password Container (HBox) */
 .password-container {
     -fx-border-radius: 5;
     -fx-background-radius: 5;
-    -fx-border-color: #ddd;
+    -fx-border-color: #ffffff;
     -fx-border-width: 1;
-    -fx-background-color: #ffffff;
+    -fx-background-color: #ebebeb;
     -fx-padding: 0;
     -fx-spacing: 0;
     -fx-alignment: CENTER_LEFT;
-    -fx-min-height: 40;
-    -fx-pref-height: 40;
-    -fx-max-height: 40;
+    -fx-min-height: 45;
+    -fx-pref-height: 50;
+    -fx-min-width: 280;
+    -fx-pref-width: 350;
 }
 
 /* PasswordField specific styling */
 PasswordField {
     -fx-border-width: 0;
     -fx-border-color: transparent;
-    -fx-padding: 10 10 10 10;
     -fx-background-color: transparent;
     -fx-text-fill: #000000;
     -fx-prompt-text-fill: #999999;
@@ -75,9 +79,8 @@ PasswordField {
     -fx-control-inner-background: transparent;
     -fx-focus-color: transparent;
     -fx-faint-focus-color: transparent;
-    -fx-min-height: 40;
-    -fx-pref-height: 40;
-    -fx-max-height: 40;
+    -fx-min-height: 45;
+    -fx-pref-height: 50;
 }
 
 PasswordField:focused {
@@ -86,9 +89,8 @@ PasswordField:focused {
     -fx-background-color: transparent;
     -fx-padding: 10 10 10 10;
     -fx-control-inner-background: transparent;
-    -fx-min-height: 40;
-    -fx-pref-height: 40;
-    -fx-max-height: 40;
+    -fx-min-height: 45;
+    -fx-pref-height: 50;
 }
 
 /* TextField specific styling */
@@ -103,9 +105,8 @@ TextField {
     -fx-background-radius: 0;
     -fx-focus-color: transparent;
     -fx-faint-focus-color: transparent;
-    -fx-min-height: 40;
-    -fx-pref-height: 40;
-    -fx-max-height: 40;
+    -fx-min-height: 45;
+    -fx-pref-height: 50;
 }
 
 TextField:focused {
@@ -115,9 +116,8 @@ TextField:focused {
     -fx-padding: 10 10 10 10;
     -fx-focus-color: transparent;
     -fx-faint-focus-color: transparent;
-    -fx-min-height: 40;
-    -fx-pref-height: 40;
-    -fx-max-height: 40;
+    -fx-min-height: 45;
+    -fx-pref-height: 50;
 }
 
 .root {
@@ -127,4 +127,45 @@ TextField:focused {
 .label {
     -fx-font-size: 16;
     -fx-text-fill: #333;
+}
+
+.registerButton{
+    -fx-background-color: transparent;
+    -fx-border-width: 0; 
+    -fx-font-size: 10; 
+    -fx-cursor: hand;  
+    -fx-padding: 0; 
+    -fx-focus-color: transparent; 
+    -fx-faint-focus-color: transparent; 
+}
+
+.registerButton:hover{ 
+   -fx-font-weight: bold;
+    -fx-underline: true;
+}
+
+.Login_title
+{
+    -fx-font-size: 24;
+    -fx-font-weight: bold;
+}
+
+.login_button { 
+    -fx-background-color: #114F3A;
+    -fx-padding: 0;
+    -fx-font-size: 13;
+    -fx-font-weight: bold;
+    -fx-text-fill: white; 
+    -fx-min-width: 80; 
+    -fx-pref-width: 100; 
+    -fx-min-height: 35; 
+    -fx-pref-height: 40;  
+    -fx-cursor:hand;
+}
+
+.responsive-image {
+    -fx-min-width: 150;
+    -fx-pref-width: 250;
+    -fx-min-height: 150;
+    -fx-pref-height: 250;
 }
