@@ -47,8 +47,8 @@ public final class DatabaseSeeder {
      * 3. Inserts the test user if missing.
      */
     public static void seedTestUser() {
-        final String testUsername = "testuser";
-        final String testPassword = "Test1234!";
+        final String testUsername = "1";
+        final String testPassword = "1";
 
         // Connect to the SQLite database (auto-closes because of try-with-resources).
         try (Connection conn = DriverManager.getConnection(DB_URL)) {
@@ -118,5 +118,64 @@ public final class DatabaseSeeder {
         while (hex.length() < 64) hex = "0" + hex;
 
         return hex;
+
+        
+    }
+
+    // CREATION OF INVENTORY TABLE 
+    private static final String CREATE_INVENTORY_TABLE = 
+        "CREATE TABLE IF NOT EXISTS inventory ( " +         //   Table name
+            "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+            "product_name TEXT NOT NULL," +
+            "category TEXT NOT NULL, " +
+            "type TEXT NOT NULL, "  +
+            "instruction TEXT NOT NULL, " +
+            "stock_quantity INTEGER DEFAULT 0, " +
+            "status TEXT DEFAULT 'No Worries Yet' " +
+            ");";
+        
+    public static void seedInventory() {
+        try(Connection conn = DriverManager.getConnection(DB_URL)) {
+            
+            // 1. Create the inventory table if needed.
+            try (PreparedStatement stmt = conn.prepareStatement(CREATE_INVENTORY_TABLE)) {
+                stmt.execute();
+            } 
+            
+        String insertSql = "INSERT INTO inventory (product_name, category, type, instruction, stock_quantity, status) VALUES (?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement ps = conn.prepareStatement(insertSql)) {
+            // Row 1 sample
+            ps.setString(1, "Wagyu Tapa");
+            ps.setString(2, "Breakfast");
+            ps.setString(3, "Non-Vegetarian");
+            ps.setString(4, "Low in Stock");
+            ps.setInt(5, 10);
+            ps.setString(6, "Pending");
+            ps.executeUpdate();
+
+            // Row 2
+            ps.setString(1, "Iberico Tocino");
+            ps.setString(2, "Breakfast");
+            ps.setString(3, "Non-Vegetarian");
+            ps.setString(4, "In Stock");
+            ps.setInt(5, 25);
+            ps.setString(6, "");
+            ps.executeUpdate();
+
+            // Row 3
+            ps.setString(1, "Ostrich Tortang Talong");
+            ps.setString(2, "Breakfast");
+            ps.setString(3, "Non-Vegetarian");
+            ps.setString(4, "High in Stock");
+            ps.setInt(5, 50);
+            ps.setString(6, "");
+            ps.executeUpdate();
+
+            System.out.println("[DatabaseSeeder] Inventory seeded successfully. ");
+        }
+        
+            } catch (SQLException e) {
+                e.printStackTrace();
+        } 
     }
 }
