@@ -39,11 +39,12 @@ public class App extends javafx.application.Application {
         
         // ---- Initial UI setup ----
         // Load the login screen FXML and create the primary Scene with a starting size.
-        scene = new Scene(loadFXML("login"), 1200, 700);
+        scene = new Scene(loadFXML("login"), 1920, 1080);
 
         // Set window title and show the stage.
         stage.setTitle("Lamesa");
         stage.setScene(scene);
+        stage.setMaximized(true);
         stage.show();
 
         // Small console trace to help debug navigation/startup problems.

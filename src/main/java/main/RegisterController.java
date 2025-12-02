@@ -123,7 +123,7 @@ public class RegisterController {
      * 5. Navigate to the main app shell
      */
     @FXML
-    private void registerUser() {
+    private void NextRegister() {
         String username = (usernameField == null) ? "" : usernameField.getText().trim();
         String password = getPasswordInput();
         String confirm = getConfirmPasswordInput();
@@ -165,7 +165,7 @@ public class RegisterController {
             // Platform.runLater to ensure navigation occurs on the JavaFX Application Thread.
             Platform.runLater(() -> {
                 try {
-                    App.setRoot("main");
+                    App.setRoot("choice");
                 } catch (Exception e) {
                     e.printStackTrace();
                     showAlert(Alert.AlertType.ERROR, "Navigation error", "Unable to open main application: " + e.getMessage());
@@ -179,6 +179,7 @@ public class RegisterController {
             e.printStackTrace();
             showAlert(Alert.AlertType.ERROR, "Encryption error", "Unable to process the password hash.");
         }
+
     }
 
     /**
