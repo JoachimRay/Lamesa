@@ -102,7 +102,7 @@ public class InventoryController {
 
         });
 
-        // Makes the column be able to choose Pending and Completed
+        // Makes the column be able to choose No Action Required, Pending and Completed
 
         inventoryTable.setEditable(true);
         statusColumn.setCellFactory(ComboBoxTableCell.forTableColumn("No Action Required","Pending", "Completed"));
@@ -188,6 +188,7 @@ public class InventoryController {
         }
     }
 
+    // Action listener for updating stock in Database
     private void updateStatusInDatabase(String newStatus, int product_id) {
         
         String dburl = "jdbc:sqlite:database/lamesa.db";
@@ -204,17 +205,6 @@ public class InventoryController {
                 e.printStackTrace();
         }
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
     // Event handling
