@@ -1,3 +1,60 @@
-.root {
-    -fx-background-color: #f5f5f5;
+/* Inventory Page Styles */
+
+/* Main VBox container */
+.inventory-root {
+    -fx-spacing: 16;
+    -fx-padding: 20;
+}
+
+/* Header section */
+.inventory-header {
+    -fx-alignment: center-left;
+    -fx-spacing: 12;
+}
+
+/* Page title */
+.inventory-title {
+    -fx-font-size: 28;
+    -fx-font-weight: bold;
+}
+
+/* New Stock button */
+.new-stock-btn {
+    -fx-background-color: #114F3A;
+    -fx-text-fill: white;
+    -fx-font-size: 12;
+    -fx-padding: 8 16 8 16;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+}
+
+/* Search and filter row */
+.search-filter-row {
+    -fx-alignment: center-left;
+    -fx-spacing: 12;
+}
+
+/* Search field */
+.search-field {
+    -fx-font-size: 12;
+    -fx-padding: 8;
+    -fx-border-radius: 4;
+}
+
+/* Status label */
+.status-label {
+    -fx-font-size: 12;
+}
+
+/* Status filter button */
+.status-filter-btn {
+    -fx-background-color: transparent;
+    -fx-font-size: 12;
+    -fx-text-fill: #666;
+    -fx-padding: 4 8 4 8;
+}
+
+/* Table view */
+.inventory-table {
+    -fx-font-size: 12;
 }
