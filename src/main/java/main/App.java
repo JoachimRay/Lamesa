@@ -34,7 +34,7 @@ public class App extends javafx.application.Application {
         // ---- Initial UI setup ----
         // Load the login screen FXML and create the primary Scene with a starting size.
         try {
-            scene = new Scene(loadFXML("login"), 1200, 800);
+            scene = new Scene(loadFXML("login"), 1920, 1080);
         } catch (IOException e) {
             System.err.println("[App] FXML loading failed!");
             e.printStackTrace();

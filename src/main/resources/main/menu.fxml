@@ -4,6 +4,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 
 <!--
     Sidebar menu for the main application.
@@ -12,72 +14,137 @@
     Uses VBox layout for vertical stacking of items
 -->
 <VBox
-    fx:id="sidebarRoot"
-    xmlns="http://javafx.com/javafx/8.0.171"
-    xmlns:fx="http://javafx.com/fxml/1"
-    fx:controller="main.MenuController"
-    spacing="10"
-    stylesheets="@../styles/menu.css"
-    styleClass="sidebar">
+        fx:id="sidebarRoot"
+        xmlns="http://javafx.com/javafx/8.0.171"
+        xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="main.MenuController"
+        spacing="10"
+        stylesheets="@../styles/menu.css"
+        styleClass="sidebar"
+        minWidth="60"
+        prefWidth="300"
+        maxWidth="300">
 
     <!-- Padding around the sidebar -->
     <padding>
-        <Insets top="12" right="12" bottom="12" left="12" />
+        <Insets top="12" right="12" bottom="12" left="12"/>
     </padding>
 
-    <!-- Top row: toggle button + brand label -->
-    <HBox spacing="8" alignment="CENTER_LEFT">
-        <!-- Sidebar toggle button (☰) -->
-        <Button fx:id="toggleButton" text="☰" onAction="#onToggleSidebar" styleClass="toggle-button" />
-        <!-- Brand/Title of sidebar -->
-        <Label text="Lamesa" styleClass="brand" />
+
+
+    <!-- Logo at the top -->
+    <HBox alignment="CENTER" styleClass="sidebar-logo">
+        <ImageView fitWidth="200" fitHeight="200" preserveRatio="true" styleClass="logo">
+            <image>
+                <Image url="@../assets/lamesa.png" />
+            </image>
+        </ImageView>
     </HBox>
 
+    <!-- Menu buttons container - left aligned -->
+    <VBox alignment="TOP_LEFT" spacing="15" VBox.vgrow="ALWAYS">
+    <padding> 
+    <Insets top="0" bottom="400" left="70" right="0"/>
+    </padding>
+   
     <!-- Menu buttons -->
-    <Button fx:id="dashboardButton" text="Dashboard" onAction="#onDashboard"
-        styleClass="menu-button">
+   <Button onAction="#onDashboard" styleClass="menu-button">
+    <graphic>
+        <HBox spacing="12" alignment="CENTER_LEFT">
+            <ImageView fitWidth="20" fitHeight="20" preserveRatio="true">
+                <image>
+                    <Image url="@../assets/home.png"/>
+                </image>
+            </ImageView>
+            <Label text="Dashboard" />
+        </HBox>
+    </graphic>
+</Button>
+
+    <Button onAction="#onInventory" styleClass="menu-button">
         <graphic>
-            <Label text="🏠" styleClass="icon" />
+            <HBox spacing="12" alignment="CENTER_LEFT">
+                <ImageView fitWidth="20" fitHeight="20" preserveRatio="true">
+                    <image>
+            <Image url = "@../assets/inventory.png"/>
+            </image>
+            </ImageView>  <!-- icon for inventory -->
+            <Label text = "Inventory"/>
+            </HBox>
         </graphic>
     </Button>
 
-    <Button fx:id="inventoryButton" text="Inventory" onAction="#onInventory"
-        styleClass="menu-button">
+    <Button onAction="#onOrders" styleClass="menu-button">
         <graphic>
-            <Label text="📦" styleClass="icon" />
+            <HBox spacing="12" alignment="CENTER_LEFT">
+                <ImageView fitWidth="20" fitHeight="20" preserveRatio="true">
+                    <image>
+                        <Image url="@../assets/order_manager.png"/>
+                    </image>
+                </ImageView>  <!-- icon for orders -->
+                <Label text="Orders"/>
+            </HBox>
         </graphic>
     </Button>
 
-    <Button fx:id="ordersButton" text="Orders" onAction="#onOrders" styleClass="menu-button">
+    <Button onAction="#onReports" styleClass="menu-button">
         <graphic>
-            <Label text="🧾" styleClass="icon" />
+            <HBox spacing="12" alignment="CENTER_LEFT">
+                <ImageView fitWidth="20" fitHeight="20" preserveRatio="true">
+                    <image>
+                        <Image url="@../assets/sales.png"/>
+                    </image>
+                </ImageView>  <!-- icon for reports -->
+                <Label text = "Reports"/>
+            </HBox>
         </graphic>
     </Button>
 
-    <Button fx:id="feedbacksButton" text="Feedback" onAction="#onFeedback" styleClass="menu-button">
+    <Button onAction="#onFeedback" styleClass="menu-button">
         <graphic>
-            <Label text="💬" styleClass="icon" />
+            <HBox spacing="12" alignment="CENTER_LEFT">
+                <ImageView fitWidth="20" fitHeight="20" preserveRatio="true">
+                    <image>
+                        <Image url="@../assets/feedback.png"/>
+                    </image>
+                </ImageView>  <!-- icon for feedback -->
+                <Label text="Feedback"/>
+            </HBox>
         </graphic>
     </Button>
 
-    <Button fx:id="employeesButton" text="Employees" onAction="#onEmployees"
-        styleClass="menu-button">
+    <Button onAction="#onEmployees" styleClass="menu-button">
         <graphic>
-            <Label text="👥" styleClass="icon" />
+            <HBox spacing="12" alignment="CENTER_LEFT">
+                <ImageView fitWidth="20" fitHeight="20" preserveRatio="true">
+                    <image> 
+                    <Image url="@../assets/account.png"/>
+                    </image>
+                </ImageView>  <!-- icon for employees -->
+                <Label text="Employees"/>
+            </HBox>
         </graphic>
     </Button>
 
-    <Button fx:id="settingsButton" text="Settings" onAction="#onSettings" styleClass="menu-button">
+    <Button onAction="#onSettings" styleClass="menu-button">
         <graphic>
-            <Label text="⚙️" styleClass="icon" />
+            <HBox spacing="12" alignment="CENTER_LEFT">
+                <Label text="⚙️" styleClass="icon"/>
+                <Label text="Settings" />
+            </HBox>
         </graphic>
     </Button>
 
-    <!-- Logout button at the bottom --> 
-     <Button text="Logout" onAction="#onLogout" styleClass="menu-button logout"> 
-        <graphic> 
-            <Label text="↩️" styleClass="icon"/> <!-- icon for logout --> 
-        </graphic> 
+    <!-- Logout button at the bottom -->
+    <Button onAction="#onLogout" styleClass="menu-button logout">
+        <graphic>
+            <HBox spacing="12" alignment="CENTER_LEFT">
+                <Label text="↩️" styleClass="icon"/>
+                <Label text="Logout" />
+            </HBox>
+        </graphic>
     </Button>
+
+    </VBox>
 
 </VBox>

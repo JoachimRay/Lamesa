@@ -17,6 +17,33 @@
 <!-- Main container for login page using StackPane for overlay -->
 <StackPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.LoginController" stylesheets="@../styles/login.css">
    <children>
+
+
+   
+      <!-- Food image 9 -->
+    <VBox alignment="CENTER_RIGHT" StackPane.alignment="CENTER_RIGHT" mouseTransparent="true">
+      <padding>
+         <Insets top="750" bottom="0" left="0" right="1100" />
+      </padding>
+      <ImageView fitWidth="350" fitHeight="350" preserveRatio="true">
+         <image>
+            <Image url="@../assets/food9.png" />
+         </image>
+      </ImageView>
+   </VBox>
+
+   <!-- Food image 4 - upper middle right -->
+   <VBox alignment="TOP_RIGHT" StackPane.alignment="TOP_RIGHT" mouseTransparent="true">
+      <padding>
+         <Insets top="0" bottom="340" left="0" right="1060" />
+      </padding>
+      <ImageView fitWidth="350" fitHeight="350" preserveRatio="true">
+         <image>
+            <Image url="@../assets/food4.png" />
+         </image>
+      </ImageView>
+   </VBox>
+
    
    <!-- Background: Card centered -->
    <BorderPane>
@@ -32,7 +59,7 @@
             <!-- Grey card box containing all login form fields -->
             <VBox alignment="TOP_LEFT" styleClass="Login_Card" >
 
-             <!-- Kusina logo image displayed at top center -->
+             <!-- lamesa logo image displayed at top center -->
         <HBox alignment="CENTER">
             <ImageView fitWidth="250" fitHeight="250" preserveRatio="true" styleClass="responsive-image">
                 <image>
@@ -126,17 +153,7 @@
       </ImageView>
    </VBox>
 
-   <!-- Food image 4 - upper middle right -->
-   <VBox alignment="TOP_RIGHT" StackPane.alignment="TOP_RIGHT" mouseTransparent="true">
-      <padding>
-         <Insets top="0" bottom="300" left="0" right="1000" />
-      </padding>
-      <ImageView fitWidth="350" fitHeight="350" preserveRatio="true">
-         <image>
-            <Image url="@../assets/food4.png" />
-         </image>
-      </ImageView>
-   </VBox>
+
 
    <!-- Food image 5 - lower middle right -->
    <VBox alignment="BOTTOM_RIGHT" StackPane.alignment="BOTTOM_RIGHT" mouseTransparent="true">
@@ -153,7 +170,7 @@
    <!-- Food image 6 - far right middle -->
    <VBox alignment="CENTER_RIGHT" StackPane.alignment="CENTER_RIGHT" mouseTransparent="true">
       <padding>
-         <Insets top="700" bottom="0" left="0" right="700" />
+         <Insets top="700" bottom="0" left="0" right="600" />
       </padding>
       <ImageView fitWidth="350" fitHeight="350" preserveRatio="true">
          <image>
@@ -175,9 +192,9 @@
    </VBox>
 
    <!-- Food image 8 -->
-   <VBox alignment="CENTER_RIGHT" StackPane.alignment="CENTER_RIGHT" mouseTransparent="true">
+    <VBox alignment="CENTER_RIGHT" StackPane.alignment="CENTER_RIGHT" mouseTransparent="true">
       <padding>
-         <Insets top="70" bottom="0" left="0" right="950" />
+         <Insets top="60" bottom="0" left="0" right="900" />
       </padding>
       <ImageView fitWidth="350" fitHeight="350" preserveRatio="true">
          <image>
@@ -185,6 +202,7 @@
          </image>
       </ImageView>
    </VBox>
+
    
    </children>
 </StackPane>
