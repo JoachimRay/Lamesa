@@ -49,6 +49,7 @@
 
     <!-- Table view for inventory items -->
     <TableView fx:id="inventoryTable" VBox.vgrow="ALWAYS" styleClass="inventory-table">
+        <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/></columnResizePolicy>
         <columns>
             <!-- Checkbox column -->
             <TableColumn prefWidth="40" text="" />
@@ -65,8 +66,8 @@
             <!-- Type column -->
             <TableColumn fx:id="typeColumn" prefWidth="100" text="Type" />
 
-            <!-- Instruction column -->
-            <TableColumn fx:id="instructionColumn" prefWidth="140" text="Instruction" />
+            <!-- Stock Level column -->
+            <TableColumn fx:id="instructionColumn" prefWidth="140" text="Stock Level" />
 
             <!-- Stock column -->
             <TableColumn fx:id="stockColumn" prefWidth="80" text="Stock" />
