@@ -16,12 +16,11 @@
     -fx-padding: 40;
     padding: 40px;
     -fx-spacing: 25;
-    -fx-min-height: 500;
-    min-height: 500px;
-    -fx-pref-height: 600;
-    -fx-min-width: 450;
-    min-width: 450px;
-    -fx-pref-width: 550;
+    -fx-min-height: 550;
+    min-height: 550px;
+    -fx-pref-height: 650;
+    -fx-max-width: 900;
+    max-width: 900px;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0.5, 0, 5);
 }
 
@@ -113,4 +112,55 @@
 /* Responsive Image */
 .responsive-image {
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0.5, 0, 2);
+}
+
+/* Role Card Style */
+.Role_Card {
+    -fx-border-radius: 8;
+    border-radius: 8px;
+    -fx-background-radius: 8;
+    -fx-border-color: #e0e0e0;
+    border-color: #e0e0e0;
+    -fx-border-width: 1;
+    border-width: 1px;
+    -fx-background-color: #f9f9f9;
+    background-color: #f9f9f9;
+    -fx-min-width: 200;
+    min-width: 200px;
+    -fx-pref-width: 220;
+    -fx-cursor: hand;
+    cursor: pointer;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 0, 2);
+}
+
+.Role_Card:hover {
+    -fx-border-color: #2a6f43;
+    border-color: #2a6f43;
+    -fx-background-color: #f0f8f5;
+    background-color: #f0f8f5;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 8, 0, 0, 3);
+}
+
+/* Role Card Icon */
+.Role_Icon {
+    -fx-font-size: 48;
+    font-size: 48px;
+    -fx-text-fill: #2a6f43;
+}
+
+/* Role Card Title */
+.Role_Label {
+    -fx-font-size: 22;
+    font-size: 22px;
+    -fx-font-weight: bold;
+    font-weight: bold;
+    -fx-text-fill: #1a1a1a;
+}
+
+/* Role Card Description */
+.Role_Description {
+    -fx-font-size: 13;
+    font-size: 13px;
+    -fx-text-fill: #666666;
+    -fx-wrap-text: true;
 }

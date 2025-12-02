@@ -16,58 +16,82 @@
       fx:controller="main.ChoiceController" stylesheets="@../styles/choice.css">
     <children>
 
-      <!-- Include background images component -->
-      <fx:include source="background-images.fxml" />
-
-
-
+  
  <!-- Background: Card centered -->
    <BorderPane>
    
    <!-- Card centered in the middle -->
    <center>
-      <VBox alignment="CENTER">
-         <HBox alignment="CENTER">
-            <padding>
-                <Insets left="0" />
-            </padding>
-
-            <!-- Grey card box containing all login form fields -->
-            <VBox alignment="TOP_CENTER" spacing="20" styleClass="Choice_Card">
+      <VBox alignment="CENTER" spacing="0">
+      
 
                 <!-- lamesa logo image displayed at top center -->
                 <HBox alignment="CENTER">
-                    <ImageView fitWidth="250" fitHeight="250" preserveRatio="true" styleClass="responsive-image">
+                    <ImageView fitWidth="200" fitHeight="200" preserveRatio="true" styleClass="responsive-image">
                         <image>
                             <Image url="@../assets/lamesa.png" />
                         </image>
                     </ImageView>
                 </HBox>
         
-                <!-- Centered fields container -->
-                <VBox alignment="CENTER" spacing="20">
-                    <!-- Page title label -->
-                    <Label text="Choice" styleClass="Choice_title" alignment="CENTER">
-                        <VBox.margin>
-                            <Insets bottom="10" top="0" left="0" right="0"/>
-                        </VBox.margin>
-                    </Label>
+                <!-- Page title label -->
+                <Label text="Select your role" styleClass="Choice_title" alignment="CENTER">
+                    <VBox.margin>
+                        <Insets bottom="15" top="-10" left="0" right="0"/>
+                    </VBox.margin>
+                </Label>
+                
+                <!-- Buttons container with two cards side by side -->
+                <HBox alignment="CENTER" spacing="40">
+                    <VBox.margin>
+                        <Insets top="10" bottom="0" left="0" right="0"/>
+                    </VBox.margin>
+                    <!-- Employee Card -->
+                    <VBox alignment="CENTER" spacing="15" styleClass="Role_Card">
+                        <padding>
+                            <Insets top="25" bottom="12" left="30" right="30"/>
+                        </padding>
+                        <Label text="💼" styleClass="Role_Icon">
+                            <VBox.margin>
+                                <Insets bottom="5" top="0" left="0" right="0"/>
+                            </VBox.margin>
+                        </Label>
+                        <Label text="Employee" styleClass="Role_Label" alignment="CENTER">
+                            <VBox.margin>
+                                <Insets bottom="8" top="0" left="0" right="0"/>
+                            </VBox.margin>
+                        </Label>
+                        <Label text="Regular staff member" styleClass="Role_Description" alignment="CENTER" wrapText="true">
+                            <VBox.margin>
+                                <Insets bottom="15" top="0" left="0" right="0"/>
+                            </VBox.margin>
+                        </Label>
+                        <Button fx:id="employeeButton" text="Select" onAction="#handleEmployee" styleClass="Employee_button"/>
+                    </VBox>
                     
-                    <!-- Manager Button -->
-                    <HBox alignment="CENTER"> 
-                        <Button fx:id="managerButton" text="Manager" onAction="#handleManager" styleClass="Manager_button"/>
-                    </HBox>
-                    
-                    <!-- Employee Button -->
-                    <HBox alignment="CENTER"> 
-                        <Button fx:id="employeeButton" text="Employee" onAction="#handleEmployee" styleClass="Employee_button"/>
-                    </HBox>
-                </VBox>
-            </VBox>
-
-            <!-- Spacer that grows to fill remaining horizontal space -->
-            <Region HBox.hgrow="ALWAYS"/>
-         </HBox>
+                    <!-- Manager Card -->
+                    <VBox alignment="CENTER" spacing="15" styleClass="Role_Card">
+                        <padding>
+                            <Insets top="25" bottom="25" left="30" right="30"/>
+                        </padding>
+                        <Label text="⭐" styleClass="Role_Icon">
+                            <VBox.margin>
+                                <Insets bottom="5" top="0" left="0" right="0"/>
+                            </VBox.margin>
+                        </Label>
+                        <Label text="Manager" styleClass="Role_Label" alignment="CENTER">
+                            <VBox.margin>
+                                <Insets bottom="8" top="0" left="0" right="0"/>
+                            </VBox.margin>
+                        </Label>
+                        <Label text="Has management access" styleClass="Role_Description" alignment="CENTER" wrapText="true">
+                            <VBox.margin>
+                                <Insets bottom="15" top="0" left="0" right="0"/>
+                            </VBox.margin>
+                        </Label>
+                        <Button fx:id="managerButton" text="Select" onAction="#handleManager" styleClass="Manager_button"/>
+                    </VBox>
+                </HBox>
       </VBox>
    </center>
    
