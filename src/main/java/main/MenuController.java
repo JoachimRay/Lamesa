@@ -85,7 +85,10 @@ public class MenuController {
     // ---------------------------------------------------------
     @FXML private void onDashboard() { loadOrShow("dashboard"); }
     @FXML private void onInventory() { loadOrShow("inventory"); }
-    @FXML private void onOrders() { loadOrShow("orders"); }
+    @FXML private void onAnalytics() {
+        System.out.println("[MenuController] Analytics button clicked");
+        loadOrShow("analytics");
+    }
     @FXML private void onReports() { loadOrShow("reports"); }
     @FXML private void onFeedback() { loadOrShow("feedback"); }
     @FXML private void onEmployees() { loadOrShow("employees"); }
