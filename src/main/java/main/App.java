@@ -22,8 +22,9 @@ import java.net.URL;
  * Notes for the team:
  * - setRoot(...) returns a boolean indicating whether navigation succeeded.
  * - loadFXML(...) throws a clear IOException when an FXML resource is missing.
- * - For production, remove the DatabaseSeeder call and replace SHA-256 password hashing
- *   with a stronger algorithm (bcrypt/argon2).
+ * - For production, remove the DatabaseSeeder call and replace SHA-256 password
+ * hashing
+ * with a stronger algorithm (bcrypt/argon2).
  */
 public class App extends javafx.application.Application {
 
@@ -36,7 +37,6 @@ public class App extends javafx.application.Application {
         // ---- Development helper (remove for production) ----
         // Ensure there is a known test user available for quick testing and debugging.
 
-        
         // ---- Initial UI setup ----
         // Load the login screen FXML and create the primary Scene with a starting size.
         scene = new Scene(loadFXML("login"), 1920, 1080);
@@ -52,11 +52,13 @@ public class App extends javafx.application.Application {
     }
 
     /**
-     * Swap the scene root to the FXML identified by the simple name (e.g. "main", "login").
+     * Swap the scene root to the FXML identified by the simple name (e.g. "main",
+     * "login").
      *
      * Behaviour:
      * - Loads the requested FXML via loadFXML(...)
-     * - Schedules root change on the JavaFX Application thread using Platform.runLater(...)
+     * - Schedules root change on the JavaFX Application thread using
+     * Platform.runLater(...)
      * - Returns true when navigation was initiated, false when the load failed.
      *
      * If loading fails, shows an error Alert with the exception stack trace to help
@@ -98,7 +100,8 @@ public class App extends javafx.application.Application {
                 // Short message visible in the alert body.
                 alert.setContentText(e.getMessage());
 
-                // Place full stack trace inside a non-editable TextArea so developers can expand it.
+                // Place full stack trace inside a non-editable TextArea so developers can
+                // expand it.
                 javafx.scene.control.TextArea textArea = new javafx.scene.control.TextArea(exceptionText);
                 textArea.setEditable(false);
                 textArea.setWrapText(false);
@@ -120,8 +123,10 @@ public class App extends javafx.application.Application {
     /**
      * Load an FXML resource from src/main/resources/main/<fxml>.fxml.
      *
-     * This method performs a defensive check and throws IOException with a clear message if
-     * the requested resource is not found. Controllers call setRoot(...) which uses this loader.
+     * This method performs a defensive check and throws IOException with a clear
+     * message if
+     * the requested resource is not found. Controllers call setRoot(...) which uses
+     * this loader.
      *
      * @param fxml simple FXML name (without .fxml)
      * @return the loaded Parent root node
@@ -151,4 +156,18 @@ public class App extends javafx.application.Application {
     public static void main(String[] args) {
         launch();
     }
+
+    /**
+     * Helper method to navigate to the appropriate home page based on user role.
+     * - Manager → Employees page
+     * - Employee → Main page
+     */
+    public static void navigateToRoleHome(String role) {
+        if ("manager".equalsIgnoreCase(role)) {
+            setRoot("employees");
+        } else {
+            setRoot("main");
+        }
+    }
+
 }

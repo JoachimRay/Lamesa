@@ -1,21 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Importing JavaFX components used in this layout -->
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.geometry.Insets?>
 
 <!--
-    Layout for the Employees page.
-    Currently shows placeholder text.
-    You can replace this with a TableView for listing employees
-    and forms for adding/editing records.
+    Employees page layout
+    Features:
+    - Search bar to filter employees
+    - TableView to display employee information
+    - Connected to EmployeesController
 -->
 <VBox
-        alignment="CENTER"
+        alignment="TOP_CENTER"
         spacing="12"
         xmlns="http://javafx.com/javafx/8.0.171"
         xmlns:fx="http://javafx.com/fxml/1"
-        stylesheets="@../styles/employees.css">
+        fx:controller="main.EmployeesController"
+        stylesheets="@../styles/employees.css"
+        padding="20">
 
     <children>
 
@@ -24,10 +30,29 @@
             text="Employees"
             style="-fx-font-size:24; -fx-font-weight:bold;" />
 
-        <!-- Placeholder description for future employee management UI -->
-        <Label
-            text="Employees management placeholder. Use TableView and forms."
-            wrapText="true" />
+        <!-- Search bar for filtering employee list -->
+        <TextField
+            fx:id="searchField"
+            promptText="Search employees..."
+            style="-fx-font-size:14;"
+            prefWidth="400" />
+
+        <!-- TableView to display employees and attendance info -->
+        <TableView fx:id="employeesTable" prefHeight="500" prefWidth="700">
+
+            <!-- Username column -->
+            <TableColumn fx:id="usernameColumn" text="Username" prefWidth="200" />
+
+            <!-- Role column -->
+            <TableColumn fx:id="roleColumn" text="Role" prefWidth="150" />
+
+            <!-- Last login column -->
+            <TableColumn fx:id="lastLoginColumn" text="Last Login" prefWidth="200" />
+
+            <!-- Shift completion column -->
+            <TableColumn fx:id="shiftStatusColumn" text="Shift Status" prefWidth="150" />
+
+        </TableView>
 
     </children>
 </VBox>

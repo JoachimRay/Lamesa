@@ -1,28 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Import JavaFX components -->
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 
 <!-- Root container for the Settings page -->
-<VBox alignment="CENTER" spacing="12" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.SettingsController" stylesheets="@../styles/settings.css">
-    <children>
-        <!-- Page title -->
-        <Label text="Settings" style="-fx-font-size:24; -fx-font-weight:bold;"/>
-        <!-- Placeholder text for settings content -->
-        <Label text="Settings placeholder." wrapText="true"/>
+<VBox alignment="CENTER" spacing="20"
+      xmlns="http://javafx.com/javafx/8.0.171"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="main.SettingsController"
+      stylesheets="@../styles/settings.css"
+      style="-fx-padding: 20;">
 
+    <!-- Page title -->
+    <Label text="Settings"
+           style="-fx-font-size: 24; -fx-font-weight: bold;" />
 
-          <!-- Logout button -->
-        <!-- Always visible for both employees and managers -->
-        <Button fx:id="logoutBtn" onAction="#onLogout" styleClass="menu-button logout">
-            <graphic>
-                <HBox spacing="12" alignment="CENTER_LEFT">
-                    <Label text="↩️" styleClass="icon"/>
-                    <Label text="Logout" />
-                </HBox>
-            </graphic>
-        </Button>
+    <!-- Placeholder -->
+    <Label text="Settings placeholder."
+           wrapText="true" />
 
-    </children>
+    <!-- Logout button -->
+    <Button fx:id="logoutBtn"
+            onAction="#onLogout"
+            styleClass="menu-button logout">
+
+        <graphic>
+            <HBox spacing="12" alignment="CENTER_LEFT">
+                <Label text="↩️" styleClass="icon" />
+                <Label text="Logout" />
+            </HBox>
+        </graphic>
+    </Button>
+
 </VBox>
