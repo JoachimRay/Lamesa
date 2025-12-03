@@ -22,7 +22,6 @@ public class MenuController {
     @FXML private Button feedbackBtn;
     @FXML private Button employeesBtn;
     @FXML private Button settingsBtn;
-    @FXML private Button logoutBtn;
 
     /**
      * This method runs automatically when the Menu FXML is loaded.
@@ -66,7 +65,7 @@ public class MenuController {
         if (!SessionManager.isManager()) {
             hideButton(reportsBtn);
             hideButton(employeesBtn);
-            hideButton(settingsBtn);
+
         }
     }
 
@@ -93,17 +92,6 @@ public class MenuController {
     @FXML private void onFeedback() { loadOrShow("feedback"); }
     @FXML private void onEmployees() { loadOrShow("employees"); }
     @FXML private void onSettings() { loadOrShow("settings"); }
-
-    /**
-     * Logs the user out:
-     * - Clears all session data (username & role)
-     * - Redirects user back to login screen
-     */
-    @FXML
-    private void onLogout() {
-        SessionManager.clear();   // Wipes login session
-        App.setRoot("login");     // Go back to login page
-    }
 
     /**
      * A smart page loader:
