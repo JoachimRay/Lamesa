@@ -1,0 +1,48 @@
+.PieCard
+{
+     -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-border: thin solid black;
+    -fx-background-color:  white;
+    -fx-padding: 30;
+    -fx-spacing: 20;
+    -fx-pref-height: 400;
+    -fx-pref-width: 500;
+    -fx-max-width:500;
+}
+
+
+.LineCard
+{
+     -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-border: thin solid black;
+    -fx-background-color:  white;
+    -fx-padding: 30;
+    -fx-spacing: 20;
+    -fx-pref-height: 400;
+    -fx-pref-width: 1000;
+    -fx-max-width:1500;
+}
+
+.SalesCard 
+{ 
+     -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-border: thin solid black;
+    -fx-background-color:  white;
+    -fx-padding: 30;
+    -fx-spacing: 20;
+    -fx-pref-height: 400;
+    -fx-pref-width: 700;
+    -fx-max-width:700;
+}
+
+.scroll-pane {
+    -fx-padding: 0;
+    -fx-font-size: 14;
+}
+
+.scroll-pane .viewport {
+    -fx-padding: 0;
+}

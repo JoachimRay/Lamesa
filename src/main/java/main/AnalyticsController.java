@@ -13,6 +13,8 @@ public class AnalyticsController {
     @FXML 
     private PieChart pieChart;
 
+    
+
     @FXML
     public void initialize() {
        XYChart.Series<String, Number> series = new XYChart.Series<>(); 
