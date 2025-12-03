@@ -9,5 +9,18 @@
         <Label text="Settings" style="-fx-font-size:24; -fx-font-weight:bold;"/>
         <!-- Placeholder text for settings content -->
         <Label text="Settings placeholder." wrapText="true"/>
+
+
+          <!-- Logout button -->
+        <!-- Always visible for both employees and managers -->
+        <Button fx:id="logoutBtn" onAction="#onLogout" styleClass="menu-button logout">
+            <graphic>
+                <HBox spacing="12" alignment="CENTER_LEFT">
+                    <Label text="↩️" styleClass="icon"/>
+                    <Label text="Logout" />
+                </HBox>
+            </graphic>
+        </Button>
+
     </children>
 </VBox>
