@@ -72,13 +72,13 @@
         </Button>
 
         <!-- Orders button -->
-        <Button fx:id="ordersBtn" onAction="#onOrders" styleClass="menu-button">
+        <Button fx:id="analyticsBtn" onAction="#onAnalytics" styleClass="menu-button">
             <graphic>
                 <HBox spacing="12" alignment="CENTER_LEFT">
                     <ImageView fitWidth="20" fitHeight="20" preserveRatio="true">
                         <image><Image url="@../assets/order_manager.png"/></image>
                     </ImageView>
-                    <Label text="Orders"/>
+                    <Label text="Analytics"/>
                 </HBox>
             </graphic>
         </Button>
