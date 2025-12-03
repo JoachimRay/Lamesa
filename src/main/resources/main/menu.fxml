@@ -83,17 +83,7 @@
             </graphic>
         </Button>
 
-        <!-- Feedback button -->
-        <Button fx:id="feedbackBtn" onAction="#onFeedback" styleClass="menu-button">
-            <graphic>
-                <HBox spacing="12" alignment="CENTER_LEFT">
-                    <ImageView fitWidth="20" fitHeight="20" preserveRatio="true">
-                        <image><Image url="@../assets/feedback.png"/></image>
-                    </ImageView>
-                    <Label text="Feedback"/>
-                </HBox>
-            </graphic>
-        </Button>
+  
 
         <!-- Employees button -->
         <!-- Hidden for employees via RBAC in MenuController -->
@@ -113,22 +103,14 @@
         <Button fx:id="settingsBtn" onAction="#onSettings" styleClass="menu-button">
             <graphic>
                 <HBox spacing="12" alignment="CENTER_LEFT">
-                    <Label text="⚙️" styleClass="icon"/>
+                     <ImageView fitWidth="20" fitHeight="20" preserveRatio="true">
+                        <image><Image url="@../assets/Settings.png"/></image>
+                    </ImageView>
                     <Label text="Settings" />
                 </HBox>
             </graphic>
         </Button>
 
-        <!-- Logout button -->
-        <!-- Always visible for both employees and managers -->
-        <Button fx:id="logoutBtn" onAction="#onLogout" styleClass="menu-button logout">
-            <graphic>
-                <HBox spacing="12" alignment="CENTER_LEFT">
-                    <Label text="↩️" styleClass="icon"/>
-                    <Label text="Logout" />
-                </HBox>
-            </graphic>
-        </Button>
-
+      
     </VBox>
 </VBox>
