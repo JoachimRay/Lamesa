@@ -104,7 +104,6 @@ public class InventoryController {
 
         // Makes the column be able to choose No Action Required, Pending and Completed
 
-        inventoryTable.setEditable(true);
         statusColumn.setCellFactory(ComboBoxTableCell.forTableColumn("No Action Required","Pending", "Completed"));
         statusColumn.setOnEditCommit(event -> {
             String newStatus = event.getNewValue();
