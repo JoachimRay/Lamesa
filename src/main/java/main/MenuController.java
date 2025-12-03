@@ -89,7 +89,10 @@ public class MenuController {
     @FXML private void onReports() { loadOrShow("reports"); }
     @FXML private void onFeedback() { loadOrShow("feedback"); }
     @FXML private void onEmployees() { loadOrShow("employees"); }
-    @FXML private void onSettings() { loadOrShow("settings"); }
+    @FXML private void onSettings() {
+        System.out.println("[MenuController] Settings button clicked");
+        loadOrShow("settings");
+    }
 
     /**
      * A smart page loader:
