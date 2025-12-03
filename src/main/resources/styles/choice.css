@@ -1,0 +1,166 @@
+/* Choice Page Styles */
+.root {
+    -fx-background-color: #ffffff;
+    background-color: #ffffff;
+}
+
+/* Choice Card Container */
+.Choice_Card {
+    -fx-border-radius: 15;
+    border-radius: 15px;
+    -fx-background-radius: 15;
+    -fx-border-color: #ddd;
+    -fx-border-width: 2;
+    -fx-background-color: #ffffff;
+    background-color: #ffffff;
+    -fx-padding: 40;
+    padding: 40px;
+    -fx-spacing: 25;
+    -fx-min-height: 550;
+    min-height: 550px;
+    -fx-pref-height: 650;
+    -fx-max-width: 900;
+    max-width: 900px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0.5, 0, 5);
+}
+
+/* Choice Page Title */
+.Choice_title {
+    -fx-font-size: 32;
+    font-size: 32px;
+    -fx-font-weight: bold;
+    font-weight: bold;
+    -fx-text-fill: #333;
+    -fx-padding: 15;
+    padding: 15px;
+}
+
+/* Manager Button Style */
+.Manager_button {
+    -fx-background-color: #114F3A;
+    background-color: #114F3A;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 16;
+    font-size: 16px;
+    -fx-font-weight: bold;
+    font-weight: bold;
+    -fx-padding: 15 50 15 50;
+    padding: 15px 50px;
+    -fx-border-radius: 8;
+    border-radius: 8px;
+    -fx-background-radius: 8;
+    -fx-min-width: 180;
+    min-width: 180px;
+    -fx-pref-width: 200;
+    -fx-min-height: 50;
+    min-height: 50px;
+    -fx-pref-height: 55;
+    -fx-cursor: hand;
+    cursor: pointer;
+    -fx-border-width: 0;
+    border-width: 0;
+}
+
+.Manager_button:hover {
+    -fx-background-color: #0d3d2e;
+    background-color: #0d3d2e;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 8, 0.5, 0, 3);
+}
+
+.Manager_button:pressed {
+    -fx-background-color: #0a2b22;
+    background-color: #0a2b22;
+}
+
+/* Employee Button Style */
+.Employee_button {
+    -fx-background-color: #4CAF50;
+    background-color: #4CAF50;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 16;
+    font-size: 16px;
+    -fx-font-weight: bold;
+    font-weight: bold;
+    -fx-padding: 15 50 15 50;
+    padding: 15px 50px;
+    -fx-border-radius: 8;
+    border-radius: 8px;
+    -fx-background-radius: 8;
+    -fx-min-width: 180;
+    min-width: 180px;
+    -fx-pref-width: 200;
+    -fx-min-height: 50;
+    min-height: 50px;
+    -fx-pref-height: 55;
+    -fx-cursor: hand;
+    cursor: pointer;
+    -fx-border-width: 0;
+    border-width: 0;
+}
+
+.Employee_button:hover {
+    -fx-background-color: #45a049;
+    background-color: #45a049;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 8, 0.5, 0, 3);
+}
+
+.Employee_button:pressed {
+    -fx-background-color: #3d8b40;
+    background-color: #3d8b40;
+}
+
+/* Responsive Image */
+.responsive-image {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0.5, 0, 2);
+}
+
+/* Role Card Style */
+.Role_Card {
+    -fx-border-radius: 8;
+    border-radius: 8px;
+    -fx-background-radius: 8;
+    -fx-border-color: #e0e0e0;
+    border-color: #e0e0e0;
+    -fx-border-width: 1;
+    border-width: 1px;
+    -fx-background-color: #f9f9f9;
+    background-color: #f9f9f9;
+    -fx-min-width: 200;
+    min-width: 200px;
+    -fx-pref-width: 220;
+    -fx-cursor: hand;
+    cursor: pointer;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 0, 2);
+}
+
+.Role_Card:hover {
+    -fx-border-color: #2a6f43;
+    border-color: #2a6f43;
+    -fx-background-color: #f0f8f5;
+    background-color: #f0f8f5;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 8, 0, 0, 3);
+}
+
+/* Role Card Icon */
+.Role_Icon {
+    -fx-font-size: 48;
+    font-size: 48px;
+    -fx-text-fill: #2a6f43;
+}
+
+/* Role Card Title */
+.Role_Label {
+    -fx-font-size: 22;
+    font-size: 22px;
+    -fx-font-weight: bold;
+    font-weight: bold;
+    -fx-text-fill: #1a1a1a;
+}
+
+/* Role Card Description */
+.Role_Description {
+    -fx-font-size: 13;
+    font-size: 13px;
+    -fx-text-fill: #666666;
+    -fx-wrap-text: true;
+}

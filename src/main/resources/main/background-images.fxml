@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
+<!-- Background images component - reusable across multiple pages -->
+<StackPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <!-- Food image 9 -->
+        <StackPane StackPane.alignment="CENTER_RIGHT">
+            <VBox alignment="CENTER_RIGHT" StackPane.alignment="CENTER_RIGHT" mouseTransparent="true">
+                <padding>
+                    <Insets top="750" bottom="0" left="0" right="1100" />
+                </padding>
+                <ImageView fitWidth="350" fitHeight="350" preserveRatio="true">
+                    <image>
+                        <Image url="@../assets/food9.png" />
+                    </image>
+                </ImageView>
+            </VBox>
+        </StackPane>
+
+        <!-- Food image 4 - upper middle right -->
+        <StackPane StackPane.alignment="TOP_RIGHT">
+            <VBox alignment="TOP_RIGHT" StackPane.alignment="TOP_RIGHT" mouseTransparent="true">
+                <padding>
+                    <Insets top="0" bottom="340" left="0" right="1060" />
+                </padding>
+                <ImageView fitWidth="350" fitHeight="350" preserveRatio="true">
+                    <image>
+                        <Image url="@../assets/food4.png" />
+                    </image>
+                </ImageView>
+            </VBox>
+        </StackPane>
+
+        <!-- Food image 1 - top right area -->
+        <StackPane StackPane.alignment="TOP_RIGHT">
+            <VBox alignment="TOP_RIGHT" StackPane.alignment="TOP_RIGHT" mouseTransparent="true">
+                <padding>
+                    <Insets top="700" bottom="0" left="0" right="180" />
+                </padding>
+                <ImageView fitWidth="350" fitHeight="350" preserveRatio="true">
+                    <image>
+                        <Image url="@../assets/food1.png" />
+                    </image>
+                </ImageView>
+            </VBox>
+        </StackPane>
+
+        <!-- Food image 2 - middle right area -->
+        <StackPane StackPane.alignment="CENTER_RIGHT">
+            <VBox alignment="CENTER_RIGHT" StackPane.alignment="CENTER_RIGHT" mouseTransparent="true">
+                <padding>
+                    <Insets top="0" bottom="0" left="50" right="0" />
+                </padding>
+                <ImageView fitWidth="350" fitHeight="350" preserveRatio="true">
+                    <image>
+                        <Image url="@../assets/food2.png" />
+                    </image>
+                </ImageView>
+            </VBox>
+        </StackPane>
+
+        <!-- Food image 3 - bottom right area -->
+        <StackPane StackPane.alignment="BOTTOM_RIGHT">
+            <VBox alignment="BOTTOM_RIGHT" StackPane.alignment="BOTTOM_RIGHT" mouseTransparent="true">
+                <padding>
+                    <Insets top="0" bottom="400" left="0" right="450" />
+                </padding>
+                <ImageView fitWidth="350" fitHeight="350" preserveRatio="true">
+                    <image>
+                        <Image url="@../assets/food3.png" />
+                    </image>
+                </ImageView>
+            </VBox>
+        </StackPane>
+
+        <!-- Food image 5 - lower middle right -->
+        <StackPane StackPane.alignment="BOTTOM_RIGHT">
+            <VBox alignment="BOTTOM_RIGHT" StackPane.alignment="BOTTOM_RIGHT" mouseTransparent="true">
+                <padding>
+                    <Insets top="0" bottom="720" left="0" right="150" />
+                </padding>
+                <ImageView fitWidth="350" fitHeight="350" preserveRatio="true">
+                    <image>
+                        <Image url="@../assets/food5.png" />
+                    </image>
+                </ImageView>
+            </VBox>
+        </StackPane>
+
+        <!-- Food image 6 - far right middle -->
+        <StackPane StackPane.alignment="CENTER_RIGHT">
+            <VBox alignment="CENTER_RIGHT" StackPane.alignment="CENTER_RIGHT" mouseTransparent="true">
+                <padding>
+                    <Insets top="700" bottom="0" left="0" right="650" />
+                </padding>
+                <ImageView fitWidth="350" fitHeight="350" preserveRatio="true">
+                    <image>
+                        <Image url="@../assets/food6.png" />
+                    </image>
+                </ImageView>
+            </VBox>
+        </StackPane>
+
+        <!-- Food image 7 -->
+        <StackPane StackPane.alignment="CENTER_RIGHT">
+            <VBox alignment="CENTER_RIGHT" StackPane.alignment="CENTER_RIGHT" mouseTransparent="true">
+                <padding>
+                    <Insets top="0" bottom="700" left="0" right="600" />
+                </padding>
+                <ImageView fitWidth="350" fitHeight="350" preserveRatio="true">
+                    <image>
+                        <Image url="@../assets/food7.png" />
+                    </image>
+                </ImageView>
+            </VBox>
+        </StackPane>
+
+        <!-- Food image 8 -->
+        <StackPane StackPane.alignment="CENTER_RIGHT">
+            <VBox alignment="CENTER_RIGHT" StackPane.alignment="CENTER_RIGHT" mouseTransparent="true">
+                <padding>
+                    <Insets top="40" bottom="0" left="0" right="930" />
+                </padding>
+                <ImageView fitWidth="350" fitHeight="350" preserveRatio="true">
+                    <image>
+                        <Image url="@../assets/food8.png" />
+                    </image>
+                </ImageView>
+            </VBox>
+        </StackPane>
+    </children>
+</StackPane>
