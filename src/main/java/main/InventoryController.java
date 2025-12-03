@@ -54,6 +54,7 @@ public class InventoryController {
 
     @FXML
     private TextField searchField;
+    ObservableList<InventoryItem> masterObservableList;
 
     @FXML
     private Button newStockButton;
@@ -99,7 +100,6 @@ public class InventoryController {
 
             updateStockInDatabase(newStock, product_id);
             System.out.println("Update product " + product_id + " to stock: " + newStock);
-
         });
 
         // Makes the column be able to choose No Action Required, Pending and Completed
@@ -113,11 +113,15 @@ public class InventoryController {
             updateStatusInDatabase(newStatus, product_id);
             System.out.println("Update product " + product_id + " to status: " + newStatus);
         });
+
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+                filterInventory(newValue);
+        });
     }   
 
     // Loading Inventory Table to Table view by connecting to Lamesa Database and using Obsevable List
     private void loadInventoryData() {
-        ObservableList<InventoryItem> items = FXCollections.observableArrayList();
+        masterObservableList = FXCollections.observableArrayList();
             
         String dbUrl = "jdbc:sqlite:database/lamesa.db";
         System.out.println("[InventoryController] Connecting to: " + dbUrl);
@@ -138,9 +142,10 @@ public class InventoryController {
                         String instruction = rs.getString("instruction");
                         int stockQuantity = rs.getInt("stock_quantity");
                         String status = rs.getString("status");
-
+                        
+                        // Only used one .add(item) since it only needs to do it once
                         InventoryItem item = new InventoryItem(id, productName, category, type, instruction, stockQuantity, status);
-                        items.add(item);
+                        masterObservableList.add(item);
                     }
                 }
             } catch (SQLException e) {
@@ -148,8 +153,9 @@ public class InventoryController {
                 e.printStackTrace();
             }
 
-            System.out.println("[InventoryController] Total items loaded: " + items.size());
-            inventoryTable.setItems(items);
+            System.out.println("[InventoryController] Total items loaded: " + masterObservableList.size());
+            System.out.println("[InventoryController] Master Observable List loaded: " + masterObservableList.size());
+            inventoryTable.setItems(masterObservableList);
         }
     
     // Action listener for updating Instruction in Database
@@ -205,7 +211,19 @@ public class InventoryController {
         }
     }
 
+    private void filterInventory(String searchText) {
+        if(searchText.isEmpty())
+            inventoryTable.setItems(masterObservableList);
+        else{
+            ObservableList<InventoryItem> filteredList = FXCollections.observableArrayList();
 
+            for(InventoryItem item : masterObservableList)
+                if (item.getProductName().toLowerCase().contains(searchText.toLowerCase())) {
+                    filteredList.add(item);
+                }
+                inventoryTable.setItems(filteredList);
+        }
+    }
     // Event handling
 
     @FXML
