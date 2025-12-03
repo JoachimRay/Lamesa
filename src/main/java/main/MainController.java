@@ -52,11 +52,13 @@ public class MainController {
         if (contentPane == null) return;
 
         try {
+            System.out.println("[MainController] Loading page: " + page);
             // Build the file path to the FXML
             String resourcePath = "/main/" + page + ".fxml";
 
             // Try to locate the file
             URL url = App.class.getResource(resourcePath);
+            System.out.println("[MainController] Resource path: " + resourcePath + " -> " + url);
             if (url == null) {
                 throw new IOException("Resource not found: " + resourcePath);
             }
