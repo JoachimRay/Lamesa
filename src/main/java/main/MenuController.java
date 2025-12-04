@@ -4,8 +4,10 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
+import java.util.List;
 
 public class MenuController {
 
@@ -59,11 +61,10 @@ public class MenuController {
         String role = SessionManager.getRole();
         System.out.println("[MenuController] Applying RBAC for role: " + role);
 
-        // Only managers should see Reports, Employees, and Settings
+        // Only managers should see Reports, Employees,
         if (!SessionManager.isManager()) {
             hideButton(reportsBtn);
             hideButton(employeesBtn);
-
         }
     }
 
