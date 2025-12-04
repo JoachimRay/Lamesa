@@ -9,6 +9,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 /**
@@ -20,11 +21,8 @@ import java.util.List;
  * - Displays a list of users from the database
  * - Shows username, role, last login, and shift status
  * - Search bar to filter employees by username
- *
- * Notes for the group:
- * - Make sure fx:id values in employees.fxml match the @FXML fields here
- * - The Employee model class provides getters for TableView PropertyValueFactory
- * - AttendanceUtils or DAO is used to fetch last login/logout data
+ * 
+ * FIXED: Added better error handling and debug logging
  */
 public class EmployeesController {
 
@@ -49,6 +47,8 @@ public class EmployeesController {
 
     @FXML
     private void initialize() {
+        System.out.println("[EmployeesController] Initializing...");
+        
         // 1) Configure table columns
         usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
         roleColumn.setCellValueFactory(new PropertyValueFactory<>("role"));
@@ -60,6 +60,8 @@ public class EmployeesController {
 
         // 3) Setup search/filter feature
         setupSearch();
+        
+        System.out.println("[EmployeesController] Initialization complete. Total employees: " + data.size());
     }
 
     /**
@@ -67,25 +69,37 @@ public class EmployeesController {
      * Populates the ObservableList for the TableView.
      */
     private void loadData() {
+        System.out.println("[EmployeesController] Loading data from database...");
         data.clear();
 
-        // Fetch all users with last login/logout info
-        List<EmployeeDAO.EmployeeRow> rows = dao.fetchAllUsersWithLastAttendance();
+        try {
+            // Fetch all users with last login/logout info
+            List<EmployeeDAO.EmployeeRow> rows = dao.fetchAllUsersWithLastAttendance();
+            System.out.println("[EmployeesController] Fetched " + rows.size() + " users from database");
 
-        for (EmployeeDAO.EmployeeRow row : rows) {
-            String username = row.username;
-            String role = row.role != null ? row.role : "employee"; // default role
-            String lastLogin = row.lastLogin;
-            String lastLogout = row.lastLogout;
+            for (EmployeeDAO.EmployeeRow row : rows) {
+                String username = row.username;
+                String role = row.role != null ? row.role : "employee"; // default role
+                String lastLogin = row.lastLogin != null ? row.lastLogin : "Never logged in";
+                String lastLogout = row.lastLogout;
 
-            // Determine shift status (Completed, hours worked, or "-")
-            String shiftStatus = computeShiftStatus(lastLogin, lastLogout);
+                // Determine shift status (Completed, hours worked, or "-")
+                String shiftStatus = computeShiftStatus(row.lastLogin, lastLogout);
 
-            // Add to TableView
-            data.add(new Employee(username, role, lastLogin, shiftStatus));
+                System.out.println("[EmployeesController] Adding: " + username + " | " + role + " | " + lastLogin + " | " + shiftStatus);
+
+                // Add to TableView
+                data.add(new Employee(username, role, lastLogin, shiftStatus));
+            }
+
+            employeesTable.setItems(data);
+            System.out.println("[EmployeesController] Data loaded successfully. Table has " + data.size() + " items");
+            
+        } catch (Exception e) {
+            System.err.println("[EmployeesController] ERROR loading data:");
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to load employee data: " + e.getMessage());
         }
-
-        employeesTable.setItems(data);
     }
 
     /**
@@ -93,16 +107,30 @@ public class EmployeesController {
      *
      * @param loginTs  last login timestamp
      * @param logoutTs last logout timestamp
-     * @return "Completed" if >=8 hrs, otherwise "X hrs", or "-" if data missing
+     * @return "Completed" if >=10 seconds, otherwise "X hrs", "Active", or "No data"
      */
     private String computeShiftStatus(String loginTs, String logoutTs) {
-        if (loginTs == null || logoutTs == null) return "-";
+        if (loginTs == null || loginTs.equals("Never logged in")) {
+            return "No data";
+        }
+        
+        if (logoutTs == null) {
+            return "Active"; // Currently logged in
+        }
+        
         try {
             LocalDateTime login = LocalDateTime.parse(loginTs, TF);
             LocalDateTime logout = LocalDateTime.parse(logoutTs, TF);
-            long hours = Duration.between(login, logout).toHours();
-            return hours >= 8 ? "Completed" : hours + " hrs";
-        } catch (Exception e) {
+            long seconds = Duration.between(login, logout).getSeconds();
+            
+            if (seconds >= 10) {
+                return "✓ Completed"; // Shift completed (>=10 seconds)
+            } else {
+                double hours = seconds / 3600.0;
+                return String.format("%.2f hrs", hours);
+            }
+        } catch (DateTimeParseException e) {
+            System.err.println("[EmployeesController] Date parse error: " + e.getMessage());
             return "-";
         }
     }
@@ -126,6 +154,16 @@ public class EmployeesController {
                 employeesTable.setItems(filtered);
             }
         });
+    }
+
+    /**
+     * Refresh button handler - reloads data from database
+     */
+    @FXML
+    private void handleRefresh() {
+        System.out.println("[EmployeesController] Refresh button clicked");
+        loadData();
+        showAlert(Alert.AlertType.INFORMATION, "Refreshed", "Employee data has been refreshed");
     }
 
     /**

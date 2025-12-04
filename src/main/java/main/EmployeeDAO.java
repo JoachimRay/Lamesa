@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class EmployeeDAO {
 
-    private static final String DB_URL = "jdbc:sqlite:Database/lamesa.db";
+    private static final String DB_URL = "jdbc:sqlite:database/lamesa.db";
     private static final DateTimeFormatter TF = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     /**
