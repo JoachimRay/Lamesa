@@ -1,14 +1,13 @@
 package main;
 
-import java.net.URL;
+// Java SQL imports
 import java.sql.Connection;
-import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ResourceBundle;
 
+// JavaFX imports
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -21,9 +20,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.converter.IntegerStringConverter;
 
+/**
+ * Controller for the Inventory page.
+ * Handles displaying, editing, filtering, and searching inventory items.
+ */
 public class InventoryController {
 
-    // FXML FIELDS
+    // ==================== FXML FIELDS - TABLE ====================
 
     @FXML
     private TableView<InventoryItem> inventoryTable;
@@ -52,6 +55,8 @@ public class InventoryController {
     @FXML
     private TableColumn<InventoryItem, String> statusColumn;
 
+    // ==================== FXML FIELDS - CONTROLS ====================
+
     @FXML
     private TextField searchField;
 
@@ -60,9 +65,24 @@ public class InventoryController {
 
     @FXML
     private Button statusFilterButton;
-    
-    // Initializing the columns which getter to use from InventoryItem.java
 
+    // ==================== DATA STORAGE ====================
+
+    /** Master list containing all inventory items from database */
+    private ObservableList<InventoryItem> masterObservableList;
+
+    /** Index for cycling through status filters */
+    private int statusFilterIndex = 0;
+
+    /** Available status filter options */
+    private String[] statusFilters = {"All", "No Action Required", "Pending", "Completed"};
+
+    // ==================== INITIALIZATION ====================
+
+    /**
+     * Initializes the controller.
+     * Sets up table columns, loads data, and configures editable cells.
+     */
     @FXML
     public void initialize() {
         productIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -86,6 +106,7 @@ public class InventoryController {
 
             updateInstructionInDatabase(newInstruction, product_id);
             System.out.println("Update product " + product_id + " to instruction: " + newInstruction);
+            item.setInstruction(newInstruction);
         });
 
         // Makes the table editable on stock
@@ -99,12 +120,11 @@ public class InventoryController {
 
             updateStockInDatabase(newStock, product_id);
             System.out.println("Update product " + product_id + " to stock: " + newStock);
-
+            item.setStockQuantity(newStock);
         });
 
         // Makes the column be able to choose No Action Required, Pending and Completed
 
-        inventoryTable.setEditable(true);
         statusColumn.setCellFactory(ComboBoxTableCell.forTableColumn("No Action Required","Pending", "Completed"));
         statusColumn.setOnEditCommit(event -> {
             String newStatus = event.getNewValue();
@@ -113,13 +133,25 @@ public class InventoryController {
 
             updateStatusInDatabase(newStatus, product_id);
             System.out.println("Update product " + product_id + " to status: " + newStatus);
+            item.setStatus(newStatus);
         });
-    }   
 
-    // Loading Inventory Table to Table view by connecting to Lamesa Database and using Obsevable List
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+                filterInventory(newValue);
+        });
+
+
+    }
+
+    // ==================== DATA LOADING ====================
+
+    /*
+     * Loads all inventory items from the database into the table.
+     */
     private void loadInventoryData() {
-        ObservableList<InventoryItem> items = FXCollections.observableArrayList();
-            
+        masterObservableList = FXCollections.observableArrayList();
+        
+        // Connection to database
         String dbUrl = "jdbc:sqlite:database/lamesa.db";
         System.out.println("[InventoryController] Connecting to: " + dbUrl);
         try(Connection conn = DriverManager.getConnection(dbUrl)) {             
@@ -139,9 +171,10 @@ public class InventoryController {
                         String instruction = rs.getString("instruction");
                         int stockQuantity = rs.getInt("stock_quantity");
                         String status = rs.getString("status");
-
+                        
+                        // POJO 
                         InventoryItem item = new InventoryItem(id, productName, category, type, instruction, stockQuantity, status);
-                        items.add(item);
+                        masterObservableList.add(item);
                     }
                 }
             } catch (SQLException e) {
@@ -149,11 +182,16 @@ public class InventoryController {
                 e.printStackTrace();
             }
 
-            System.out.println("[InventoryController] Total items loaded: " + items.size());
-            inventoryTable.setItems(items);
+            System.out.println("[InventoryController] Total items loaded: " + masterObservableList.size());
+            System.out.println("[InventoryController] Master Observable List loaded: " + masterObservableList.size());
+            inventoryTable.setItems(masterObservableList);
         }
-    
-    // Action listener for updating Instruction in Database
+
+    // ==================== DATABASE UPDATE METHODS ====================
+
+    /*
+     * Updates the instruction field in the database.
+     */
     private void updateInstructionInDatabase(String newInstruction, int product_id) {
 
         String dburl = "jdbc:sqlite:database/lamesa.db";
@@ -170,7 +208,10 @@ public class InventoryController {
                 e.printStackTrace();
         }
     }
-    // Action listener for updating stock in Database
+
+    /*
+     * Updates the stock quantity in the database.
+     */
     private void updateStockInDatabase(int newStock, int product_id) {
         
         String dburl = "jdbc:sqlite:database/lamesa.db";
@@ -188,7 +229,9 @@ public class InventoryController {
         }
     }
 
-    // Action listener for updating stock in Database
+    /**
+     * Updates the status field in the database.
+     */
     private void updateStatusInDatabase(String newStatus, int product_id) {
         
         String dburl = "jdbc:sqlite:database/lamesa.db";
@@ -206,16 +249,65 @@ public class InventoryController {
         }
     }
 
+    // ==================== FILTER METHODS ====================
 
-    // Event handling
+    /**
+     * Filters the inventory table by product name.
+     * @param searchText The text to search for in product names
+     */
+    private void filterInventory(String searchText) {
 
+        if(searchText.isEmpty()) {
+            inventoryTable.setItems(masterObservableList);
+        }
+        else {
+            ObservableList<InventoryItem> filteredList = FXCollections.observableArrayList();
+
+            for(InventoryItem item : masterObservableList)
+                if (item.getProductName().toLowerCase().contains(searchText.toLowerCase())) {
+                    filteredList.add(item);
+                }
+                inventoryTable.setItems(filteredList);
+        }
+    }
+
+    // ==================== EVENT HANDLERS ====================
+
+    /**
+     * Handles the "New Stock" button click.
+     * TODO: Opens a dialog to add a new inventory item.
+     */
     @FXML
     private void handleNewStock() {
         System.out.println("New Stock button clicked");
-        // Opens a dialog to add a new item
     }
 
+    /**
+     * Handles the status filter button click.
+     * Cycles through: All -> No Action Required -> Pending -> Completed -> All...
+     */
     @FXML
     private void handleStatusFilter() {
+        
+        String currentFilter = statusFilters[statusFilterIndex];
+
+        if(currentFilter.equals("All")) {
+        inventoryTable.setItems(masterObservableList);
+        }
+        else {
+        ObservableList<InventoryItem> filteredList = FXCollections.observableArrayList();
+
+        for(InventoryItem item : masterObservableList) 
+                if (item.getStatus().toLowerCase().equals(currentFilter.toLowerCase())) {
+                    filteredList.add(item);
+                }
+                inventoryTable.setItems(filteredList);
+        }
+
+        System.out.println("[InventoryController] current status: " + currentFilter);
+        ++statusFilterIndex;
+        statusFilterButton.setText(currentFilter);
+        if(statusFilterIndex >= statusFilters.length)
+            statusFilterIndex = 0;
     }
 }

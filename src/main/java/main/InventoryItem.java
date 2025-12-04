@@ -1,5 +1,7 @@
 package main;
 
+// POJO class: holds data for one inventory row
+
 public class InventoryItem {
 
     // Fields
@@ -49,5 +51,35 @@ public class InventoryItem {
 
     public String getStatus() {
         return status;
+    }
+
+    // Setters
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setInstruction(String instruction) {
+        this.instruction = instruction;
+    }
+
+    public void setStockQuantity(int stockQuantity) {
+        this.stockQuantity = stockQuantity;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
