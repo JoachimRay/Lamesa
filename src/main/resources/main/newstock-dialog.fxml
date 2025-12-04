@@ -29,7 +29,7 @@
         </rowConstraints>
          <children>
             <Label text="Product Name" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-            <Label text="Instruction" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Label text="Stock Level" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             <Label text="Stock" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             <Label text="Status" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             <ComboBox fx:id="productNameCombo" prefWidth="150.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
