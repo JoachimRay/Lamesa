@@ -2,6 +2,7 @@
 
 <!-- Importing JavaFX UI components used in this layout -->
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.control.Label?>
@@ -66,70 +67,75 @@
                </Text>
              </children>
           </Pane>
-          <Pane layoutX="402.0" layoutY="253.0" prefHeight="142.0" prefWidth="337.24">
-         <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="172.0" stroke="TRANSPARENT" strokeType="INSIDE" width="337.24" />
-            <Text layoutX="141.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="75" wrappingWidth="55.3179931640625">
-               <font>
-                  <Font name="System Bold" size="46.0" />
-               </font>
-            </Text>
-            <Text layoutX="118.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Orders">
-               <font>
-                  <Font name="Arial" size="18.0" />
-               </font>
-            </Text>
-            <Text layoutX="129.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4% (30 days) " />
-         </children>
-      </Pane>
-      <Pane layoutX="780.0" layoutY="253.0" prefHeight="142.0" prefWidth="337.24">
-         <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="172.0" stroke="TRANSPARENT" strokeType="INSIDE" width="337.24" />
-            <Text layoutX="129.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4% (30 days) " />
-            <Text layoutX="136.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="357" wrappingWidth="85.718017578125">
-               <font>
-                  <Font name="System Bold" size="46.0" />
-               </font>
-            </Text>
-            <Text layoutX="118.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Delivered">
-               <font>
-                  <Font name="Arial" size="18.0" />
-               </font>
-            </Text>
-         </children>
-      </Pane>
-      <Pane layoutX="1158.0" layoutY="253.0" prefHeight="142.0" prefWidth="337.24">
-         <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="172.0" stroke="TRANSPARENT" strokeType="INSIDE" width="337.24" />
-            <Text layoutX="129.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4% (30 days) " />
-            <Text layoutX="118.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Canceled">
-               <font>
-                  <Font name="Arial" size="18.0" />
-               </font>
-            </Text>
-            <Text layoutX="141.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="65" wrappingWidth="55.3179931640625">
-               <font>
-                  <Font name="System Bold" size="46.0" />
-               </font>
-            </Text>
-         </children>
-      </Pane>
-      <Pane layoutX="1534.76" layoutY="253.0" prefHeight="142.0" prefWidth="337.24">
-         <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="172.0" stroke="TRANSPARENT" strokeType="INSIDE" width="337.24" />
-            <Text layoutX="115.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$128" wrappingWidth="106.07421875">
-               <font>
-                  <Font name="System Bold" size="46.0" />
-               </font>
-            </Text>
-            <Text layoutX="118.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Revenue">
-               <font>
-                  <Font name="Arial" size="18.0" />
-               </font>
-            </Text>
-            <Text layoutX="129.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4% (30 days) " />
-         </children>
-      </Pane>
+          
+         <HBox spacing="5" alignment="TOP_LEFT">
+           <children>
+             <Pane prefHeight="172.0" prefWidth="300.0">
+                <children>
+                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="172.0" stroke="TRANSPARENT" strokeType="INSIDE" width="300.0" />
+                   <Text layoutX="141.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="75" wrappingWidth="55.3179931640625">
+                      <font>
+                         <Font name="System Bold" size="46.0" />
+                      </font>
+                   </Text>
+                   <Text layoutX="118.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Orders">
+                      <font>
+                         <Font name="Arial" size="18.0" />
+                      </font>
+                   </Text>
+                   <Text layoutX="129.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4% (30 days) " />
+                </children>
+             </Pane>
+             <Pane prefHeight="172.0" prefWidth="300.0">
+                <children>
+                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="172.0" stroke="TRANSPARENT" strokeType="INSIDE" width="300.0" />
+                   <Text layoutX="129.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4% (30 days) " />
+                   <Text layoutX="136.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="357" wrappingWidth="85.718017578125">
+                      <font>
+                         <Font name="System Bold" size="46.0" />
+                      </font>
+                   </Text>
+                   <Text layoutX="118.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Delivered">
+                      <font>
+                         <Font name="Arial" size="18.0" />
+                      </font>
+                   </Text>
+                </children>
+             </Pane>
+             <Pane prefHeight="172.0" prefWidth="300.0">
+                <children>
+                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="172.0" stroke="TRANSPARENT" strokeType="INSIDE" width="300.0" />
+                   <Text layoutX="129.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4% (30 days) " />
+                   <Text layoutX="118.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Canceled">
+                      <font>
+                         <Font name="Arial" size="18.0" />
+                      </font>
+                   </Text>
+                   <Text layoutX="141.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="65" wrappingWidth="55.3179931640625">
+                      <font>
+                         <Font name="System Bold" size="46.0" />
+                      </font>
+                   </Text>
+                </children>
+             </Pane>
+             <Pane prefHeight="172.0" prefWidth="300.0">
+                <children>
+                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="172.0" stroke="TRANSPARENT" strokeType="INSIDE" width="300.0" />
+                   <Text layoutX="115.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$128" wrappingWidth="106.07421875">
+                      <font>
+                         <Font name="System Bold" size="46.0" />
+                      </font>
+                   </Text>
+                   <Text layoutX="118.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Revenue">
+                      <font>
+                         <Font name="Arial" size="18.0" />
+                      </font>
+                   </Text>
+                   <Text layoutX="129.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4% (30 days) " />
+                </children>
+             </Pane>
+           </children>
+         </HBox>
 
         </children>
     </VBox>
