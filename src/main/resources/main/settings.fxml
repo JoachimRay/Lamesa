@@ -158,7 +158,6 @@
                 <Label text="Ready to leave?" styleClass="logout-label"/>
                 
                 <Button fx:id="logoutBtn"
-                        text="Logout"
                         onAction="#onLogout"
                         styleClass="logout-button">
                     <graphic>
