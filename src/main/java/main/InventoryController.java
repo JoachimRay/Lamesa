@@ -259,7 +259,6 @@ public class InventoryController {
 
     /**
      * Filters the inventory table by product name.
-     * @param searchText The text to search for in product names
      */
     private void filterInventory(String searchText) {
 

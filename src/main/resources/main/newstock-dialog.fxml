@@ -10,29 +10,29 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="newstockRoot" prefHeight="100.0" prefWidth="800.0" spacing="10" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.NewStockDialogController">
+<VBox fx:id="newstockRoot" prefHeight="257.0" prefWidth="290.0" spacing="10" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.NewStockDialogController">
 <padding>
     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
 </padding>
    <children>
-      <GridPane>
+      <GridPane prefHeight="343.0" prefWidth="383.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Label text="Product Name" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-            <Label text="Stock Level" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-            <Label text="Stock" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-            <Label text="Status" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-            <ComboBox fx:id="productNameCombo" prefWidth="150.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+            <Label alignment="CENTER" contentDisplay="CENTER" text="Stock Level" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <Label text="Stock" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+            <Label text="Status" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+            <ComboBox fx:id="productNameCombo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <GridPane.margin>
                   <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
                </GridPane.margin></ComboBox>
@@ -40,19 +40,19 @@
                <GridPane.margin>
                   <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
                </GridPane.margin></ComboBox>
-            <ComboBox fx:id="statusCombo" prefWidth="150.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-               <GridPane.margin>
-                  <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
-               </GridPane.margin></ComboBox>
-            <TextField fx:id="stockField" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+            <TextField fx:id="stockField" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                <GridPane.margin>
                   <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
                </GridPane.margin></TextField>
-            <Button fx:id="okayButton" minWidth="72.0" mnemonicParsing="false" onAction="#handleOkay" text="Okay" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+            <ComboBox fx:id="statusCombo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+               <GridPane.margin>
+                  <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+               </GridPane.margin></ComboBox>
+            <Button fx:id="okayButton" minWidth="72.0" mnemonicParsing="false" onAction="#handleOkay" text="Okay" GridPane.halignment="LEFT" GridPane.rowIndex="4" GridPane.valignment="CENTER">
                <GridPane.margin>
                   <Insets left="22.0" top="5.0" />
                </GridPane.margin></Button>
-            <Button fx:id="cancelButton" minWidth="72.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+            <Button fx:id="cancelButton" minWidth="72.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="CENTER">
                <GridPane.margin>
                   <Insets right="22.0" top="5.0" />
                </GridPane.margin></Button>
