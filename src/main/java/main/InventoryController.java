@@ -11,6 +11,9 @@ import java.sql.SQLException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
@@ -18,12 +21,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 
-/**
- * Controller for the Inventory page.
- * Handles displaying, editing, filtering, and searching inventory items.
- */
+
+
+// Controller for the Inventory page.
+// Handles displaying, editing, filtering, and searching inventory items.
+
 public class InventoryController {
 
     // ==================== FXML FIELDS - TABLE ====================
@@ -68,21 +74,21 @@ public class InventoryController {
 
     // ==================== DATA STORAGE ====================
 
-    /** Master list containing all inventory items from database */
+    // Master list containing all inventory items from database
     private ObservableList<InventoryItem> masterObservableList;
 
-    /** Index for cycling through status filters */
+    // Index for cycling through status filters
     private int statusFilterIndex = 0;
 
-    /** Available status filter options */
+    // Available status filter options
     private String[] statusFilters = {"All", "No Action Required", "Pending", "Completed"};
 
     // ==================== INITIALIZATION ====================
 
-    /**
-     * Initializes the controller.
-     * Sets up table columns, loads data, and configures editable cells.
-     */
+    
+    // Initializes the controller.
+    // Sets up table columns, loads data, and configures editable cells.
+    
     @FXML
     public void initialize() {
         productIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -145,9 +151,9 @@ public class InventoryController {
 
     // ==================== DATA LOADING ====================
 
-    /*
-     * Loads all inventory items from the database into the table.
-     */
+
+    // Loads all inventory items from the database into the table.
+
     private void loadInventoryData() {
         masterObservableList = FXCollections.observableArrayList();
         
@@ -189,9 +195,9 @@ public class InventoryController {
 
     // ==================== DATABASE UPDATE METHODS ====================
 
-    /*
-     * Updates the instruction field in the database.
-     */
+
+    // Updates the instruction field in the database.
+   
     private void updateInstructionInDatabase(String newInstruction, int product_id) {
 
         String dburl = "jdbc:sqlite:database/lamesa.db";
@@ -209,9 +215,9 @@ public class InventoryController {
         }
     }
 
-    /*
-     * Updates the stock quantity in the database.
-     */
+ 
+    // Updates the stock quantity in the database.
+
     private void updateStockInDatabase(int newStock, int product_id) {
         
         String dburl = "jdbc:sqlite:database/lamesa.db";
@@ -229,9 +235,9 @@ public class InventoryController {
         }
     }
 
-    /**
-     * Updates the status field in the database.
-     */
+    
+    // Updates the status field in the database.
+    
     private void updateStatusInDatabase(String newStatus, int product_id) {
         
         String dburl = "jdbc:sqlite:database/lamesa.db";
@@ -251,10 +257,9 @@ public class InventoryController {
 
     // ==================== FILTER METHODS ====================
 
-    /**
-     * Filters the inventory table by product name.
-     * @param searchText The text to search for in product names
-     */
+    
+    // Filters the inventory table by product name.
+   
     private void filterInventory(String searchText) {
 
         if(searchText.isEmpty()) {
@@ -273,19 +278,35 @@ public class InventoryController {
 
     // ==================== EVENT HANDLERS ====================
 
-    /**
-     * Handles the "New Stock" button click.
-     * TODO: Opens a dialog to add a new inventory item.
-     */
+    
+     //Handles the "New Stock" button click.
+     // Opens a dialog to add a new inventory item using FXML.
+    
     @FXML
     private void handleNewStock() {
         System.out.println("New Stock button clicked");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/main/newstock-dialog.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setTitle("Add New Stock");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+
+            // Refresh the table after dialog closes
+            loadInventoryData();
+        } catch (Exception e) {
+            System.out.println("[InventoryController] ERROR loading dialog: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
-    /**
-     * Handles the status filter button click.
-     * Cycles through: All -> No Action Required -> Pending -> Completed -> All...
-     */
+     // Handles the status filter button click.
+     // Cycles through: All -> No Action Required -> Pending -> Completed -> All...
+
+
     @FXML
     private void handleStatusFilter() {
         
@@ -297,7 +318,7 @@ public class InventoryController {
         else {
         ObservableList<InventoryItem> filteredList = FXCollections.observableArrayList();
 
-        for(InventoryItem item : masterObservableList) 
+            for(InventoryItem item : masterObservableList) 
                 if (item.getStatus().toLowerCase().equals(currentFilter.toLowerCase())) {
                     filteredList.add(item);
                 }
