@@ -53,16 +53,16 @@
                         </VBox.margin>
                     </Label>
                 <!-- Username input field -->
-                <TextField fx:id="usernameField" promptText="Username" prefHeight="40" minHeight="40" maxHeight="40"/>
+                <TextField fx:id="usernameField" promptText="Username" prefHeight="40" minHeight="40" maxHeight="40" onAction="#handleLogin"/>
                 
                 <!-- Password field container with show/hide toggle button -->
                 <HBox spacing="0" styleClass="password-container">
                     <!-- StackPane keeps PasswordField and TextField in same position to prevent text shift on toggle -->
                     <StackPane HBox.hgrow="ALWAYS" prefHeight="40" minHeight="40" maxHeight="40">
                         <!-- Hidden by default - shows bullet points for password -->
-                        <PasswordField fx:id="passwordField" promptText="Enter Password" HBox.hgrow="ALWAYS" prefHeight="40" minHeight="40" maxHeight="40"/>
+                        <PasswordField fx:id="passwordField" promptText="Enter Password" HBox.hgrow="ALWAYS" prefHeight="40" minHeight="40" maxHeight="40" onAction="#handleLogin"/>
                         <!-- Visible when eye button clicked - shows password as plain text -->
-                        <TextField fx:id="passwordFieldVisible" promptText="Enter Password" visible="false" HBox.hgrow="ALWAYS" prefHeight="40" minHeight="40" maxHeight="40"/>
+                        <TextField fx:id="passwordFieldVisible" promptText="Enter Password" visible="false" HBox.hgrow="ALWAYS" prefHeight="40" minHeight="40" maxHeight="40" onAction="#handleLogin"/>
                     </StackPane>
                     <!-- Eye icon button to toggle between password and plain text visibility -->
                     <Button fx:id="passwordToggle" text="👁" onAction="#togglePasswordVisibility" styleClass="eye-button" focusTraversable="false"/>

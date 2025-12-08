@@ -7,8 +7,8 @@
     -fx-padding: 30;
     -fx-spacing: 20;
     -fx-pref-height: 400;
-    -fx-pref-width: 500;
-    -fx-max-width:500;
+    -fx-pref-width: 660;
+    -fx-max-width: 660;
 }
 
 
@@ -20,12 +20,12 @@
     -fx-background-color:  white;
     -fx-padding: 30;
     -fx-spacing: 20;
-    -fx-pref-height: 400;
+    -fx-pref-height: 500;
     -fx-pref-width: 1000;
     -fx-max-width:1500;
 }
 
-.SalesCard 
+.MonthlySalesCard 
 { 
      -fx-border-radius: 10;
     -fx-background-radius: 10;
@@ -34,9 +34,54 @@
     -fx-padding: 30;
     -fx-spacing: 20;
     -fx-pref-height: 400;
-    -fx-pref-width: 700;
-    -fx-max-width:700;
+      -fx-pref-width: 400;
+    -fx-max-width:400;
+    
 }
+
+
+.MonthlySalesTitle{ 
+      -fx-font-size: 15;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+}
+
+.TotalMonthlySalesLabel{
+    -fx-font-size: 30;
+    -fx-font-weight: bold;
+    -fx-text-alignment: center;
+    -fx-text-fill : #114F3A;
+}
+
+.YearlySalesCard 
+{ 
+     -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-border: thin solid black;
+    -fx-background-color:  white;
+    -fx-padding: 30;
+    -fx-spacing: 20;
+    -fx-pref-height: 400;
+    -fx-pref-width: 400;
+    -fx-max-width:400;
+}
+
+
+.YearlySalesTitle { 
+   -fx-font-size: 15;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+
+}
+
+.TotalYearlySalesLabel { 
+   -fx-font-size: 30;
+    -fx-font-weight: bold;
+    -fx-text-alignment: center;
+    -fx-text-fill : #114F3A;
+}
+
+
 
 .scroll-pane {
     -fx-padding: 0;

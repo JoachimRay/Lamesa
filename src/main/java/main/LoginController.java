@@ -4,6 +4,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -77,6 +79,15 @@ public class LoginController {
             passwordField.setVisible(false);
             passwordFieldVisible.setText(passwordField.getText());
             isPasswordVisible = true;
+        }
+    }
+
+
+    @FXML 
+
+    private void handleLoginKeyPress(KeyEvent event) { 
+        if (event.getCode() == KeyCode.ENTER) { 
+            handleLogin();
         }
     }
 

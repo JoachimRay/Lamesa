@@ -3,7 +3,11 @@ package main;
 import javafx.fxml.FXML;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.LineChart; 
-import javafx.scene.chart.XYChart; 
+import javafx.scene.chart.XYChart;
+import javafx.scene.control.Label; 
+import java.time.LocalDate;
+import java.time.YearMonth; 
+import java.time.format.DateTimeFormatter; 
 
 
 import java.sql.Connection;
@@ -26,15 +30,72 @@ public class AnalyticsController {
     @FXML 
     private PieChart pieChart;
 
+    @FXML
+    private Label TotalMonthlySalesLabel;
+
+    @FXML 
+    private Label TotalYearlySalesLabel; 
+
+
+    @FXML 
+    private Label MonthlySalesTitle; 
+
+
+    @FXML 
+    private Label YearlySalesTitle;
+
        String DB_URL = "jdbc:sqlite:database/lamesa.db";
 
 
 
+
+        private String loadTotalMonthlySales() throws SQLException { 
+
+            
        String CurrentmonthSales = "SELECT SUM(total_price) AS total_Sales_Current_Month" + 
                              " FROM sales " + "WHERE strftime('%Y-%m', sale_date) = strftime('%Y-%m', 'now');";
 
-        String CurrentYearSales = "SELECT SUM(total_price) AS total_Sales_Current_Year" + 
+        try(Connection conn = DriverManager.getConnection(DB_URL); 
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(CurrentmonthSales)) {
+
+                while(rs.next()) { 
+                    double totalmonthlysales =  rs.getDouble("total_Sales_Current_Month");
+                    return String.format("%.0f", totalmonthlysales);
+                }
+
+                                
+            } catch(SQLException e){
+                System.err.println("Error loading total monthly sales: " + e.getMessage()); 
+            }
+            return "0.00";
+        }
+
+
+        private String loadTotalYearlySales() throws SQLException { 
+
+
+               String CurrentYearSales = "SELECT SUM(total_price) AS total_Sales_Current_Year" + 
                              " FROM sales " + "WHERE strftime('%Y', sale_date) = strftime('%Y', 'now');";
+
+            try(Connection conn = DriverManager.getConnection(DB_URL); 
+                Statement stmt = conn.createStatement(); 
+                ResultSet rs = stmt.executeQuery(CurrentYearSales)) { 
+
+                    while(rs.next()) { 
+                        double totalyearlysales = rs.getDouble("total_Sales_Current_Year"); 
+                        return String.format("%.0f", totalyearlysales);
+                    }
+
+                }catch(SQLException e) { 
+                    System.err.println("Error loading total yearly sales: " + e.getMessage()); 
+                }
+
+                return "0.00";
+
+        }
+
+
 
 
 
@@ -66,6 +127,8 @@ public class AnalyticsController {
             }
 
         }
+
+
 
         private void loadMonthlySalesData() throws SQLException { 
             String monthlySalesQuery = "SELECT strftime('%Y-%m', sale_date) AS month, SUM(total_price) AS total_sales " +
@@ -99,6 +162,22 @@ public class AnalyticsController {
 
 
 
+        private String displayCurrentMonth() 
+        {
+            LocalDate today = LocalDate.now(); 
+            String currentMonth = today.format(DateTimeFormatter.ofPattern("MMMM")); 
+            return currentMonth; 
+        }
+
+        private String displayCurrentYear()
+        { 
+            LocalDate today = LocalDate.now(); 
+            String currentYear = today.format(DateTimeFormatter.ofPattern("yyyy")); 
+            return currentYear;
+        }
+
+
+
        
 
     @FXML
@@ -115,6 +194,29 @@ public class AnalyticsController {
             System.err.println("Error initializing top meals data: " + e.getMessage());
             e.printStackTrace();
         }
+
+        try {
+            TotalMonthlySalesLabel.setText(loadTotalMonthlySales() + " ₱");
+        } catch (SQLException e) { 
+            System.err.println("Error settint total monthly sales label" + e.getMessage()); 
+        }
+
+
+        try{ 
+            TotalYearlySalesLabel.setText(loadTotalYearlySales() + " ₱");
+        } catch (SQLException e) { 
+            System.err.println("Error setting total yearly sales label: " + e.getMessage());
+        }
+
+        try { 
+            MonthlySalesTitle.setText(displayCurrentMonth()); 
+            YearlySalesTitle.setText(displayCurrentYear());
+        } catch(Exception e) { 
+            System.err.println("Error in setting sales titles: " + e.getMessage());
+        }
+
+
+
 
     }
 
