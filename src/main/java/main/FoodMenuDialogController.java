@@ -50,7 +50,6 @@ public class FoodMenuDialogController
     private Button cancelButton;
 
     private File selectedImageFile;
-    private String savedImageName;
 
     @FXML
     public void initialize()
@@ -130,7 +129,7 @@ public class FoodMenuDialogController
         FileChooser fc = new FileChooser();
         fc.setTitle("Upload an Image");
         fc.getExtensionFilters().addAll
-        (new ExtensionFilter("Image Files", "*.png", "*.jpg","*.jpeg"));
+        (new ExtensionFilter("Image Files", "*.png", "*.jpg","*.jpeg"));    // Possible types of files that can be uploaded
 
         // Shows the uploaded Image directly if user uploaded
         File file = fc.showOpenDialog(imageUpload.getScene().getWindow());
@@ -177,15 +176,15 @@ public class FoodMenuDialogController
             System.out.println("[FoodMenuDialogController] Connected successfully!");
             String sql = "SELECT category_id FROM meal_category WHERE category_name = ?";
             try(PreparedStatement ps = conn.prepareStatement(sql))
-                {
-                  ps.setString(1, categoryName);
+            {
+                ps.setString(1, categoryName);
 
-                  try(ResultSet rs = ps.executeQuery())
-                  {
+                try(ResultSet rs = ps.executeQuery())
+                {
                     if(rs.next())
                         return rs.getInt("category_id");
-                  }
                 }
+            }
         }
         catch (SQLException e) 
         {
@@ -193,5 +192,81 @@ public class FoodMenuDialogController
             e.printStackTrace();
         }
         return -1; //Return a -1 if not found
+    }
+
+    private int getTypeId(String typeName)
+    {
+        String dbUrl = "jdbc:sqlite:database/lamesa.db";
+        System.out.println("[FoodMenuDialogController] Connecting to: " + dbUrl);
+        try(Connection conn = DriverManager.getConnection(dbUrl))
+        {
+            System.out.println("[FoodMenuDialogController] Connected successfully!");
+            String sql = "SELECT type_id FROM meal_types WHERE type_name = ?";
+            try(PreparedStatement ps = conn.prepareStatement(sql))
+            {
+                ps.setString(1, typeName);
+            
+
+                try(ResultSet rs = ps.executeQuery())
+                {
+                    if(rs.next())
+                        return rs.getInt("type_id");
+                }
+            }
+        }
+        catch (SQLException e)
+        {
+            System.out.println("[FoodMenuDialogController] ERROR: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return -1;
+    }
+    
+    @FXML
+    private void handleOkay()
+    {
+        String name = mealLabel.getText();
+        String category = categoryBox.getValue();
+        String type = typeBox.getValue();
+        String priceText = priceField.getText();
+        String description = descriptionText.getText();
+
+        double price = Double.parseDouble(priceText);
+
+        int category_id = getCategoryId(category);
+        int type_id = getTypeId(type);
+        String imagePath = saveImageToAssets();
+
+        String dbUrl = "jdbc:sqlite:database/lamesa.db";
+        System.out.println("[FoodMenuDialogController] Connecting to: " + dbUrl);
+        try(Connection conn = DriverManager.getConnection(dbUrl))
+        {
+            System.out.println("[FoodMenuDialogController] Connected successfully!");
+            String sql = "INSERT INTO meal (name, price, category_id, type_id, description, image_path) " +
+                         "VALUES (?, ?, ?, ?, ?, ?)";
+            try(PreparedStatement ps = conn.prepareStatement(sql))
+            {
+                ps.setString(1, name);
+                ps.setDouble(2, price);
+                ps.setInt(3, category_id);
+                ps.setInt(4, type_id);
+                ps.setString(5, description);
+                ps.setString(6, imagePath);
+                
+                ps.executeUpdate();
+                okayButton.getScene().getWindow().hide();
+            }
+        }
+        catch (SQLException e)
+        {
+            System.out.println("[FoodMenuDialogController] ERROR: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void handleCancel()
+    {
+        cancelButton.getScene().getWindow().hide();
     }
 }
