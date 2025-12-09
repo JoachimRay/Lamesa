@@ -1,22 +1,19 @@
 package main;
 
-import javafx.fxml.FXML;
-import javafx.scene.chart.PieChart;
-import javafx.scene.chart.LineChart; 
-import javafx.scene.chart.XYChart;
-import javafx.scene.control.Label; 
-import java.time.LocalDate;
-import java.time.YearMonth; 
-import java.time.format.DateTimeFormatter; 
-
-
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Queue;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+import javafx.fxml.FXML;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
+import javafx.scene.control.Label;
 
 
 
@@ -46,6 +43,9 @@ public class AnalyticsController {
 
     @FXML
     private javafx.scene.layout.HBox customLegend;
+
+    @FXML
+    private BarChart<String, Number> barChart;
 
        String DB_URL = "jdbc:sqlite:database/lamesa.db";
 
@@ -186,6 +186,33 @@ public class AnalyticsController {
 
 
 
+        private void SalesByProduct() throws SQLException
+        { 
+            String lowestToHighest = "SELECT name, SUM(quantity) AS total_sold " + 
+                                "FROM sales " +
+                                "JOIN meal USING(meal_id) " + 
+                                "GROUP BY meal_id, name " + 
+                                "ORDER BY total_sold ASC;"; 
+
+            try(Connection conn = DriverManager.getConnection(DB_URL); 
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(lowestToHighest)) { 
+
+                    XYChart.Series<String, Number> series = new XYChart.Series<>(); 
+                    series.setName("Quantity Sold"); 
+
+                    while(rs.next()) { 
+                        series.getData().add(new XYChart.Data<>(rs.getString("name"), rs.getInt("total_sold"))); 
+                    }
+                    
+                    barChart.getData().add(series);
+                } catch (SQLException e){
+                    System.err.println("Error loading total sales per product: " + e.getMessage()); 
+                    e.printStackTrace();
+                }
+        }
+
+
        
 
     @FXML
@@ -256,6 +283,12 @@ public class AnalyticsController {
             YearlySalesTitle.setText(displayCurrentYear());
         } catch(Exception e) { 
             System.err.println("Error in setting sales titles: " + e.getMessage());
+        }
+
+        try{
+            SalesByProduct();
+        } catch(Exception e) {
+            System.err.println("Error loading Sales by product" + e.getMessage());
         }
     }
 

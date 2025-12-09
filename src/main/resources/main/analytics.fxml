@@ -12,11 +12,14 @@
 <?import javafx.scene.chart.CategoryAxis?> 
 <?import javafx.scene.chart.LineChart?> 
 <?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.BarChart?> 
+<?import javafx.scene.chart.NumberAxis?> 
+
 
 
 <ScrollPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="main.AnalyticsController" stylesheets="@../styles/analytics.css" fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="NEVER" pannable="false">
-  <VBox spacing="20" style="-fx-padding: 20;">
+      fx:controller="main.AnalyticsController" stylesheets="@../styles/analytics.css" fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED">
+  <VBox spacing="20" style="-fx-padding: 20; -fx-pref-height: USE_COMPUTED_SIZE; -fx-min-height: USE_PREF_SIZE;">
 
     <HBox spacing="20">
       <VBox spacing="20">
@@ -51,6 +54,21 @@
             <NumberAxis label="Sales"/>
           </yAxis>
         </LineChart>
+    </VBox>
+
+    <VBox styleClass = "BarCard"> 
+
+    <BarChart fx:id="barChart" title = "Sales by Product" categoryGap = "10" barGap = "0.2">
+        <xAxis> 
+          <CategoryAxis label = "Products"/>
+        </xAxis>
+        <yAxis> 
+          <NumberAxis label = "Sales"/>
+        </yAxis>
+    </BarChart>
+
+
+
     </VBox>
 
   </VBox>
