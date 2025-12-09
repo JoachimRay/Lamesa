@@ -44,6 +44,9 @@ public class AnalyticsController {
     @FXML 
     private Label YearlySalesTitle;
 
+    @FXML
+    private javafx.scene.layout.HBox customLegend;
+
        String DB_URL = "jdbc:sqlite:database/lamesa.db";
 
 
@@ -148,7 +151,12 @@ public class AnalyticsController {
                 while(rs.next()) { 
                     String month = rs.getString("month"); 
                     double totalsales = rs.getDouble("total_sales");
-                    series.getData().add(new XYChart.Data<>(month, totalsales));
+                    
+                    // Convert "2024-12" to "December"
+                    java.time.YearMonth ym = java.time.YearMonth.parse(month);
+                    String monthName = ym.format(java.time.format.DateTimeFormatter.ofPattern("MMMM"));
+                    
+                    series.getData().add(new XYChart.Data<>(monthName, totalsales));
                 }
                 
 
@@ -184,16 +192,51 @@ public class AnalyticsController {
     public void initialize() {
         try {
             loadMonthlySalesData();
+            // Color the line chart line
+            if (lineChart.getData().size() > 0) {
+                XYChart.Series<String, Number> series = lineChart.getData().get(0);
+                // Style the series line and legend
+                series.getNode().setStyle("-fx-stroke: #3ab68dff; -fx-stroke-width: 3;");
+                // Color the data points
+                for (XYChart.Data<String, Number> data : series.getData()) {
+                    if (data.getNode() != null) {
+                        data.getNode().setStyle("-fx-background-color: #3ab68dff;");
+                    }
+                }
+            }
         } catch (SQLException e) {
             System.err.println("Error initializing monthly sales data: " + e.getMessage());
             e.printStackTrace();
         }
-        try {
-            loadTopMealsData();
-        } catch (SQLException e) {
-            System.err.println("Error initializing top meals data: " + e.getMessage());
-            e.printStackTrace();
-        }
+     try {
+    loadTopMealsData();
+
+    final String[] colors = {"#114F3A", "#1A6B4F", "#228866", "#2BA47C", "#34C191"};
+    int index = 0;
+
+    // Clear custom legend
+    customLegend.getChildren().clear();
+
+    for (PieChart.Data data : pieChart.getData()) {
+        String color = colors[index % colors.length];
+        data.getNode().setStyle("-fx-pie-color: " + color + ";");
+        
+        // Add to custom legend
+        javafx.scene.shape.Circle circle = new javafx.scene.shape.Circle(4);
+        circle.setFill(javafx.scene.paint.Color.web(color));
+        javafx.scene.control.Label label = new javafx.scene.control.Label(data.getName());
+        label.setStyle("-fx-font-size: 11;");
+        javafx.scene.layout.HBox legendItem = new javafx.scene.layout.HBox(4);
+        legendItem.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+        legendItem.getChildren().addAll(circle, label);
+        customLegend.getChildren().add(legendItem);
+        
+        index++;
+    }
+
+} catch (SQLException e) {
+    e.printStackTrace();
+}
 
         try {
             TotalMonthlySalesLabel.setText(loadTotalMonthlySales() + " ₱");
@@ -214,10 +257,6 @@ public class AnalyticsController {
         } catch(Exception e) { 
             System.err.println("Error in setting sales titles: " + e.getMessage());
         }
-
-
-
-
     }
 
 }

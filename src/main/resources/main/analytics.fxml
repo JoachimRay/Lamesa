@@ -19,23 +19,25 @@
   <VBox spacing="20" style="-fx-padding: 20;">
 
     <HBox spacing="20">
-      <VBox styleClass="MonthlySalesCard" alignment="CENTER" spacing="0">
-        <HBox alignment="CENTER">
-          <Label text = "Total Monthly Sales: " fx:id = "TotalMonthlySalesLabel" styleClass = "TotalMonthlySalesLabel"/> 
-        </HBox>
-        <Label text="Monthly Sales" styleClass="MonthlySalesTitle" fx:id="MonthlySalesTitle" alignment="CENTER"/>
-      </VBox>
+      <VBox spacing="20">
+        <VBox styleClass="MonthlySalesCard" alignment="CENTER" spacing="0">
+          <HBox alignment="CENTER">
+            <Label text = "Total Monthly Sales: " fx:id = "TotalMonthlySalesLabel" styleClass = "TotalMonthlySalesLabel"/> 
+          </HBox>
+          <Label text="Monthly Sales" styleClass="MonthlySalesTitle" fx:id="MonthlySalesTitle" alignment="CENTER"/>
+        </VBox>
 
-      <VBox styleClass = "YearlySalesCard" alignment="CENTER" spacing="0"> 
-      <HBox alignment="CENTER">
-        <Label text = "Total Yearly Sales: " fx:id = "TotalYearlySalesLabel" styleClass = "TotalYearlySalesLabel"/>
-      </HBox>
-      <Label text = "Current Year Sales" styleClass = "YearlySalesTitle" fx:id = "YearlySalesTitle" alignment="CENTER"/>
+        <VBox styleClass = "YearlySalesCard" alignment="CENTER" spacing="0"> 
+          <HBox alignment="CENTER">
+            <Label text = "Total Yearly Sales: " fx:id = "TotalYearlySalesLabel" styleClass = "TotalYearlySalesLabel"/>
+          </HBox>
+          <Label text = "Current Year Sales" styleClass = "YearlySalesTitle" fx:id = "YearlySalesTitle" alignment="CENTER"/>
+        </VBox>
       </VBox>
-
 
       <VBox styleClass="PieCard">
-        <PieChart fx:id="pieChart" title="Top Products" prefWidth="500" prefHeight="300" styleClass="PieChart"/>
+        <PieChart fx:id="pieChart" title="Top Products" styleClass="PieChart" legendVisible="false"/>
+        <HBox fx:id="customLegend" spacing="15" style="-fx-padding: 10; -fx-alignment: center;"/>
       </VBox>
     </HBox>
 
