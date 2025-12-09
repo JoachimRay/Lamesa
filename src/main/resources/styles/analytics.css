@@ -6,9 +6,10 @@
     -fx-background-color:  white;
     -fx-padding: 30;
     -fx-spacing: 20;
-    -fx-pref-height: 400;
-    -fx-pref-width: 750;
-    -fx-max-width: Infinity;
+    -fx-pref-height: 500;
+    -fx-pref-width: 1130;
+    -fx-max-width:1130;
+
 }
 
 
@@ -21,8 +22,8 @@
     -fx-padding: 30;
     -fx-spacing: 20;
     -fx-pref-height: 450;
-    -fx-pref-width: 1170;
-    -fx-max-width:1170;
+         -fx-pref-width: 1550;
+    -fx-max-width:1550;
 }
 
 
@@ -34,11 +35,10 @@
     -fx-background-color:  white;
     -fx-padding: 30;
     -fx-spacing: 20;
-    -fx-min-height: 520;
-    -fx-pref-height: 520;
-      -fx-pref-width: 1170;
-    -fx-max-width:1170;
-  
+    -fx-min-height: 450;
+    -fx-pref-height: 450;
+       -fx-pref-width: 1550;
+    -fx-max-width:1550;
 }
 
 .MonthlySalesCard 
@@ -97,6 +97,81 @@
     -fx-text-fill : #114F3A;
 }
 
+/* Date Filter Card Styling */
+.DateFilterCard {
+      -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-border: thin solid black;
+    -fx-background-color:  white;
+    -fx-padding: 12 15;
+    -fx-spacing: 8;
+     -fx-pref-width: 400;
+    -fx-max-width:400;
+}
+
+.DateFilterTitle {
+    -fx-font-size: 13;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1a1a1a;
+}
+
+.DateRangeLabel {
+    -fx-font-size: 12;
+    -fx-text-fill: #888;
+}
+
+.DatePickerInput {
+    -fx-padding: 6 8;
+    -fx-border: 1 solid #d8d8d8;
+    -fx-border-radius: 5;
+    -fx-background-color: #fafafa;
+    -fx-font-size: 11;
+    -fx-text-fill: #333;
+}
+
+.DatePickerInput:focused {
+    -fx-border: 1.5 solid #114F3A;
+    -fx-background-color: white;
+    -fx-border-radius: 6;
+}
+
+.ApplyFilterButton {
+    -fx-padding: 6 14;
+    -fx-background-color: #114F3A;
+    -fx-text-fill: white;
+    -fx-font-size: 10;
+    -fx-font-weight: bold;
+    -fx-border-radius: 5;
+    -fx-cursor: hand;
+    -fx-background-radius: 5;
+    -fx-min-width: 60;
+}
+
+.ApplyFilterButton:hover {
+    -fx-background-color: #0d3d2e;
+}
+
+.ApplyFilterButton:pressed {
+    -fx-background-color: #0a2f23;
+}
+
+/* Date Picker Spinner Button Styling */
+.date-picker-popup > .calendar-button,
+.date-picker > .arrow-button {
+    -fx-background-color: #f9f9f9;
+    -fx-text-fill: #114F3A;
+}
+
+.date-picker-popup > .calendar-button:hover,
+.date-picker > .arrow-button:hover {
+    -fx-background-color: #e8e8e8;
+}
+
+/* Date Picker popup styling */
+.date-picker-popup {
+    -fx-border: 1 solid #d8d8d8;
+    -fx-background-color: white;
+}
 
 
 .scroll-pane {
