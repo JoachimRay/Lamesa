@@ -4,10 +4,9 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
-import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
-import java.util.List;
+
 
 public class MenuController {
 
@@ -15,14 +14,10 @@ public class MenuController {
 
     // Reference to all sidebar buttons
     // (Used for showing/hiding certain buttons depending on user role)
-    @FXML private Button dashboardBtn;
-    @FXML private Button inventoryBtn;
-    @FXML private Button ordersBtn;
+ 
     @FXML private Button reportsBtn;
-    @FXML private Button feedbackBtn;
     @FXML private Button employeesBtn;
-    @FXML private Button settingsBtn;
-
+   
     /**
      * This method runs automatically when the Menu FXML is loaded.
      * We use it to:
