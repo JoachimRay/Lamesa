@@ -1,16 +1,16 @@
 package main;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.net.URL;
+
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
-
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.io.IOException;
-import java.net.URL;
 
 /**
  * Entry point for the JavaFX application.
