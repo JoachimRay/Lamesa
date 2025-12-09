@@ -1,26 +1,177 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Label?>
 
-<!-- Root container for the Settings page -->
-<VBox alignment="CENTER" spacing="12" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../styles/settings.css">
-    <children>
-        <!-- Page title -->
-        <Label text="Settings" style="-fx-font-size:24; -fx-font-weight:bold;"/>
-        <!-- Placeholder text for settings content -->
-        <Label text="Settings placeholder." wrapText="true"/>
+<!-- Import JavaFX components -->
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
 
+<!--
+    SETTINGS PAGE - MODERN CARD-BASED DESIGN
+    
+    Features:
+    - User profile card showing username, role, and member since date
+    - Account management section with Change Password and View History
+    - About section with app information
+    - Modern logout button
+    - Professional card-based layout
+-->
+<ScrollPane xmlns="http://javafx.com/javafx/8.0.171"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="main.SettingsController"
+            stylesheets="@../styles/settings.css"
+            fitToWidth="true"
+            styleClass="settings-scroll">
 
-          <!-- Logout button -->
-        <!-- Always visible for both employees and managers -->
-        <Button fx:id="logoutBtn" onAction="#onLogout" styleClass="menu-button logout">
-            <graphic>
-                <HBox spacing="12" alignment="CENTER_LEFT">
-                    <Label text="↩️" styleClass="icon"/>
-                    <Label text="Logout" />
-                </HBox>
-            </graphic>
-        </Button>
+    <content>
+        <VBox styleClass="settings-container" spacing="24">
+            <padding>
+                <Insets top="40" right="40" bottom="40" left="40"/>
+            </padding>
 
-    </children>
-</VBox>
+            <!-- Page Header -->
+            <VBox spacing="8" styleClass="header-section">
+                <Label text="Settings" styleClass="page-title"/>
+                <Label text="Manage your account and preferences" styleClass="page-subtitle"/>
+            </VBox>
+
+            <!-- Divider -->
+            <Separator styleClass="section-divider"/>
+
+            <!-- USER PROFILE CARD -->
+            <VBox styleClass="settings-card profile-card" spacing="20">
+                <padding>
+                    <Insets top="24" right="24" bottom="24" left="24"/>
+                </padding>
+
+                <!-- Card Title -->
+                <Label text="👤 Profile Information" styleClass="card-title"/>
+
+                <!-- Profile Details Grid -->
+                <GridPane hgap="20" vgap="16" styleClass="profile-grid">
+                    
+                    <!-- Username Row -->
+                    <Label text="Username" styleClass="profile-label" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                    <Label fx:id="usernameLabel" text="Loading..." styleClass="profile-value" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+                    <!-- Role Row -->
+                    <Label text="Role" styleClass="profile-label" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                    <HBox spacing="8" alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <Label fx:id="roleLabel" text="Loading..." styleClass="profile-value role-badge"/>
+                    </HBox>
+
+                    <!-- Member Since Row -->
+                    <Label text="Member Since" styleClass="profile-label" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                    <Label fx:id="memberSinceLabel" text="Loading..." styleClass="profile-value" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+                    <!-- Current Session Row -->
+                    <Label text="Current Session" styleClass="profile-label" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                    <Label fx:id="sessionTimeLabel" text="Not logged in" styleClass="profile-value session-time" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                </GridPane>
+            </VBox>
+
+            <!-- ACCOUNT MANAGEMENT CARD -->
+            <VBox styleClass="settings-card" spacing="16">
+                <padding>
+                    <Insets top="24" right="24" bottom="24" left="24"/>
+                </padding>
+
+                <!-- Card Title -->
+                <Label text="🔒 Account Management" styleClass="card-title"/>
+
+                <!-- Action Buttons -->
+                <VBox spacing="12">
+                    
+                    <!-- Change Password Button -->
+                    <Button fx:id="changePasswordBtn" 
+                            text="Change Password" 
+                            onAction="#onChangePassword"
+                            styleClass="action-button"
+                            maxWidth="Infinity">
+                        <graphic>
+                            <HBox spacing="10" alignment="CENTER_LEFT">
+                                <Label text="🔑" style="-fx-font-size: 16px;"/>
+                                <VBox>
+                                    <Label text="Change Password" styleClass="button-title"/>
+                                    <Label text="Update your account password" styleClass="button-subtitle"/>
+                                </VBox>
+                            </HBox>
+                        </graphic>
+                    </Button>
+
+                    <!-- View Attendance History Button -->
+                    <Button fx:id="viewHistoryBtn" 
+                            text="View Attendance History" 
+                            onAction="#onViewHistory"
+                            styleClass="action-button"
+                            maxWidth="Infinity">
+                        <graphic>
+                            <HBox spacing="10" alignment="CENTER_LEFT">
+                                <Label text="📊" style="-fx-font-size: 16px;"/>
+                                <VBox>
+                                    <Label text="Attendance History" styleClass="button-title"/>
+                                    <Label text="View your login and logout records" styleClass="button-subtitle"/>
+                                </VBox>
+                            </HBox>
+                        </graphic>
+                    </Button>
+                </VBox>
+            </VBox>
+
+            <!-- ABOUT CARD -->
+            <VBox styleClass="settings-card" spacing="16">
+                <padding>
+                    <Insets top="24" right="24" bottom="24" left="24"/>
+                </padding>
+
+                <!-- Card Title -->
+                <Label text="ℹ️ About" styleClass="card-title"/>
+
+                <!-- About Details -->
+                <VBox spacing="12">
+                    <HBox spacing="10">
+                        <Label text="App Name:" styleClass="about-label" minWidth="120"/>
+                        <Label text="Lamesa" styleClass="about-value"/>
+                    </HBox>
+                    <HBox spacing="10">
+                        <Label text="Version:" styleClass="about-label" minWidth="120"/>
+                        <Label text="1.0.0" styleClass="about-value"/>
+                    </HBox>
+                    <HBox spacing="10">
+                        <Label text="Description:" styleClass="about-label" minWidth="120"/>
+                        <Label text="Employee Management System with Attendance Tracking" 
+                               styleClass="about-value" 
+                               wrapText="true" 
+                               maxWidth="400"/>
+                    </HBox>
+                    <HBox spacing="10">
+                        <Label text="Built by:" styleClass="about-label" minWidth="120"/>
+                        <Label text="Your Team Name" styleClass="about-value"/>
+                    </HBox>
+                </VBox>
+            </VBox>
+
+            <!-- Divider -->
+            <Separator styleClass="section-divider"/>
+
+            <!-- LOGOUT SECTION -->
+            <VBox styleClass="logout-section" spacing="12" alignment="CENTER">
+                <Label text="Ready to leave?" styleClass="logout-label"/>
+                
+                <Button fx:id="logoutBtn"
+                        onAction="#onLogout"
+                        styleClass="logout-button">
+                    <graphic>
+                        <HBox spacing="10" alignment="CENTER">
+                            <Label text="🚪" style="-fx-font-size: 18px;"/>
+                            <Label text="Logout" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+                        </HBox>
+                    </graphic>
+                </Button>
+            </VBox>
+
+            <!-- Spacer at bottom -->
+            <Region minHeight="20"/>
+
+        </VBox>
+    </content>
+</ScrollPane>

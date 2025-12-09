@@ -1,57 +1,70 @@
 package main;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.nio.charset.StandardCharsets;
 import java.sql.*;
 
-
-
+/**
+ * ChoiceController
+ * 
+ * Handles role selection after user registration.
+ * Updates the most recently created user's role to either 'manager' or 'employee',
+ * then navigates back to the login screen.
+ * 
+ * FIXED ISSUES:
+ * - Changed database path from "Database/lamesa.db" to "database/lamesa.db" (lowercase)
+ */
 public class ChoiceController {
 
-    private String manager = "UPDATE users SET role = 'manager' WHERE id = (SELECT MAX(id) FROM users )";
-    private String employee = "UPDATE users SET role = 'employee' WHERE id = (SELECT MAX(id) FROM users )"; 
-    private String sqldb = "jdbc:sqlite:Database/lamesa.db";
+    // SQL queries to update the most recent user's role
+    private String manager = "UPDATE users SET role = 'manager' WHERE id = (SELECT MAX(id) FROM users)";
+    private String employee = "UPDATE users SET role = 'employee' WHERE id = (SELECT MAX(id) FROM users)"; 
+    
+    // FIXED: Changed to lowercase "database/lamesa.db" for consistency
+    private String sqldb = "jdbc:sqlite:database/lamesa.db";
 
+    /**
+     * Handles Manager button click.
+     * Sets the most recent user's role to 'manager' and navigates to login.
+     */
     @FXML
     private void handleManager(){
-
         try { 
             Class.forName("org.sqlite.JDBC");
             try(Connection conn = DriverManager.getConnection(sqldb); 
-        PreparedStatement ps = conn.prepareStatement(manager)) { 
+                PreparedStatement ps = conn.prepareStatement(manager)) { 
                 ps.executeUpdate();
-                System.out.println("Manager role assigned");
+                System.out.println("[ChoiceController] Manager role assigned");
                 App.setRoot("login"); 
+            }
+        } catch (SQLException e) { 
+            System.err.println("[ChoiceController] SQL Error: " + e.getMessage());
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) { 
+            System.err.println("[ChoiceController] Class Not Found: " + e.getMessage());
+            e.printStackTrace();
         }
-    } catch (SQLException e) { 
-        System.err.println("[ChoiceController] SQL Error: " + e.getMessage());
-    } catch (ClassNotFoundException e) { 
-        System.err.println("[ChoiceController] Class Not Found: " + e.getMessage());   
     }
-}
 
+    /**
+     * Handles Employee button click.
+     * Sets the most recent user's role to 'employee' and navigates to login.
+     */
     @FXML
     private void handleEmployee(){ 
         try{ 
             Class.forName("org.sqlite.JDBC");
             try(Connection conn = DriverManager.getConnection(sqldb);
-        PreparedStatement ps = conn.prepareStatement(employee)) { 
+                PreparedStatement ps = conn.prepareStatement(employee)) { 
                 ps.executeUpdate();
-                System.out.println("Employee role assigned"); 
+                System.out.println("[ChoiceController] Employee role assigned"); 
                 App.setRoot("login"); 
-        }
-        }catch (SQLException e) { 
+            }
+        } catch (SQLException e) { 
             System.err.println("[ChoiceController] SQL Error: " + e.getMessage());
+            e.printStackTrace();
         } catch (ClassNotFoundException e) { 
-            System.err.println("[ChoiceController] Class Not Found: " + e.getMessage());   
+            System.err.println("[ChoiceController] Class Not Found: " + e.getMessage());
+            e.printStackTrace();
         }
     }
-
 }

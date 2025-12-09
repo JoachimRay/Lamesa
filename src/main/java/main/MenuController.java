@@ -61,11 +61,10 @@ public class MenuController {
         String role = SessionManager.getRole();
         System.out.println("[MenuController] Applying RBAC for role: " + role);
 
-        // Only managers should see Reports, Employees, and Settings
+        // Only managers should see Reports, Employees,
         if (!SessionManager.isManager()) {
             hideButton(reportsBtn);
             hideButton(employeesBtn);
-
         }
     }
 
@@ -87,11 +86,17 @@ public class MenuController {
     // ---------------------------------------------------------
     @FXML private void onDashboard() { loadOrShow("dashboard"); }
     @FXML private void onInventory() { loadOrShow("inventory"); }
-    @FXML private void onOrders() { loadOrShow("orders"); }
+    @FXML private void onAnalytics() {
+        System.out.println("[MenuController] Analytics button clicked");
+        loadOrShow("analytics");
+    }
     @FXML private void onReports() { loadOrShow("reports"); }
     @FXML private void onFeedback() { loadOrShow("feedback"); }
     @FXML private void onEmployees() { loadOrShow("employees"); }
-    @FXML private void onSettings() { loadOrShow("settings"); }
+    @FXML private void onSettings() {
+        System.out.println("[MenuController] Settings button clicked");
+        loadOrShow("settings");
+    }
 
     /**
      * A smart page loader:
