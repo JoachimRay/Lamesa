@@ -86,10 +86,12 @@
 .scroll-pane {
     -fx-padding: 0;
     -fx-font-size: 14;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
 }
 
-.scroll-pane .viewport {
-    -fx-padding: 0;
+.scroll-pane:focused {
+    -fx-border-color: transparent;
 }
 
 .chart-legend {

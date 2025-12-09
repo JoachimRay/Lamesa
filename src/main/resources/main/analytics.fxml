@@ -15,7 +15,7 @@
 
 
 <ScrollPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="main.AnalyticsController" stylesheets="@../styles/analytics.css" fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="NEVER" pannable="true">
+      fx:controller="main.AnalyticsController" stylesheets="@../styles/analytics.css" fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="NEVER" pannable="false">
   <VBox spacing="20" style="-fx-padding: 20;">
 
     <HBox spacing="20">
