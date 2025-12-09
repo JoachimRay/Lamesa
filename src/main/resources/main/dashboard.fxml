@@ -2,31 +2,142 @@
 
 <!-- Importing JavaFX UI components used in this layout -->
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.text.Text?>
 
 <!-- 
     This is the main layout for the Dashboard page.
     It currently shows placeholder text.
     You can replace the labels with real dashboard widgets later.
 -->
-<VBox
-        alignment="CENTER"
-        spacing="12"
-        xmlns="http://javafx.com/javafx/8.0.171"
-        xmlns:fx="http://javafx.com/fxml/1"
-        stylesheets="@../styles/dashboard.css">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: F3F2F7;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+  <children>
+    <VBox
+            alignment="CENTER"
+            spacing="12"
+            stylesheets="@../styles/dashboard.css">
 
-    <children>
+        <children>
+          <Pane layoutX="402.0" layoutY="139.0" prefHeight="76.0" prefWidth="1468.0">
+             <children>
+                <Label prefHeight="38.0" prefWidth="152.0" text="Dashboard">
+                   <font>
+                      <Font size="31.0" />
+                   </font>
+                </Label>
+                <Label layoutY="46.0" prefHeight="22.0" prefWidth="384.0" text="Hi, Joachim. Welcome Back to Lamesa Admin">
+                   <font>
+                      <Font size="19.0" />
+                   </font>
+                </Label>
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fcfcfc" height="76.0" layoutX="900.0" stroke="WHITE" strokeType="INSIDE" width="293.0" />
+                <DatePicker layoutX="900.0" opacity="0.0" prefHeight="76.0" prefWidth="293.0"/>
+               <ImageView fitHeight="48.0" fitWidth="48.0" layoutX="910.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../assets/date_icon.png" />
+                  </image>
+               </ImageView>
+               <ImageView fitHeight="34.0" fitWidth="34.0" layoutX="917.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../assets/calendar_icon.png" />
+                  </image>
+               </ImageView>
+               <Text layoutX="1000.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Filter Period">
+                  <font>
+                     <Font size="20.0" />
+                  </font>
+               </Text>
+               <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="1150.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../assets/down_icon.png" />
+                  </image>
+               </ImageView>
+               <Text layoutX="1000.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date">
+                  <font>
+                     <Font size="20.0" />
+                  </font>
+               </Text>
+             </children>
+          </Pane>
+          
+         <HBox spacing="5" alignment="TOP_LEFT">
+           <children>
+             <Pane prefHeight="172.0" prefWidth="300.0">
+                <children>
+                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="172.0" stroke="TRANSPARENT" strokeType="INSIDE" width="300.0" />
+                   <Text layoutX="141.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="75" wrappingWidth="55.3179931640625">
+                      <font>
+                         <Font name="System Bold" size="46.0" />
+                      </font>
+                   </Text>
+                   <Text layoutX="118.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Orders">
+                      <font>
+                         <Font name="Arial" size="18.0" />
+                      </font>
+                   </Text>
+                   <Text layoutX="129.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4% (30 days) " />
+                </children>
+             </Pane>
+             <Pane prefHeight="172.0" prefWidth="300.0">
+                <children>
+                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="172.0" stroke="TRANSPARENT" strokeType="INSIDE" width="300.0" />
+                   <Text layoutX="129.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4% (30 days) " />
+                   <Text layoutX="136.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="357" wrappingWidth="85.718017578125">
+                      <font>
+                         <Font name="System Bold" size="46.0" />
+                      </font>
+                   </Text>
+                   <Text layoutX="118.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Delivered">
+                      <font>
+                         <Font name="Arial" size="18.0" />
+                      </font>
+                   </Text>
+                </children>
+             </Pane>
+             <Pane prefHeight="172.0" prefWidth="300.0">
+                <children>
+                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="172.0" stroke="TRANSPARENT" strokeType="INSIDE" width="300.0" />
+                   <Text layoutX="129.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4% (30 days) " />
+                   <Text layoutX="118.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Canceled">
+                      <font>
+                         <Font name="Arial" size="18.0" />
+                      </font>
+                   </Text>
+                   <Text layoutX="141.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="65" wrappingWidth="55.3179931640625">
+                      <font>
+                         <Font name="System Bold" size="46.0" />
+                      </font>
+                   </Text>
+                </children>
+             </Pane>
+             <Pane prefHeight="172.0" prefWidth="300.0">
+                <children>
+                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="172.0" stroke="TRANSPARENT" strokeType="INSIDE" width="300.0" />
+                   <Text layoutX="115.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$128" wrappingWidth="106.07421875">
+                      <font>
+                         <Font name="System Bold" size="46.0" />
+                      </font>
+                   </Text>
+                   <Text layoutX="118.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Revenue">
+                      <font>
+                         <Font name="Arial" size="18.0" />
+                      </font>
+                   </Text>
+                   <Text layoutX="129.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4% (30 days) " />
+                </children>
+             </Pane>
+           </children>
+         </HBox>
 
-        <!-- Main title of the page -->
-        <Label 
-            text="Dashboard"
-            style="-fx-font-size:24; -fx-font-weight:bold;" />
-
-        <!-- Description/placeholder text -->
-        <Label 
-            text="Welcome to the dashboard. Replace this placeholder with real widgets."
-            wrapText="true" />
-
-    </children>
-</VBox>
+        </children>
+    </VBox>
+  </children>
+</AnchorPane>

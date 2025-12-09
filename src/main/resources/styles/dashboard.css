@@ -1,3 +1,16 @@
 .root {
     -fx-background-color: #f5f5f5;
 }
+.DatePicker {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-opacity: 0.0;
+    -fx-cursor: hand;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+}
+.rectangle {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0.0, 0, 2);
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+}

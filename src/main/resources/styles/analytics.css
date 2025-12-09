@@ -7,8 +7,8 @@
     -fx-padding: 30;
     -fx-spacing: 20;
     -fx-pref-height: 400;
-    -fx-pref-width: 500;
-    -fx-max-width:500;
+    -fx-pref-width: 960;
+    -fx-max-width: 960;
 }
 
 
@@ -20,12 +20,12 @@
     -fx-background-color:  white;
     -fx-padding: 30;
     -fx-spacing: 20;
-    -fx-pref-height: 400;
+    -fx-pref-height: 500;
     -fx-pref-width: 1000;
     -fx-max-width:1500;
 }
 
-.SalesCard 
+.MonthlySalesCard 
 { 
      -fx-border-radius: 10;
     -fx-background-radius: 10;
@@ -33,16 +33,112 @@
     -fx-background-color:  white;
     -fx-padding: 30;
     -fx-spacing: 20;
-    -fx-pref-height: 400;
-    -fx-pref-width: 700;
-    -fx-max-width:700;
+    -fx-pref-height: 200;
+      -fx-pref-width: 400;
+    -fx-max-width:400;
+    
 }
+
+
+.MonthlySalesTitle{ 
+      -fx-font-size: 15;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+}
+
+.TotalMonthlySalesLabel{
+    -fx-font-size: 30;
+    -fx-font-weight: bold;
+    -fx-text-alignment: center;
+    -fx-text-fill : #114F3A;
+} 
+
+.YearlySalesCard 
+{ 
+     -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-border: thin solid black;
+    -fx-background-color:  white;
+    -fx-padding: 30;
+    -fx-spacing: 20;
+    -fx-pref-height: 200;
+    -fx-pref-width: 400;
+    -fx-max-width:400;
+}
+
+
+.YearlySalesTitle { 
+   -fx-font-size: 15;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+
+}
+
+.TotalYearlySalesLabel { 
+   -fx-font-size: 30;
+    -fx-font-weight: bold;
+    -fx-text-alignment: center;
+    -fx-text-fill : #114F3A;
+}
+
+
 
 .scroll-pane {
     -fx-padding: 0;
     -fx-font-size: 14;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
 }
 
-.scroll-pane .viewport {
-    -fx-padding: 0;
+.scroll-pane:focused {
+    -fx-border-color: transparent;
 }
+
+.chart-legend {
+    -fx-text-fill: #114F3A;
+}
+
+.chart-legend-item {
+    -fx-text-fill: #114F3A;
+}
+
+.chart-legend-item-symbol {
+    -fx-padding: 5;
+    -fx-border-width: 2;
+}
+
+.chart-series-line {
+    -fx-stroke: #114F3A;
+    -fx-stroke-width: 3;
+}
+
+.chart-line-symbol {
+    -fx-background-color: #114F3A;
+}
+
+.pie-chart .chart-legend-item-symbol {
+    -fx-scale-x: 1.5;
+    -fx-scale-y: 1.5;
+}
+
+/* Pie chart slice colors */
+.slice0 {
+    -fx-pie-color: #114F3A;
+}
+
+.slice1 {
+    -fx-pie-color: #1A6B4F;
+}
+
+.slice2 {
+    -fx-pie-color: #228866;
+}
+
+.slice3 {
+    -fx-pie-color: #2BA47C;
+}
+
+.slice4 {
+    -fx-pie-color: #34C191;
+}
+
