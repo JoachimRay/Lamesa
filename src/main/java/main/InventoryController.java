@@ -96,7 +96,7 @@ public class InventoryController
     private int statusFilterIndex = 0;
 
     // Available status filter options
-    private String[] statusFilters = {"All", "No Action Required", "Pending", "Completed"};
+    private String[] statusFilters = {"All", "Available", "Action Required"};
 
     // ==================== INITIALIZATION ====================
 

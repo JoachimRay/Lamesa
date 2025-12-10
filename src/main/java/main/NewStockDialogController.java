@@ -36,8 +36,8 @@ public class NewStockDialogController {
     @FXML
     public void initialize() {
         productNameCombo.setItems(loadProducts());
-        instructionCombo.setItems(FXCollections.observableArrayList("Out of Stock", "Low in Stock", "High in Stock"));
-        statusCombo.setItems(FXCollections.observableArrayList("No Action Required", "Pending", "Completed"));
+        instructionCombo.setItems(FXCollections.observableArrayList("Low in Stock", "High in Stock"));
+        statusCombo.setItems(FXCollections.observableArrayList("Available", "Action Required"));
     }
 
     private ObservableList<String> loadProducts() {
