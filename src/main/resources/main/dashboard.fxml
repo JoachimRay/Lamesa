@@ -18,12 +18,22 @@
     It currently shows placeholder text.
     You can replace the labels with real dashboard widgets later.
 -->
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: F3F2F7;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" >
+<AnchorPane maxHeight="-Infinity" 
+            maxWidth="-Infinity" 
+            minHeight="-Infinity" 
+            minWidth="-Infinity" 
+            prefHeight="1080.0" 
+            prefWidth="1920.0" 
+            style="-fx-background-color: F3F2F7;" 
+            xmlns="http://javafx.com/javafx/25" 
+            xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="main.DashboardController"
+            stylesheets="@../styles/dashboard.css">
   <children>
+
     <VBox
             alignment="CENTER"
-            spacing="12"
-            stylesheets="@../styles/dashboard.css">
+            spacing="12">
     </VBox>
 
 <!-- This is where the Dashboard will be seen with the DatePicker-->
@@ -36,7 +46,7 @@
                         <Font size="31.0" />
                      </font>
                   </Label>
-                  <Label fx:id= "welcomeLabel" prefHeight="22.0" prefWidth="384.0" text="Hi, User. Welcome Back to Lamesa Admin">
+                  <Label fx:id= "welcomeLabel" prefHeight="22.0" prefWidth="384.0">
                      <font>
                         <Font size="19.0" />
                      </font>
@@ -46,7 +56,23 @@
             <Pane prefHeight="76.0" prefWidth="293.0">
                <children>
                   <Rectangle arcHeight="50.0" arcWidth="50.0" fill="WHITE" height="76.0" stroke="BLACK" strokeType="INSIDE" width="293.0" />
-                  <DatePicker opacity="0.0" prefHeight="76.0" prefWidth="293.0"/>
+                  <DatePicker fx:id="datePicker" opacity="0.0" prefHeight="76.0" prefWidth="293.0"/>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/date_icon.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="34.0" fitWidth="34.0" layoutX="21.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/calendar_icon.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="256.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/down_icon.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="date" layoutX="133.0" layoutY="29.0" text="Label" />
                </children>
             </Pane>
          </children>
@@ -58,7 +84,7 @@
              <Pane prefHeight="172.0" prefWidth="250.0">
                 <children>
                    <Rectangle arcHeight="20.0" arcWidth="20.0" fill="WHITE" height="172.0" stroke="TRANSPARENT" strokeType="INSIDE" width="250.0" />
-                   <Text layoutX="100.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="75" wrappingWidth="55.3179931640625">
+                   <Text fx:id="totalOrdersText" layoutX="100.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="55.3179931640625">
                       <font>
                          <Font name="System Bold" size="46.0" />
                       </font>
@@ -75,7 +101,7 @@
                 <children>
                    <Rectangle arcHeight="20.0" arcWidth="20.0" fill="WHITE" height="172.0" stroke="TRANSPARENT" strokeType="INSIDE" width="250.0" />
                    <Text layoutX="95.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4% (30 days) " />
-                   <Text layoutX="100.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="357" wrappingWidth="85.718017578125">
+                   <Text fx:id="totalDeliveredText" layoutX="100.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="85.718017578125">
                       <font>
                          <Font name="System Bold" size="46.0" />
                       </font>
@@ -96,7 +122,7 @@
                          <Font name="Arial" size="18.0" />
                       </font>
                    </Text>
-                   <Text layoutX="100.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="65" wrappingWidth="55.3179931640625">
+                   <Text fx:id="totalCanceledText" layoutX="100.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="55.3179931640625">
                       <font>
                          <Font name="System Bold" size="46.0" />
                       </font>
@@ -106,7 +132,7 @@
              <Pane prefHeight="172.0" prefWidth="250.0">
                 <children>
                    <Rectangle arcHeight="20.0" arcWidth="20.0" fill="WHITE" height="172.0" stroke="TRANSPARENT" strokeType="INSIDE" width="250.0" />
-                   <Text layoutX="90.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$128" wrappingWidth="106.07421875">
+                   <Text fx:id="totalRevenueText" layoutX="90.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="106.07421875">
                       <font>
                          <Font name="System Bold" size="46.0" />
                       </font>

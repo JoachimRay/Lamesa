@@ -23,6 +23,7 @@ public class MainController {
     // The container where pages (FXML files) will be loaded
     @FXML
     private StackPane contentPane;
+    
 
     @FXML
     private void initialize() {
@@ -64,8 +65,17 @@ public class MainController {
             }
 
             // Load the FXML file and place it inside the content pane
-            Node node = FXMLLoader.load(url);
+            FXMLLoader loader = new FXMLLoader(url);
+            Node node = loader.load();
+            
+            // If loading the dashboard, pass the username to its controller
+            if (page.equals("dashboard")) {
+                DashboardController controller = loader.getController();
+                controller.setUsername(SessionManager.getUsername());
+            }
+
             contentPane.getChildren().setAll(node);
+
 
         } catch (IOException e) {
             // If something goes wrong, show an error message on the screen
