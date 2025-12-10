@@ -178,18 +178,7 @@ public class InventoryController
         // Loads the data
         loadInventoryData();
 
-        // Makes the table be able to choose Out of Stock, Low in Stock, and High in Stock
-        instructionColumn.setCellFactory(ComboBoxTableCell.forTableColumn("Out of Stock", "Low in Stock", "High in Stock"));
-        instructionColumn.setOnEditCommit(event ->
-        {
-            String newInstruction = event.getNewValue();
-            InventoryItem item = event.getRowValue();
-            int inventoryId = item.getId();
-
-            updateInstructionInDatabase(newInstruction, inventoryId);
-            System.out.println("Update inventory " + inventoryId + " to instruction: " + newInstruction);
-            item.setInstruction(newInstruction);
-        });
+        // Instruction column is read-only (auto-calculated based on stock)
 
         // Makes the table editable on stock
         inventoryTable.setEditable(true);
@@ -200,23 +189,35 @@ public class InventoryController
             InventoryItem item = event.getRowValue();
             int inventoryId = item.getId();
 
+            // Update stock in database
             updateStockInDatabase(newStock, inventoryId);
             System.out.println("Update inventory " + inventoryId + " to stock: " + newStock);
             item.setStockQuantity(newStock);
+
+            // Auto-update instruction and status based on stock level
+            if (newStock < 10) 
+            {
+                item.setInstruction("Low in Stock");
+                item.setStatus("Action Required");
+                
+                // Show alert for low stock
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Low Stock Warning");
+                alert.setHeaderText("Stock is running low!");
+                alert.setContentText(item.getProductName() + " has only " + newStock + " items left.\n\nAction Required!");
+                alert.showAndWait();
+            } 
+            else 
+            {
+                item.setInstruction("High in Stock");
+                item.setStatus("Available");
+            }
+            
+            // Refresh table to show updated values
+            inventoryTable.refresh();
         });
 
-        // Makes the column be able to choose No Action Required, Pending and Completed
-        statusColumn.setCellFactory(ComboBoxTableCell.forTableColumn("No Action Required","Pending", "Completed"));
-        statusColumn.setOnEditCommit(event -> 
-        {
-            String newStatus = event.getNewValue();
-            InventoryItem item = event.getRowValue();
-            int inventoryId = item.getId();
-
-            updateStatusInDatabase(newStatus, inventoryId);
-            System.out.println("Update inventory " + inventoryId + " to status: " + newStatus);
-            item.setStatus(newStatus);
-        });
+        // Status column is read-only (managed automatically based on stock)
 
         searchField.textProperty().addListener((observable, oldValue, newValue) -> 
         {
@@ -241,8 +242,15 @@ public class InventoryController
         {             
             System.out.println("[InventoryController] Connected successfully!");
             
-            String sql = "SELECT product_id, product_name, category, type, instruction, stock_quantity, status, date_added " +
-                         "FROM inventory ORDER BY product_name";
+            // JOIN with meal, meal_category, and meal_types to get names
+            String sql = "SELECT i.inventory_id, m.name AS product_name, " +
+                         "mc.category_name AS category, mt.type_name AS type, " +
+                         "i.stock_quantity, i.status, i.date_added " +
+                         "FROM inventory i " +
+                         "JOIN meal m ON i.meal_id = m.meal_id " +
+                         "LEFT JOIN meal_category mc ON m.category_id = mc.category_id " +
+                         "LEFT JOIN meal_types mt ON m.type_id = mt.type_id " +
+                         "ORDER BY m.name";
             
             try (PreparedStatement ps = conn.prepareStatement(sql);
                  ResultSet rs = ps.executeQuery()) 
@@ -251,14 +259,26 @@ public class InventoryController
                 while (rs.next()) 
                 {
                     // Get each
-                    int id = rs.getInt("product_id");
+                    int id = rs.getInt("inventory_id");
                     String productName = rs.getString("product_name");
                     String category = rs.getString("category");
                     String type = rs.getString("type");
-                    String instruction = rs.getString("instruction");
                     int stockQuantity = rs.getInt("stock_quantity");
-                    String status = rs.getString("status");
                     String dateAdded = rs.getString("date_added");
+                    
+                    // Auto-calculate instruction and status based on stock
+                    String instruction;
+                    String status;
+                    if (stockQuantity <= 10) 
+                    {
+                        instruction = "Low in Stock";
+                        status = "Action Required";
+                    } 
+                    else 
+                    {
+                        instruction = "High in Stock";
+                        status = "Available";
+                    }
                     
                     // POJO 
                     InventoryItem item = new InventoryItem(id, productName, category, type, instruction, stockQuantity, status, dateAdded);
@@ -282,43 +302,28 @@ public class InventoryController
 
     // Updates the instruction field in the database.
    
-    private void updateInstructionInDatabase(String newInstruction, int productId) 
+    private void updateInstructionInDatabase(String newInstruction, int inventoryId) 
     {
-        String dburl = "jdbc:sqlite:database/lamesa.db";
-        
-        try (Connection con = DriverManager.getConnection(dburl)) 
-        {
-            String sql = "UPDATE inventory SET instruction = ? WHERE product_id = ?";
-            
-            try (PreparedStatement ps = con.prepareStatement(sql)) 
-            {
-                ps.setString(1, newInstruction);
-                ps.setInt(2, productId);
-                ps.executeUpdate();
-            }
-        } 
-        catch (SQLException e) 
-        {
-            System.out.println("[InventoryController] ERROR: " + e.getMessage());
-            e.printStackTrace();
-        }
+        // Note: instruction column doesn't exist in meal-linked inventory
+        // This is kept for UI compatibility but does nothing
+        System.out.println("[InventoryController] Instruction update skipped (not stored in DB)");
     }
 
  
     // Updates the stock quantity in the database.
 
-    private void updateStockInDatabase(int newStock, int productId) 
+    private void updateStockInDatabase(int newStock, int inventoryId) 
     {
         String dburl = "jdbc:sqlite:database/lamesa.db";
         
         try (Connection con = DriverManager.getConnection(dburl)) 
         {
-            String sql = "UPDATE inventory SET stock_quantity = ? WHERE product_id = ?";
+            String sql = "UPDATE inventory SET stock_quantity = ? WHERE inventory_id = ?";
 
             try (PreparedStatement ps = con.prepareStatement(sql)) 
             {
                 ps.setInt(1, newStock);
-                ps.setInt(2, productId);
+                ps.setInt(2, inventoryId);
                 ps.executeUpdate();
             }
         } 
@@ -332,18 +337,18 @@ public class InventoryController
     
     // Updates the status field in the database.
     
-    private void updateStatusInDatabase(String newStatus, int productId) 
+    private void updateStatusInDatabase(String newStatus, int inventoryId) 
     {
         String dburl = "jdbc:sqlite:database/lamesa.db";
         
         try (Connection con = DriverManager.getConnection(dburl)) 
         {
-            String sql = "UPDATE inventory SET status = ? WHERE product_id = ?";
+            String sql = "UPDATE inventory SET status = ? WHERE inventory_id = ?";
 
             try (PreparedStatement ps = con.prepareStatement(sql)) 
             {
                 ps.setString(1, newStatus);
-                ps.setInt(2, productId);
+                ps.setInt(2, inventoryId);
                 ps.executeUpdate();
             }
         } 
@@ -384,7 +389,7 @@ public class InventoryController
 
     
     // Handles the "New Stock" button click.
-    // Opens a dialog to add a new inventory item using FXML.
+    // Opens a dialog to add/update stock for a meal.
     
     @FXML
     private void handleNewStock() 
@@ -397,7 +402,7 @@ public class InventoryController
             Parent root = loader.load();
 
             Stage stage = new Stage();
-            stage.setTitle("Add New Stock");
+            stage.setTitle("Add/Update Stock");
             stage.setScene(new Scene(root));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
@@ -479,7 +484,7 @@ public class InventoryController
             
             try (Connection conn = DriverManager.getConnection(dbUrl)) 
             {
-                String sql = "DELETE FROM inventory WHERE product_id = ?";
+                String sql = "DELETE FROM inventory WHERE inventory_id = ?";
                 
                 try (PreparedStatement ps = conn.prepareStatement(sql)) 
                 {
