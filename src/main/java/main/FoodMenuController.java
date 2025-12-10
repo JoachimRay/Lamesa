@@ -88,15 +88,12 @@ public class FoodMenuController {
         loadFoodCards();
     }
 
-    // this just returns a true if a toggle is selected
     private boolean matchesSelectedCategory(String categoryName) 
     {
         if (categoryName == null)
             return false;
 
-        if(appetizerToggle.isSelected() && categoryName.equalsIgnoreCase("Appetizer"))
-            return true;
-
+        // Categories from meal_category: Breakfast, Lunch, Dinner, Snack, Dessert
         if(breakfastToggle.isSelected() && categoryName.equalsIgnoreCase("Breakfast"))
             return true;
 
@@ -106,10 +103,13 @@ public class FoodMenuController {
         if(dinnerToggle.isSelected() && categoryName.equalsIgnoreCase("Dinner"))
             return true;
 
+        if(drinksToggle.isSelected() && categoryName.equalsIgnoreCase("Snack"))
+            return true;
+
         if(dessertToggle.isSelected() && categoryName.equalsIgnoreCase("Dessert"))
             return true;
 
-        if(drinksToggle.isSelected() && categoryName.equalsIgnoreCase("Drinks"))
+        if(appetizerToggle.isSelected() && categoryName.equalsIgnoreCase("Appetizer"))
             return true;
 
         return false;
@@ -117,13 +117,16 @@ public class FoodMenuController {
 
     private boolean matchesSelectedType(String typeName)
     {
-        if (typeName == null)
+        if (typeName == null || typeName.isEmpty())
             return false;
 
-        if(vegetarianToggle.isSelected() && typeName.equalsIgnoreCase("Vegetarian"))
+        String normalizedType = typeName.toLowerCase().trim();
+        
+        // Types from meal_types: Vegetarian, Non-Vegetarian, Vegan, Gluten-Free, High-Protein
+        if(vegetarianToggle.isSelected() && normalizedType.equalsIgnoreCase("Vegetarian"))
             return true;
 
-        if(nonVegetarianToggle.isSelected() && typeName.equalsIgnoreCase("Non-Vegetarian"))
+        if(nonVegetarianToggle.isSelected() && normalizedType.equalsIgnoreCase("Non-Vegetarian"))
             return true;
 
         return false;
@@ -306,7 +309,8 @@ public class FoodMenuController {
         allMeals.clear();
 
         String dbUrl = "jdbc:sqlite:database/lamesa.db";
-        String sql = "SELECT m.meal_id, m.name, m.price, m.description, m.image_path, c.category_name, t.type_name " + 
+        // Note: m.category_id references meal_category (meal times), m.type_id references meal_types (dietary types)
+        String sql = "SELECT m.meal_id, m.name, m.price, m.description, m.image_path, c.category_name AS category_name, t.type_name AS type_name " + 
                      "FROM meal m " + "LEFT JOIN meal_category c ON m.category_id = c.category_id " +
                      "LEFT JOIN meal_types t ON m.type_id = t.type_id " + "ORDER BY m.name";
         
