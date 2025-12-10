@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -111,6 +113,15 @@ public class RegisterController {
             confirmPasswordField.setVisible(false);
             confirmPasswordFieldVisible.setText(confirmPasswordField.getText());
             isConfirmPasswordVisible = true;
+        }
+    }
+
+
+
+
+    @FXML private void NextRegisterHandleButton(KeyEvent event) { 
+        if(event.getCode() == KeyCode.ENTER) { 
+            NextRegister(); 
         }
     }
 
