@@ -109,6 +109,7 @@ public class InventoryController
     {
         // Setup checkbox column with header checkbox for "Select All"
         selectAllCheckBox = new CheckBox();
+        selectAllCheckBox.setStyle("-fx-font-size: 12; -fx-padding: 0;");
         checkBoxColumn.setGraphic(selectAllCheckBox);
         selectAllCheckBox.setOnAction(event -> 
         {
@@ -120,7 +121,7 @@ public class InventoryController
             inventoryTable.refresh();
         });
 
-        // Setup checkbox cells for each row (single select only)
+        // Setup checkbox cells for each row (multi-select enabled)
         checkBoxColumn.setCellFactory(column -> new TableCell<InventoryItem, Boolean>() 
         {
             private final CheckBox checkBox = new CheckBox();
@@ -129,21 +130,7 @@ public class InventoryController
                 checkBox.setOnAction(event -> 
                 {
                     InventoryItem currentItem = getTableView().getItems().get(getIndex());
-                    
-                    // If selecting this one, deselect all others first (single select)
-                    if (checkBox.isSelected()) 
-                    {
-                        for (InventoryItem item : getTableView().getItems()) 
-                        {
-                            item.setSelected(false);
-                        }
-                        currentItem.setSelected(true);
-                        selectAllCheckBox.setSelected(false); // Uncheck "Select All"
-                    } 
-                    else 
-                    {
-                        currentItem.setSelected(false);
-                    }
+                    currentItem.setSelected(checkBox.isSelected());
                     getTableView().refresh();
                 });
                 setAlignment(Pos.CENTER);
@@ -242,7 +229,7 @@ public class InventoryController
         {             
             System.out.println("[InventoryController] Connected successfully!");
             
-            // JOIN with meal, meal_category, and meal_types to get names
+            // JOIN with meal, meal_types, and meal_category to get names
             String sql = "SELECT i.inventory_id, m.name AS product_name, " +
                          "mc.category_name AS category, mt.type_name AS type, " +
                          "i.stock_quantity, i.status, i.date_added " +
@@ -265,6 +252,8 @@ public class InventoryController
                     String type = rs.getString("type");
                     int stockQuantity = rs.getInt("stock_quantity");
                     String dateAdded = rs.getString("date_added");
+                    
+                    System.out.println("[DEBUG] " + productName + " | Category: " + category + " | Type: " + type);
                     
                     // Auto-calculate instruction and status based on stock
                     String instruction;
