@@ -1,98 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
 
+<VBox 
+    alignment="TOP_LEFT" 
+    spacing="16" 
+    xmlns="http://javafx.com/javafx/25" 
+    xmlns:fx="http://javafx.com/fxml/1" 
+    fx:controller="main.EmployeesController"
+    stylesheets="@../styles/employees.css"
+    styleClass="employees-root">
 
-<!-- EMPLOYEES PAGE - ENHANCED UI Features: 
-    - Better visual hierarchy with header section 
-    - Improved search bar with icon-like styling 
-    - Action buttons for user management 
-    - Better spacing and layout 
-    - Card-based design for the table -->
+    <HBox alignment="CENTER_LEFT" spacing="12">
+        <Label text="👥 Employees" styleClass="employees-title"/>
+        <Region HBox.hgrow="ALWAYS" />
+    </HBox>
 
-<BorderPane
-        xmlns="http://javafx.com/javafx/8"
-        xmlns:fx="http://javafx.com/fxml/1"
-        fx:controller="main.EmployeesController"
-        stylesheets="@../styles/employees.css"
-        styleClass="employees-page">
+    <HBox alignment="CENTER_LEFT" spacing="12">
+        <TextField fx:id="searchField" prefWidth="280" promptText="🔍 Search by username..." styleClass="search-field" />
+        <Region HBox.hgrow="ALWAYS" />
+        <Label text="Role:" styleClass="role-label" />
+        <ComboBox fx:id="roleFilterCombo" prefWidth="140" styleClass="role-filter-combo" />
+    </HBox>
 
-    <!-- ===================== TOP AREA ===================== -->
-    <top>
-        <VBox styleClass="header-section">
-            <padding>
-                <Insets top="30" right="40" bottom="20" left="40"/>
-            </padding>
+    <TableView fx:id="employeesTable" VBox.vgrow="ALWAYS" styleClass="employees-table">
+        <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/></columnResizePolicy>
+        <columns>
+            <TableColumn fx:id="usernameColumn" prefWidth="200" text="Username" />
+            <TableColumn fx:id="roleColumn" prefWidth="150" text="Role" />
+            <TableColumn fx:id="lastLoginColumn" prefWidth="220" text="Last Login" />
+            <TableColumn fx:id="shiftStatusColumn" prefWidth="180" text="Shift Status" />
+        </columns>
+    </TableView>
 
-            <!-- Title -->
-            <VBox spacing="6">
-                <Label text="Employee Management" styleClass="page-title"/>
-                <Label text="View and manage all employees and their activity" styleClass="page-subtitle"/>
-            </VBox>
-
-            <!-- Search + Refresh -->
-            <HBox spacing="16" alignment="CENTER_LEFT" styleClass="controls-row">
-                <VBox.margin>
-                    <Insets top="22"/>
-                </VBox.margin>
-
-                <!-- Search Field -->
-                <TextField
-                        fx:id="searchField"
-                        promptText="Search employees by username..."
-                        styleClass="search-field"
-                        prefWidth="350"/>
-
-                <Region HBox.hgrow="ALWAYS"/>
-
-                <!-- Refresh Button -->
-                <Button text="Refresh" styleClass="btn-secondary" onAction="#handleRefresh"/>
-            </HBox>
-
-            <Separator styleClass="section-divider">
-                <VBox.margin>
-                    <Insets top="22"/>
-                </VBox.margin>
-            </Separator>
-        </VBox>
-    </top>
-
-    <!-- ===================== CENTER AREA ===================== -->
-    <center>
-        <VBox styleClass="content-section">
-            <padding>
-                <Insets top="24" right="40" bottom="40" left="40"/>
-            </padding>
-
-            <!-- Table Container -->
-            <VBox styleClass="table-container" VBox.vgrow="ALWAYS">
-
-                <TableView fx:id="employeesTable" styleClass="employees-table" VBox.vgrow="ALWAYS">
-                    <columns>
-
-                        <TableColumn fx:id="usernameColumn" text="Username" prefWidth="200"/>
-                        <TableColumn fx:id="roleColumn" text="Role" prefWidth="150"/>
-                        <TableColumn fx:id="lastLoginColumn" text="Last Login" prefWidth="220"/>
-                        <TableColumn fx:id="shiftStatusColumn" text="Shift Status" prefWidth="180"/>
-
-                    </columns>
-
-                    <!-- Empty State -->
-                    <placeholder>
-                        <VBox alignment="CENTER" spacing="10" styleClass="empty-state">
-                            <Label text="📋" style="-fx-font-size: 46px;"/>
-                            <Label text="No employees found" styleClass="empty-state-title"/>
-                            <Label text="Employees will appear here once registered"
-                                   styleClass="empty-state-subtitle"/>
-                        </VBox>
-                    </placeholder>
-
-                </TableView>
-            </VBox>
-
-        </VBox>
-    </center>
-
-</BorderPane>
+</VBox>
