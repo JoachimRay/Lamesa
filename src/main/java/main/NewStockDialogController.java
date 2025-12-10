@@ -91,15 +91,41 @@ public class NewStockDialogController {
             return;
         }
 
-        // Step 2: Insert new inventory entry (always adds new stock, not update)
+        // Step 2: Check if inventory entry exists for this meal, update or insert
         try (Connection conn = DriverManager.getConnection(dbUrl)) {
-            String insertSQL = "INSERT INTO inventory (meal_id, stock_quantity, status, date_added) VALUES (?, ?, ?, DATE('now'))";
-            try (PreparedStatement ps = conn.prepareStatement(insertSQL)) {
+            // First check if inventory entry exists for this meal
+            String checkSQL = "SELECT inventory_id FROM inventory WHERE meal_id = ?";
+            int inventoryId = -1;
+            
+            try (PreparedStatement ps = conn.prepareStatement(checkSQL)) {
                 ps.setInt(1, mealId);
-                ps.setInt(2, stock);
-                ps.setString(3, status);
-                ps.executeUpdate();
-                System.out.println("[NewStockDialogController] Added new stock: " + product + " | Quantity: " + stock);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    inventoryId = rs.getInt("inventory_id");
+                }
+            }
+            
+            // If exists, update; otherwise insert
+            if (inventoryId != -1) {
+                // Update existing inventory entry
+                String updateSQL = "UPDATE inventory SET stock_quantity = ?, status = ?, date_added = DATE('now') WHERE inventory_id = ?";
+                try (PreparedStatement ps = conn.prepareStatement(updateSQL)) {
+                    ps.setInt(1, stock);
+                    ps.setString(2, status);
+                    ps.setInt(3, inventoryId);
+                    ps.executeUpdate();
+                    System.out.println("[NewStockDialogController] Updated stock: " + product + " | Quantity: " + stock);
+                }
+            } else {
+                // Insert new inventory entry
+                String insertSQL = "INSERT INTO inventory (meal_id, stock_quantity, status, date_added) VALUES (?, ?, ?, DATE('now'))";
+                try (PreparedStatement ps = conn.prepareStatement(insertSQL)) {
+                    ps.setInt(1, mealId);
+                    ps.setInt(2, stock);
+                    ps.setString(3, status);
+                    ps.executeUpdate();
+                    System.out.println("[NewStockDialogController] Added new stock: " + product + " | Quantity: " + stock);
+                }
             }
         } catch (SQLException e) {
             System.out.println("[NewStockDialogController] ERROR: " + e.getMessage());

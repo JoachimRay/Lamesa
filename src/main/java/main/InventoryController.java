@@ -109,6 +109,7 @@ public class InventoryController
     {
         // Setup checkbox column with header checkbox for "Select All"
         selectAllCheckBox = new CheckBox();
+        selectAllCheckBox.setStyle("-fx-font-size: 12; -fx-padding: 0;");
         checkBoxColumn.setGraphic(selectAllCheckBox);
         selectAllCheckBox.setOnAction(event -> 
         {
@@ -120,7 +121,7 @@ public class InventoryController
             inventoryTable.refresh();
         });
 
-        // Setup checkbox cells for each row (single select only)
+        // Setup checkbox cells for each row (multi-select enabled)
         checkBoxColumn.setCellFactory(column -> new TableCell<InventoryItem, Boolean>() 
         {
             private final CheckBox checkBox = new CheckBox();
@@ -129,21 +130,7 @@ public class InventoryController
                 checkBox.setOnAction(event -> 
                 {
                     InventoryItem currentItem = getTableView().getItems().get(getIndex());
-                    
-                    // If selecting this one, deselect all others first (single select)
-                    if (checkBox.isSelected()) 
-                    {
-                        for (InventoryItem item : getTableView().getItems()) 
-                        {
-                            item.setSelected(false);
-                        }
-                        currentItem.setSelected(true);
-                        selectAllCheckBox.setSelected(false); // Uncheck "Select All"
-                    } 
-                    else 
-                    {
-                        currentItem.setSelected(false);
-                    }
+                    currentItem.setSelected(checkBox.isSelected());
                     getTableView().refresh();
                 });
                 setAlignment(Pos.CENTER);

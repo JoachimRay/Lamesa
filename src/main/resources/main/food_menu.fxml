@@ -28,29 +28,23 @@
         <Insets bottom="14.0" left="14.0" right="14.0" top="14.0" />
     </padding>
 
-    <!-- Header section with title and search -->
-    <HBox alignment="CENTER_LEFT" spacing="12">
+    <!-- Header section with title only -->
+    <HBox alignment="CENTER_LEFT" spacing="16">
         
         <!-- Page title -->
         <Label text="Menu" styleClass="menu-title" />
-
-        <!-- Spacer to push search to right -->
-        <Region HBox.hgrow="ALWAYS" />
-
-        <!-- Quick search input -->
-        <TextField fx:id="searchField" prefWidth="200" promptText="Quick search" styleClass="search-field" />
     </HBox>
 
     <!-- Add New button -->
-    <HBox>
+    <HBox spacing="16">
         <Button fx:id="addNewButton" 
                 text="+ Add new" 
                 onAction="#handleAddNew" 
                 styleClass="add-new-btn" />
     </HBox>
 
-    <!-- Filter section - all in one line with separator -->
-    <HBox spacing="12" alignment="CENTER_LEFT">
+    <!-- Filter section -->
+    <HBox spacing="12" alignment="CENTER_LEFT" styleClass="filter-section">
         
         <!-- Filter label -->
         <Label text="Filter" styleClass="filter-label" />
@@ -69,18 +63,27 @@
         <!-- Type filter toggles -->
         <ToggleButton fx:id="vegetarianToggle" text="Vegetarian" styleClass="filter-toggle" />
         <ToggleButton fx:id="nonVegetarianToggle" text="Non-Vegetarian" styleClass="filter-toggle" />
+
+
+
+        <!-- Search bar beside filters -->
+        <TextField fx:id="searchField" prefWidth="250" promptText="Quick search" styleClass="search-field" />
     </HBox>
 
     <!-- Scrollable food cards area -->
     <ScrollPane fx:id="scrollPane" 
                 fitToWidth="true" 
                 VBox.vgrow="ALWAYS"
-                styleClass="food-scroll-pane">
+                styleClass="food-scroll-pane"
+                hbarPolicy="NEVER"
+                vbarPolicy="NEVER">
         <content>
             <!-- FlowPane arranges cards in rows, wraps when no space -->
             <FlowPane fx:id="foodCardsPane" 
-                      hgap="15" 
-                      vgap="15"
+                      hgap="20" 
+                      vgap="20"
+                      prefWrapLength="0"
+                      columnHalignment="CENTER"
                       styleClass="food-cards-pane">
             </FlowPane>
         </content>

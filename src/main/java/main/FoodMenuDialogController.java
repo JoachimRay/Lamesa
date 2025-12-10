@@ -280,10 +280,39 @@ public class FoodMenuDialogController
         String priceText = priceField.getText();
         String description = descriptionText.getText();
 
-        double price = Double.parseDouble(priceText);
+        // Validation
+        if (name == null || name.trim().isEmpty()) {
+            System.out.println("[FoodMenuDialogController] ERROR: Meal name is required");
+            return;
+        }
+        if (category == null || category.trim().isEmpty()) {
+            System.out.println("[FoodMenuDialogController] ERROR: Category is required");
+            return;
+        }
+        if (type == null || type.trim().isEmpty()) {
+            System.out.println("[FoodMenuDialogController] ERROR: Type is required");
+            return;
+        }
+        if (priceText == null || priceText.trim().isEmpty()) {
+            System.out.println("[FoodMenuDialogController] ERROR: Price is required");
+            return;
+        }
+
+        double price;
+        try {
+            price = Double.parseDouble(priceText);
+        } catch (NumberFormatException e) {
+            System.out.println("[FoodMenuDialogController] ERROR: Invalid price format");
+            return;
+        }
 
         int category_id = getCategoryId(category);
         int type_id = getTypeId(type);
+        
+        if (category_id == -1 || type_id == -1) {
+            System.out.println("[FoodMenuDialogController] ERROR: Invalid category or type ID");
+            return;
+        }
         
         // Only save new image if user uploaded one, otherwise keep existing
         String imagePath = saveImageToAssets();
@@ -302,10 +331,12 @@ public class FoodMenuDialogController
                 // ADD mode - insert new meal
                 sql = "INSERT INTO meal (name, price, category_id, type_id, description, image_path) " +
                       "VALUES (?, ?, ?, ?, ?, ?)";
+                System.out.println("[FoodMenuDialogController] INSERT mode - Adding new meal");
             } else {
                 // EDIT mode - update existing meal
                 sql = "UPDATE meal SET name = ?, price = ?, category_id = ?, type_id = ?, description = ?, image_path = ? " +
                       "WHERE meal_id = ?";
+                System.out.println("[FoodMenuDialogController] UPDATE mode - Editing meal ID: " + editingMeal.getMealId());
             }
             
             try(PreparedStatement ps = conn.prepareStatement(sql))
@@ -315,13 +346,21 @@ public class FoodMenuDialogController
                 ps.setInt(3, category_id);
                 ps.setInt(4, type_id);
                 ps.setString(5, description);
-                ps.setString(6, imagePath);
+                ps.setString(6, imagePath != null ? imagePath : "");
                 
                 if (editingMeal != null) {
                     ps.setInt(7, editingMeal.getMealId());  // Add meal_id for UPDATE
                 }
                 
-                ps.executeUpdate();
+                int result = ps.executeUpdate();
+                System.out.println("[FoodMenuDialogController] Rows affected: " + result);
+                
+                if (result > 0) {
+                    System.out.println("[FoodMenuDialogController] SUCCESS - Meal saved! Image path: " + imagePath);
+                } else {
+                    System.out.println("[FoodMenuDialogController] ERROR - No rows were updated");
+                }
+                
                 okayButton.getScene().getWindow().hide();
             }
         }

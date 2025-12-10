@@ -131,23 +131,23 @@ public class FoodMenuController {
 
     private VBox createFoodCard(FoodMenuItem meal)
     {
-        VBox card = new VBox(5);
+        VBox card = new VBox(8);
         card.getStyleClass().add("food-card");
-        card.setPrefWidth(180);
-        card.setPrefHeight(220);
-        card.setMinHeight(220);
-        card.setMaxHeight(220);
+        card.setPrefWidth(280);
+        card.setPrefHeight(350);
+        card.setMinHeight(350);
+        card.setMaxHeight(350);
 
         // Image container with fixed height
         StackPane imageContainer = new StackPane();
-        imageContainer.setPrefHeight(100);
-        imageContainer.setMinHeight(100);
-        imageContainer.setMaxHeight(100);
+        imageContainer.setPrefHeight(180);
+        imageContainer.setMinHeight(180);
+        imageContainer.setMaxHeight(180);
         imageContainer.setStyle("-fx-background-color: #f5f5f5; -fx-background-radius: 8;");
 
         ImageView imageView = new ImageView();
-        imageView.setFitWidth(160);
-        imageView.setFitHeight(100);
+        imageView.setFitWidth(260);
+        imageView.setFitHeight(180);
         imageView.setPreserveRatio(true);
         imageView.getStyleClass().add("food-card-image");
 
@@ -278,6 +278,9 @@ public class FoodMenuController {
 
         boolean anyTypeSelected = vegetarianToggle.isSelected() || nonVegetarianToggle.isSelected();
 
+        System.out.println("[FILTER DEBUG] anyCategorySelected: " + anyCategorySelected + " | anyTypeSelected: " + anyTypeSelected);
+        System.out.println("[FILTER DEBUG] Vegetarian: " + vegetarianToggle.isSelected() + " | Non-Veg: " + nonVegetarianToggle.isSelected());
+
         for (FoodMenuItem meal : allMeals)
         {
             boolean searchMatch = searchText.isEmpty() || meal.getName().toLowerCase().contains(searchText);
@@ -288,6 +291,10 @@ public class FoodMenuController {
             {
                 VBox card = createFoodCard(meal);
                 foodCardsPane.getChildren().add(card);
+            }
+            else if (anyTypeSelected)
+            {
+                System.out.println("[FILTER DEBUG] " + meal.getName() + " - Type: " + meal.getTypeName() + " | typeMatch: " + typeMatch);
             }
         }
 
