@@ -1,5 +1,6 @@
 package main;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -21,8 +22,7 @@ import java.util.List;
  * - Displays a list of users from the database
  * - Shows username, role, last login, and shift status
  * - Search bar to filter employees by username
- * 
- * FIXED: Added better error handling and debug logging
+ * - Role filter dropdown (All, Admin, Employee)
  */
 public class EmployeesController {
 
@@ -33,11 +33,13 @@ public class EmployeesController {
     @FXML private TableColumn<Employee, String> lastLoginColumn;
     @FXML private TableColumn<Employee, String> shiftStatusColumn;
 
-    // Search field for filtering employees
+    // Search field and filter dropdown
     @FXML private TextField searchField;
+    @FXML private ComboBox<String> roleFilterCombo;
 
     // ObservableList stores employee data for the TableView
     private final ObservableList<Employee> data = FXCollections.observableArrayList();
+    private ObservableList<Employee> filteredData = FXCollections.observableArrayList();
 
     // Formatter to parse and display timestamps
     private static final DateTimeFormatter TF = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -55,10 +57,57 @@ public class EmployeesController {
         lastLoginColumn.setCellValueFactory(new PropertyValueFactory<>("lastLogin"));
         shiftStatusColumn.setCellValueFactory(new PropertyValueFactory<>("shiftStatus"));
 
-        // 2) Load data from database
-        loadData();
+        // 2) Make username column bold
+        usernameColumn.setCellFactory(column -> new TableCell<Employee, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setStyle("");
+                } else {
+                    setText(item);
+                    setStyle("-fx-font-weight: bold; -fx-text-fill: #114F3A;");
+                }
+            }
+        });
 
-        // 3) Setup search/filter feature
+        // 3) Setup role filter ComboBox with custom cell factory
+        roleFilterCombo.setItems(FXCollections.observableArrayList("All", "manager", "employee"));
+        roleFilterCombo.setValue("All");
+        roleFilterCombo.setCellFactory(column -> new ListCell<String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item);
+                    setStyle("-fx-text-fill: #333 !important; -fx-background-color: white; -fx-padding: 10px;");
+                }
+            }
+        });
+        roleFilterCombo.setButtonCell(new ListCell<String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item);
+                    setStyle("-fx-text-fill: white;");
+                }
+            }
+        });
+        roleFilterCombo.setOnAction(e -> filterEmployees());
+
+        // 4) Load data from database
+        Platform.runLater(() -> {
+            loadData();
+            filterEmployees();
+        });
+
+        // 5) Setup search/filter feature
         setupSearch();
         
         System.out.println("[EmployeesController] Initialization complete. Total employees: " + data.size());
@@ -79,7 +128,7 @@ public class EmployeesController {
 
             for (EmployeeDAO.EmployeeRow row : rows) {
                 String username = row.username;
-                String role = row.role != null ? row.role : "employee"; // default role
+                String role = row.role != null ? row.role : "Employee"; // default role
                 String lastLogin = row.lastLogin != null ? row.lastLogin : "Never logged in";
                 String lastLogout = row.lastLogout;
 
@@ -88,18 +137,39 @@ public class EmployeesController {
 
                 System.out.println("[EmployeesController] Adding: " + username + " | " + role + " | " + lastLogin + " | " + shiftStatus);
 
-                // Add to TableView
+                // Add to ObservableList
                 data.add(new Employee(username, role, lastLogin, shiftStatus));
             }
 
-            employeesTable.setItems(data);
-            System.out.println("[EmployeesController] Data loaded successfully. Table has " + data.size() + " items");
+            System.out.println("[EmployeesController] Data loaded successfully. Total items: " + data.size());
             
         } catch (Exception e) {
             System.err.println("[EmployeesController] ERROR loading data:");
             e.printStackTrace();
             showAlert(Alert.AlertType.ERROR, "Error", "Failed to load employee data: " + e.getMessage());
         }
+    }
+
+    /**
+     * Filter employees by role and search
+     */
+    private void filterEmployees() {
+        String roleFilter = roleFilterCombo.getValue();
+        String searchText = searchField.getText().toLowerCase().trim();
+
+        filteredData.clear();
+
+        for (Employee e : data) {
+            boolean matchesRole = roleFilter.equals("All") || e.getRole().equals(roleFilter);
+            boolean matchesSearch = searchText.isEmpty() || e.getUsername().toLowerCase().contains(searchText);
+
+            if (matchesRole && matchesSearch) {
+                filteredData.add(e);
+            }
+        }
+
+        employeesTable.setItems(filteredData);
+        System.out.println("[EmployeesController] Filtered: " + filteredData.size() + " employees shown (Role: " + roleFilter + ", Search: " + searchText + ")");
     }
 
     /**
@@ -141,29 +211,8 @@ public class EmployeesController {
      */
     private void setupSearch() {
         searchField.textProperty().addListener((obs, oldVal, newVal) -> {
-            String filter = newVal == null ? "" : newVal.toLowerCase().trim();
-            if (filter.isEmpty()) {
-                employeesTable.setItems(data);
-            } else {
-                ObservableList<Employee> filtered = FXCollections.observableArrayList();
-                for (Employee e : data) {
-                    if (e.getUsername().toLowerCase().contains(filter)) {
-                        filtered.add(e);
-                    }
-                }
-                employeesTable.setItems(filtered);
-            }
+            filterEmployees();
         });
-    }
-
-    /**
-     * Refresh button handler - reloads data from database
-     */
-    @FXML
-    private void handleRefresh() {
-        System.out.println("[EmployeesController] Refresh button clicked");
-        loadData();
-        showAlert(Alert.AlertType.INFORMATION, "Refreshed", "Employee data has been refreshed");
     }
 
     /**

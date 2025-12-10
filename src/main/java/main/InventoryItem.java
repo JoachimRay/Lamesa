@@ -1,85 +1,119 @@
 package main;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 // POJO class: holds data for one inventory row
 
 public class InventoryItem {
 
-    // Fields
-    private int id;
-    private String productName;
-    private String category;
-    private String type;
-    private String instruction;
-    private int stockQuantity;
-    private String status;
+    // Fields as JavaFX Properties
+    private final IntegerProperty id;
+    private final StringProperty productName;
+    private final StringProperty category;
+    private final StringProperty type;
+    private final StringProperty instruction;
+    private final IntegerProperty stockQuantity;
+    private final StringProperty status;
 
     // Constructor
     public InventoryItem(int id, String productName, String category, String type, String instruction, int stockQuantity, String status) {
-        this.id = id;
-        this.productName = productName;
-        this.category = category;
-        this.type = type;
-        this.instruction = instruction;
-        this.stockQuantity = stockQuantity;
-        this.status = status;
+        this.id = new SimpleIntegerProperty(id);
+        this.productName = new SimpleStringProperty(productName);
+        this.category = new SimpleStringProperty(category);
+        this.type = new SimpleStringProperty(type);
+        this.instruction = new SimpleStringProperty(instruction);
+        this.stockQuantity = new SimpleIntegerProperty(stockQuantity);
+        this.status = new SimpleStringProperty(status);
     }
 
-    // Getters
-    public int getId() {
+    // Property getters (required for JavaFX binding)
+    public IntegerProperty idProperty() {
         return id;
     }
 
-    public String getProductName() {
+    public StringProperty productNameProperty() {
         return productName;
     }
 
-    public String getCategory() {
+    public StringProperty categoryProperty() {
         return category;
     }
 
-    public String getType() {
+    public StringProperty typeProperty() {
         return type;
     }
 
-    public String getInstruction() {
+    public StringProperty instructionProperty() {
         return instruction;
     }
 
-    public int getStockQuantity() {
+    public IntegerProperty stockQuantityProperty() {
         return stockQuantity;
     }
 
-    public String getStatus() {
+    public StringProperty statusProperty() {
         return status;
+    }
+
+    // Value getters
+    public int getId() {
+        return id.get();
+    }
+
+    public String getProductName() {
+        return productName.get();
+    }
+
+    public String getCategory() {
+        return category.get();
+    }
+
+    public String getType() {
+        return type.get();
+    }
+
+    public String getInstruction() {
+        return instruction.get();
+    }
+
+    public int getStockQuantity() {
+        return stockQuantity.get();
+    }
+
+    public String getStatus() {
+        return status.get();
     }
 
     // Setters
 
     public void setId(int id) {
-        this.id = id;
+        this.id.set(id);
     }
 
     public void setProductName(String productName) {
-        this.productName = productName;
+        this.productName.set(productName);
     }
 
     public void setCategory(String category) {
-        this.category = category;
+        this.category.set(category);
     }
 
     public void setType(String type) {
-        this.type = type;
+        this.type.set(type);
     }
 
     public void setInstruction(String instruction) {
-        this.instruction = instruction;
+        this.instruction.set(instruction);
     }
 
     public void setStockQuantity(int stockQuantity) {
-        this.stockQuantity = stockQuantity;
+        this.stockQuantity.set(stockQuantity);
     }
 
     public void setStatus(String status) {
-        this.status = status;
+        this.status.set(status);
     }
 }

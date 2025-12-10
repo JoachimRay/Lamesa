@@ -14,6 +14,8 @@
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.BarChart?> 
 <?import javafx.scene.chart.NumberAxis?> 
+<?import javafx.scene.control.DatePicker?>
+
 
 
 
@@ -21,8 +23,19 @@
       fx:controller="main.AnalyticsController" stylesheets="@../styles/analytics.css" fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED">
   <VBox spacing="20" style="-fx-padding: 20; -fx-pref-height: USE_COMPUTED_SIZE; -fx-min-height: USE_PREF_SIZE;">
 
-    <HBox spacing="20">
+    <HBox spacing="20" VBox.vgrow="ALWAYS">
       <VBox spacing="20">
+        <VBox styleClass="DateFilterCard" spacing="8">
+          <Label text="Date Range Filter" styleClass="DateFilterTitle"/>
+          <HBox spacing="10" alignment="CENTER_LEFT">
+            <DatePicker fx:id="StartDatePicker" styleClass="DatePickerInput" promptText="Start Date"/>
+            <Label text="to" styleClass="DateRangeLabel" style="-fx-padding: 0 5; -fx-text-fill: #666;"/>
+            <DatePicker fx:id="EndDatePicker" styleClass="DatePickerInput" promptText="End Date"/>
+            <Button text="Filter" onAction="#HandleFilterDate" styleClass="ApplyFilterButton"/>
+            <Region HBox.hgrow="ALWAYS"/>
+          </HBox>
+        </VBox>
+
         <VBox styleClass="MonthlySalesCard" alignment="CENTER" spacing="0">
           <HBox alignment="CENTER">
             <Label text = "Total Monthly Sales: " fx:id = "TotalMonthlySalesLabel" styleClass = "TotalMonthlySalesLabel"/> 
@@ -38,7 +51,7 @@
         </VBox>
       </VBox>
 
-      <VBox styleClass="PieCard">
+      <VBox styleClass="PieCard" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
         <PieChart fx:id="pieChart" title="Top Products" styleClass="PieChart" legendVisible="false"/>
         <HBox fx:id="customLegend" spacing="15" style="-fx-padding: 10; -fx-alignment: center;"/>
       </VBox>
