@@ -70,31 +70,28 @@ public class DashboardController implements Initializable {
         try {
             Connection conn = Database.getConnection();
 
-            String sql = "SELECT * FROM orders WHERE DATE(order_date) = ?";
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, selectedDate.toString());
+                String sql = "SELECT * FROM sales WHERE DATE(sale_date) = DATE(?)";
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                stmt.setString(1, selectedDate.toString());
 
-            ResultSet rs = stmt.executeQuery();
+                ResultSet rs = stmt.executeQuery();
 
-            int totalOrders = 0;
-            int canceled = 0;
-            int delivered = 0;
-            double totalRevenue = 0;
+                int totalOrders = 0;
+                double totalRevenue = 0;
 
-            while (rs.next()) {
-                totalOrders++;
+                while (rs.next()) {
+                    totalOrders++;
 
-                String status = rs.getString("status");
-                if ("Delivered".equals(status)) delivered++;
-                if ("Canceled".equals(status)) canceled++;
+                    // sales table has no status — remove delivered/canceled logic
 
-                totalRevenue += rs.getDouble("amount");
-            }
+                    totalRevenue += rs.getDouble("total_price");
+                }
 
                 totalOrdersText.setText(String.valueOf(totalOrders));
-                totalDeliveredText.setText(String.valueOf(delivered));
-                totalCanceledText.setText(String.valueOf(canceled));
+                totalDeliveredText.setText("—");  // or remove
+                totalCanceledText.setText("—");   // or remove
                 totalRevenueText.setText(String.format("$%.2f", totalRevenue));
+
 
 
 
