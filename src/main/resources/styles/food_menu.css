@@ -1,0 +1,167 @@
+/* Food Menu Page Styles */
+
+/* Page title */
+.menu-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+/* Search field */
+.search-field {
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-padding: 8 12 8 12;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1;
+}
+
+/* Search field when focused */
+.search-field:focused {
+    -fx-border-color: #4a7c59;
+    -fx-border-width: 2;
+}
+
+/* Add New button */
+.add-new-btn {
+    -fx-background-color: #4a7c59;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8 16 8 16;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+}
+
+/* Add New button hover */
+.add-new-btn:hover {
+    -fx-background-color: #3d6b4a;
+}
+
+/* Add New button pressed */
+.add-new-btn:pressed {
+    -fx-background-color: #2f5339;
+}
+
+/* Filter section label */
+.filter-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+/* Filter toggle buttons */
+.filter-toggle {
+    -fx-background-color: #f5f5f5;
+    -fx-text-fill: #333333;
+    -fx-padding: 6 12 6 12;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-cursor: hand;
+}
+
+/* Filter toggle button hover */
+.filter-toggle:hover {
+    -fx-background-color: #e0e0e0;
+}
+
+/* Filter toggle button when selected */
+.filter-toggle:selected {
+    -fx-background-color: #4a7c59;
+    -fx-text-fill: white;
+}
+
+/* Filter toggle button selected and hover */
+.filter-toggle:selected:hover {
+    -fx-background-color: #3d6b4a;
+}
+
+/* Vertical separator between category and type filters */
+.filter-separator {
+    -fx-background-color: #cccccc;
+}
+
+/* Scroll pane container */
+.food-scroll-pane {
+    -fx-background: transparent;
+    -fx-background-color: transparent;
+}
+
+/* Scroll pane viewport */
+.food-scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+/* Flow pane that holds food cards */
+.food-cards-pane {
+    -fx-padding: 10;
+    -fx-background-color: transparent;
+}
+
+/* Individual food card */
+.food-card {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-padding: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 2);
+    -fx-cursor: hand;
+}
+
+/* Food card hover effect */
+.food-card:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0, 0, 3);
+}
+
+/* Food card image */
+.food-card-image {
+    -fx-background-radius: 8;
+}
+
+/* Food card meal name */
+.food-card-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+/* Food card description text */
+.food-card-description {
+    -fx-font-size: 11px;
+    -fx-text-fill: #666666;
+    -fx-wrap-text: true;
+}
+
+/* Food card bottom row */
+.food-card-bottom {
+    -fx-padding: 5 0 0 0;
+}
+
+/* Edit info link */
+.food-card-edit {
+    -fx-font-size: 12px;
+    -fx-text-fill: #4a7c59;
+    -fx-underline: true;
+    -fx-cursor: hand;
+}
+
+/* Edit info link hover */
+.food-card-edit:hover {
+    -fx-text-fill: #3d6b4a;
+}
+
+/* Delete link */
+.food-card-delete {
+    -fx-font-size: 12px;
+    -fx-text-fill: #c0392b;
+    -fx-underline: true;
+    -fx-cursor: hand;
+}
+
+/* Delete link hover */
+.food-card-delete:hover {
+    -fx-text-fill: #a93226;
+}
+
+/* Price label */
+.food-card-price {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #4a7c59;
+}

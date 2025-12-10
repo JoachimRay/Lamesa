@@ -116,12 +116,12 @@ public class MenuController {
     
     /**
      * NEW: Food Menu navigation
-     * Loads the foodmenu.fxml page when Food Menu button is clicked
+     * Loads the food_menu.fxml page when Food Menu button is clicked
      */
     @FXML 
     private void onFoodMenu() {
         System.out.println("[MenuController] Food Menu button clicked");
-        loadOrShow("foodmenu");
+        loadOrShow("food_menu");
     }
     
     @FXML 
