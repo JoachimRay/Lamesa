@@ -106,4 +106,24 @@ public class EmployeeDAO {
             return false;
         }
     }
+
+/**
+ * Delete a user from the database by username.
+ * Returns true if deletion was successful.
+ */
+public boolean deleteUserByUsername(String username) {
+    String sql = "DELETE FROM users WHERE username = ?";
+    
+    try (Connection conn = DriverManager.getConnection(DB_URL);
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+        
+        ps.setString(1, username);
+        int deleted = ps.executeUpdate();
+        return deleted > 0; 
+        
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
+    }
+}
 }
