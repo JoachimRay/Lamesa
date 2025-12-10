@@ -18,12 +18,11 @@
     It currently shows placeholder text.
     You can replace the labels with real dashboard widgets later.
 -->
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: F3F2F7;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: F3F2F7;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../styles/dashboard.css">
   <children>
     <VBox
             alignment="CENTER"
-            spacing="12"
-            stylesheets="@../styles/dashboard.css">
+            spacing="12">
 
         <children>
           <Pane layoutX="402.0" layoutY="139.0" prefHeight="76.0" prefWidth="1468.0">
