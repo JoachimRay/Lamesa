@@ -26,6 +26,7 @@
             stylesheets="@../styles/dashboard.css">
     </VBox>
 
+<!-- This is where the Dashboard will be seen with the DatePicker-->
      <HBox layoutX="10.0" layoutY="60.0" prefHeight="76.0" prefWidth="1300.0" style="-fx-spacing: 500">
          <children>
             <VBox prefHeight="71.0" prefWidth="384.0" style="-fx-padding: 0;">
@@ -35,7 +36,7 @@
                         <Font size="31.0" />
                      </font>
                   </Label>
-                  <Label prefHeight="22.0" prefWidth="384.0" text="Hi, Joachim. Welcome Back to Lamesa Admin">
+                  <Label fx:id= "welcomeLabel" prefHeight="22.0" prefWidth="384.0" text="Hi, User. Welcome Back to Lamesa Admin">
                      <font>
                         <Font size="19.0" />
                      </font>
@@ -51,6 +52,7 @@
          </children>
       </HBox>
           
+         <!-- Here are the stats -->
          <HBox spacing="50" alignment="TOP_LEFT" layoutX="10.0" layoutY="220.0" prefHeight="172.0" prefWidth="1230.0">
            <children>
              <Pane prefHeight="172.0" prefWidth="250.0">
