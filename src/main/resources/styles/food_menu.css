@@ -73,6 +73,11 @@
     -fx-background-color: #3d6b4a;
 }
 
+/* Vertical separator between category and type filters */
+.filter-separator {
+    -fx-background-color: #cccccc;
+}
+
 /* Scroll pane container */
 .food-scroll-pane {
     -fx-background: transparent;
@@ -139,6 +144,19 @@
 /* Edit info link hover */
 .food-card-edit:hover {
     -fx-text-fill: #3d6b4a;
+}
+
+/* Delete link */
+.food-card-delete {
+    -fx-font-size: 12px;
+    -fx-text-fill: #c0392b;
+    -fx-underline: true;
+    -fx-cursor: hand;
+}
+
+/* Delete link hover */
+.food-card-delete:hover {
+    -fx-text-fill: #a93226;
 }
 
 /* Price label */

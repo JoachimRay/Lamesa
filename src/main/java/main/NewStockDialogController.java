@@ -73,20 +73,24 @@ public class NewStockDialogController {
         String type = "";
         String dbUrl = "jdbc:sqlite:database/lamesa.db";
 
-        // Step 1: Get category and type from meal table
+        // Step 1: Get category and type from meal table (via JOINs)
         try(Connection conn = DriverManager.getConnection(dbUrl)) {
-            String sql = "SELECT category, type FROM meal WHERE name = ?";
+            String sql = "SELECT c.category_name, t.type_name " +
+                         "FROM meal m " +
+                         "LEFT JOIN meal_category c ON m.category_id = c.category_id " +
+                         "LEFT JOIN meal_types t ON m.type_id = t.type_id " +
+                         "WHERE m.name = ?";
 
             try(PreparedStatement ps = conn.prepareStatement(sql)) {
                 ps.setString(1, product);
                 ResultSet rs = ps.executeQuery();
                 if (rs.next()) {
-                    category = rs.getString("category");
-                    type = rs.getString("type");
+                    category = rs.getString("category_name");
+                    type = rs.getString("type_name");
                 }
             }
         } catch (SQLException e) {
-            System.out.println("[NewStockDialogController] ERROR: " + e.getMessage());
+            System.out.println("[NewStockDialogController] ERROR getting category/type: " + e.getMessage());
         }
 
         // Step 2: Insert into inventory table
@@ -100,10 +104,10 @@ public class NewStockDialogController {
                 ps.setInt(5, stock);
                 ps.setString(6, status);
                 ps.executeUpdate();
-                System.out.println("[NewStockDialogController] Inserted: " + product);
+                System.out.println("[NewStockDialogController] Inserted: " + product + " | Category: " + category + " | Type: " + type);
             } 
         } catch (SQLException e) {
-            System.out.println("[NewStockDialogController] ERROR: " + e.getMessage());
+            System.out.println("[NewStockDialogController] ERROR inserting: " + e.getMessage());
         }
         
         // Step 3: Close the dialog

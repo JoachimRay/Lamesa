@@ -18,13 +18,21 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 
 public class FoodMenuDialogController 
 {
+    @FXML
+    private StackPane imageContainer;
+
+    @FXML
+    private Label uploadLabel;
+
     @FXML
     private ImageView imageUpload;
 
@@ -50,13 +58,53 @@ public class FoodMenuDialogController
     private Button cancelButton;
 
     private File selectedImageFile;
+    private FoodMenuItem editingMeal = null;  // null = add mode, not null = edit mode
+    private String existingImagePath = null;  // Keep track of existing image when editing
 
     @FXML
     public void initialize()
     {
-        imageUpload.setOnMouseClicked(event -> handleImageUpload());
+        imageContainer.setOnMouseClicked(event -> handleImageUpload());
         loadCategories();
         loadTypes();
+    }
+
+    // Set the dialog to edit mode with existing meal data
+    public void setEditMode(FoodMenuItem meal) {
+        this.editingMeal = meal;
+        this.existingImagePath = meal.getImagePath();
+        
+        // Fill in the form with existing data
+        mealLabel.setText(meal.getName());
+        priceField.setText(String.valueOf(meal.getPrice()));
+        descriptionText.setText(meal.getDescription() != null ? meal.getDescription() : "");
+        
+        // Set category dropdown
+        if (meal.getCategoryName() != null) {
+            categoryBox.setValue(meal.getCategoryName());
+        }
+        
+        // Set type dropdown
+        if (meal.getTypeName() != null) {
+            typeBox.setValue(meal.getTypeName());
+        }
+        
+        // Load existing image
+        if (meal.getImagePath() != null && !meal.getImagePath().isEmpty()) {
+            try {
+                String imagePath = meal.getImagePath();
+                if (!imagePath.startsWith("assets/")) {
+                    imagePath = "assets/" + imagePath;
+                }
+                Image image = new Image(getClass().getResourceAsStream("/" + imagePath));
+                if (image != null && !image.isError()) {
+                    imageUpload.setImage(image);
+                    uploadLabel.setVisible(false);
+                }
+            } catch (Exception e) {
+                System.out.println("[FoodMenuDialogController] Could not load image: " + meal.getImagePath());
+            }
+        }
     }
 
     // Loads meal categories and stores it in a ObservableList
@@ -137,6 +185,7 @@ public class FoodMenuDialogController
         {
             selectedImageFile = file;
             imageUpload.setImage(new Image(file.toURI().toString()));
+            uploadLabel.setVisible(false);  // Hide the "Click to upload" text
         }
     }
 
@@ -157,7 +206,7 @@ public class FoodMenuDialogController
             assetsFolder.resolve(newName),          // Destination (where to copy TO)
             StandardCopyOption.REPLACE_EXISTING);   // If file exists, overwrite it
 
-            return newName;
+            return "assets/" + newName;
         }
         catch (IOException e)
         {
@@ -235,15 +284,30 @@ public class FoodMenuDialogController
 
         int category_id = getCategoryId(category);
         int type_id = getTypeId(type);
+        
+        // Only save new image if user uploaded one, otherwise keep existing
         String imagePath = saveImageToAssets();
+        if (imagePath == null && existingImagePath != null) {
+            imagePath = existingImagePath;  // Keep existing image
+        }
 
         String dbUrl = "jdbc:sqlite:database/lamesa.db";
         System.out.println("[FoodMenuDialogController] Connecting to: " + dbUrl);
         try(Connection conn = DriverManager.getConnection(dbUrl))
         {
             System.out.println("[FoodMenuDialogController] Connected successfully!");
-            String sql = "INSERT INTO meal (name, price, category_id, type_id, description, image_path) " +
-                         "VALUES (?, ?, ?, ?, ?, ?)";
+            
+            String sql;
+            if (editingMeal == null) {
+                // ADD mode - insert new meal
+                sql = "INSERT INTO meal (name, price, category_id, type_id, description, image_path) " +
+                      "VALUES (?, ?, ?, ?, ?, ?)";
+            } else {
+                // EDIT mode - update existing meal
+                sql = "UPDATE meal SET name = ?, price = ?, category_id = ?, type_id = ?, description = ?, image_path = ? " +
+                      "WHERE meal_id = ?";
+            }
+            
             try(PreparedStatement ps = conn.prepareStatement(sql))
             {
                 ps.setString(1, name);
@@ -252,6 +316,10 @@ public class FoodMenuDialogController
                 ps.setInt(4, type_id);
                 ps.setString(5, description);
                 ps.setString(6, imagePath);
+                
+                if (editingMeal != null) {
+                    ps.setInt(7, editingMeal.getMealId());  // Add meal_id for UPDATE
+                }
                 
                 ps.executeUpdate();
                 okayButton.getScene().getWindow().hide();

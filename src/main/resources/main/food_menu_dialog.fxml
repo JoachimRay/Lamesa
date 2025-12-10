@@ -10,6 +10,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
 <!-- Dialog layout for adding a new food menu item -->
@@ -26,16 +27,20 @@
     </padding>
 
     <!-- Image upload area (click to upload) -->
-    <ImageView fx:id="imageUpload" 
-               fitHeight="200.0" 
-               fitWidth="320.0" 
-               pickOnBounds="true" 
-               preserveRatio="true"
-               style="-fx-cursor: hand;">
+    <StackPane fx:id="imageContainer" 
+               prefHeight="200.0" 
+               prefWidth="320.0" 
+               style="-fx-background-color: #f0f0f0; -fx-border-color: #cccccc; -fx-border-style: dashed; -fx-cursor: hand;">
         <VBox.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
         </VBox.margin>
-    </ImageView>
+        <Label fx:id="uploadLabel" text="Click to upload image" style="-fx-text-fill: #888888;" />
+        <ImageView fx:id="imageUpload" 
+                   fitHeight="190.0" 
+                   fitWidth="310.0" 
+                   pickOnBounds="true" 
+                   preserveRatio="true" />
+    </StackPane>
 
     <!-- Meal name input -->
     <TextField fx:id="mealLabel" 

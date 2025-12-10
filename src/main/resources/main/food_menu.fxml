@@ -49,28 +49,27 @@
                 styleClass="add-new-btn" />
     </HBox>
 
-    <!-- Filter section -->
-    <VBox spacing="8">
+    <!-- Filter section - all in one line with separator -->
+    <HBox spacing="12" alignment="CENTER_LEFT">
         
         <!-- Filter label -->
         <Label text="Filter" styleClass="filter-label" />
 
         <!-- Category filter toggles -->
-        <HBox spacing="8">
-            <ToggleButton fx:id="appetizerToggle" text="Appetizer" styleClass="filter-toggle" />
-            <ToggleButton fx:id="breakfastToggle" text="Breakfast" styleClass="filter-toggle" />
-            <ToggleButton fx:id="lunchToggle" text="Lunch" styleClass="filter-toggle" />
-            <ToggleButton fx:id="dinnerToggle" text="Dinner" styleClass="filter-toggle" />
-            <ToggleButton fx:id="dessertToggle" text="Dessert" styleClass="filter-toggle" />
-            <ToggleButton fx:id="drinksToggle" text="Drinks" styleClass="filter-toggle" />
-        </HBox>
+        <ToggleButton fx:id="appetizerToggle" text="Appetizer" styleClass="filter-toggle" />
+        <ToggleButton fx:id="breakfastToggle" text="Breakfast" styleClass="filter-toggle" />
+        <ToggleButton fx:id="lunchToggle" text="Lunch" styleClass="filter-toggle" />
+        <ToggleButton fx:id="dinnerToggle" text="Dinner" styleClass="filter-toggle" />
+        <ToggleButton fx:id="dessertToggle" text="Dessert" styleClass="filter-toggle" />
+        <ToggleButton fx:id="drinksToggle" text="Drinks" styleClass="filter-toggle" />
+
+        <!-- Vertical separator between categories and types -->
+        <Region styleClass="filter-separator" prefWidth="1" prefHeight="24" />
 
         <!-- Type filter toggles -->
-        <HBox spacing="8">
-            <ToggleButton fx:id="vegetarianToggle" text="Vegetarian" styleClass="filter-toggle" />
-            <ToggleButton fx:id="nonVegetarianToggle" text="Non-Vegetarian" styleClass="filter-toggle" />
-        </HBox>
-    </VBox>
+        <ToggleButton fx:id="vegetarianToggle" text="Vegetarian" styleClass="filter-toggle" />
+        <ToggleButton fx:id="nonVegetarianToggle" text="Non-Vegetarian" styleClass="filter-toggle" />
+    </HBox>
 
     <!-- Scrollable food cards area -->
     <ScrollPane fx:id="scrollPane" 
