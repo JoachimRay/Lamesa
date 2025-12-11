@@ -181,8 +181,6 @@ lamesa/
 ---
 
 
-## Getting Started
-
 ### First Time Setup
 
 #### Step 1: Launch the Application
