@@ -1,16 +1,17 @@
 package main;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.net.URL;
+
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
-
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.io.IOException;
-import java.net.URL;
 
 /**
  * Entry point for the JavaFX application.
@@ -45,6 +46,18 @@ public class App extends javafx.application.Application {
         stage.setTitle("Lamesa");
         stage.setScene(scene);
         stage.setMaximized(true);
+        
+        // Set the app icon to the Lamesa logo
+        try {
+            URL iconResource = App.class.getResource("/assets/appicon.png");
+            if (iconResource != null) {
+                Image icon = new Image(iconResource.toExternalForm(), 512, 512, true, true);
+                stage.getIcons().add(icon);
+            }
+        } catch (Exception e) {
+            System.err.println("[App] Failed to load icon: " + e.getMessage());
+        }
+        
         stage.show();
 
         // Small console trace to help debug navigation/startup problems.

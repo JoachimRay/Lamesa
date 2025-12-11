@@ -1,111 +1,323 @@
-/* =========================================================
-   GLOBAL PAGE STYLE
-   ========================================================= */
-.employees-page {
-    -fx-background-color: #f4f5f7;
-    -fx-font-family: "Segoe UI", sans-serif;
+/* Employees Page Styles - Matching Inventory Theme */
+
+/* Main VBox container */
+.employees-root {
+    -fx-spacing: 16;
+    -fx-padding: 20;
+    -fx-background-color: #f5f5f5;
 }
 
-/* =========================================================
-   HEADER SECTION
-   ========================================================= */
-.header-section {
-    -fx-background-color: white;
-}
-
-.page-title {
-    -fx-font-size: 26px;
+/* Page title */
+.employees-title {
+    -fx-font-size: 32;
     -fx-font-weight: bold;
-    -fx-text-fill: #2d2d2d;
+    -fx-text-fill: #114F3A;
 }
 
-.page-subtitle {
-    -fx-font-size: 14px;
-    -fx-text-fill: #6b6b6b;
-}
-
-.controls-row {
-    -fx-padding: 0 0 10 0;
-}
-
-/* =========================================================
-   SEARCH FIELD
-   ========================================================= */
+/* Search field */
 .search-field {
+    -fx-font-size: 12;
+    -fx-padding: 8 12 8 12;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-border-color: #ddd;
+    -fx-border-width: 1;
     -fx-background-color: white;
-    -fx-background-radius: 8px;
-    -fx-padding: 8 12;
-    -fx-border-color: #d0d0d0;
-    -fx-border-radius: 8px;
+    -fx-text-fill: #333;
 }
 
 .search-field:focused {
-    -fx-border-color: #4a90e2;
+    -fx-border-color: #228866;
+    -fx-border-width: 2;
 }
 
-/* =========================================================
-   BUTTONS
-   ========================================================= */
-.btn-secondary {
-    -fx-background-color: #e5e7eb;
-    -fx-background-radius: 8px;
-    -fx-text-fill: #333;
-    -fx-padding: 8 16;
+/* Role label */
+.role-label {
+    -fx-font-size: 12;
+    -fx-text-fill: #114F3A;
+    -fx-font-weight: bold;
 }
 
-.btn-secondary:hover {
-    -fx-background-color: #d6d8db;
+/* Role filter combo */
+.role-filter-combo {
+    -fx-background-color: #228866;
+    -fx-font-size: 12;
+    -fx-text-fill: white;
+    -fx-padding: 8 16 8 16;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-font-weight: bold;
+    -fx-color: white;
 }
 
-/* =========================================================
-   SECTION DIVIDER
-   ========================================================= */
-.section-divider {
-    -fx-background-color: #dedede;
+.role-filter-combo:hover {
+    -fx-background-color: #1a6b50;
 }
 
-/* =========================================================
-   CONTENT SECTION
-   ========================================================= */
-.content-section {}
+.role-filter-combo .text {
+    -fx-fill: white;
+    -fx-text-fill: white;
+}
 
-/* =========================================================
-   TABLE CONTAINER
-   ========================================================= */
-.table-container {
+.role-filter-combo:focused .text {
+    -fx-fill: white;
+    -fx-text-fill: white;
+}
+
+/* ComboBox popup styling */
+.combo-box-popup {
     -fx-background-color: white;
-    -fx-padding: 20;
-    -fx-background-radius: 12;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 10, 0, 0, 2);
+    -fx-border-color: #ddd;
+    -fx-border-radius: 6;
+    -fx-border-width: 1;
 }
 
-/* =========================================================
-   TABLEVIEW STYLING
-   ========================================================= */
-.employees-table {
+.combo-box-popup .list-view {
+    -fx-background-color: white;
+    -fx-padding: 0;
+    -fx-control-inner-background: white;
+}
+
+.combo-box-popup .list-view .list-cell {
+    -fx-text-fill: #333 !important;
+    -fx-background-color: white !important;
+    -fx-padding: 10 12 10 12;
+    -fx-font-size: 12;
     -fx-border-color: transparent;
 }
 
+.combo-box-popup .list-view .list-cell .text {
+    -fx-text-fill: #333 !important;
+    -fx-fill: #333 !important;
+}
+
+.combo-box-popup .list-view .list-cell:hover {
+    -fx-background-color: #f0f0f0 !important;
+    -fx-text-fill: #333 !important;
+}
+
+.combo-box-popup .list-view .list-cell:hover .text {
+    -fx-text-fill: #333 !important;
+    -fx-fill: #333 !important;
+}
+
+.combo-box-popup .list-view .list-cell:filled:selected {
+    -fx-background-color: #228866 !important;
+    -fx-text-fill: white !important;
+    -fx-font-weight: bold;
+}
+
+.combo-box-popup .list-view .list-cell:filled:selected .text {
+    -fx-text-fill: white !important;
+    -fx-fill: white !important;
+}
+
+.role-filter-combo .arrow-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0 8 0 0;
+}
+
+.role-filter-combo .arrow-button:hover {
+    -fx-background-color: transparent;
+}
+
+.role-filter-combo .arrow {
+    -fx-background-color: white;
+}
+
+/* Table view */
+.employees-table {
+    -fx-font-size: 12;
+    -fx-background-color: white;
+}
+
+/* Table header */
 .employees-table .column-header-background {
-    -fx-background-color: #f0f0f0;
-    -fx-background-radius: 8 8 0 0;
+    -fx-background-color: #114F3A;
 }
 
 .employees-table .column-header {
-    -fx-font-weight: bold;
-    -fx-padding: 12 6;
+    -fx-background-color: #114F3A;
+    -fx-text-fill: white;
+    -fx-padding: 10;
 }
 
-/* =========================================================
-   EMPTY STATE
-   ========================================================= */
-.empty-state-title {
-    -fx-font-size: 16px;
+.employees-table .column-header .label {
+    -fx-text-fill: white;
     -fx-font-weight: bold;
-    -fx-text-fill: #444;
+    -fx-font-size: 13;
 }
 
-.empty-state-subtitle {
-    -fx-font-size: 12px;
-    -fx-text-fill: #777;
+/* Table rows */
+.employees-table .table-row-cell {
+    -fx-cell-size: 45;
+    -fx-background-color: white;
+    -fx-text-fill: #333;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
 }
+
+.employees-table .table-row-cell:odd {
+    -fx-background-color: #fafafa;
+    -fx-text-fill: #333;
+}
+
+.employees-table .table-row-cell:even {
+    -fx-background-color: white;
+    -fx-text-fill: #333;
+}
+
+.employees-table .table-row-cell:filled:selected {
+    -fx-background-color: white;
+    -fx-text-fill: #333 !important;
+    -fx-font-weight: normal;
+}
+
+.employees-table .table-row-cell:filled:hover {
+    -fx-background-color: #f5f5f5;
+    -fx-text-fill: #333 !important;
+}
+
+/* Highlight only the selected cell with light green */
+.employees-table:focused .table-row-cell:filled:selected .table-cell {
+    -fx-background-color: #d4f1e9;
+    -fx-text-fill: #333 !important;
+}
+
+/* Table cell styling */
+.employees-table .table-cell {
+    -fx-padding: 8 12 8 12;
+    -fx-alignment: CENTER_LEFT;
+    -fx-border-color: transparent;
+    -fx-text-fill: #333 !important;
+}
+
+.employees-table .table-cell:empty {
+    -fx-padding: 0;
+}
+
+.employees-table .table-row-cell:empty {
+    -fx-cell-size: 0;
+    -fx-padding: 0;
+    -fx-background-color: transparent;
+}
+
+/* Action button styles */
+.action-button-danger {
+    -fx-background-color: #d32f2f;
+    -fx-text-fill: white;
+    -fx-font-size: 12;
+    -fx-font-weight: bold;
+    -fx-padding: 8 16 8 16;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+    -fx-border-color: transparent;
+    -fx-border-width: 2;
+}
+
+.action-button-danger:hover {
+    -fx-background-color: #b71c1c;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.15), 8, 0, 0, 2);
+}
+
+.action-button-danger:pressed {
+    -fx-background-color: #8b0000;
+}
+
+.action-button-danger:disabled {
+    -fx-background-color: #ccc;
+    -fx-opacity: 0.6;
+    -fx-cursor: default;
+}
+
+/* Action button in table */
+.action-button-table {
+    -fx-padding: 4 8 4 8;
+    -fx-font-size: 11;
+    -fx-background-radius: 4;
+    -fx-border-radius: 4;
+    -fx-cursor: hand;
+}
+
+/* Edit button (primary) */
+.action-button-primary {
+    -fx-background-color: #228866;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.action-button-primary:hover {
+    -fx-background-color: #1a6b50;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.15), 6, 0, 0, 1);
+}
+
+.action-button-primary:pressed {
+    -fx-background-color: #0d3d2a;
+}
+
+/* Delete button in table (secondary) */
+.action-button-delete {
+    -fx-background-color: #dc3545;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.action-button-delete:hover {
+    -fx-background-color: #c82333;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.15), 6, 0, 0, 1);
+}
+
+.action-button-delete:pressed {
+    -fx-background-color: #9c2c2c;
+}
+
+/* Context menu styling (for three-dot menu if still used) */
+.context-menu {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 6;
+    -fx-border-width: 1;
+    -fx-padding: 4 0 4 0;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.25), 12, 0.0, 0, 4);
+    -fx-font-smoothing-type: lcd;
+}
+
+.context-menu:focused {
+    -fx-border-color: #228866;
+    -fx-border-width: 1;
+}
+
+.context-menu .menu-item {
+    -fx-padding: 12 24 12 24;
+    -fx-font-size: 13;
+    -fx-text-fill: #333333;
+    -fx-cursor: hand;
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 0;
+}
+
+.context-menu .menu-item:focused {
+    -fx-background-color: #228866;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+    -fx-padding: 12 24 12 24;
+}
+
+.context-menu .menu-item:armed {
+    -fx-background-color: #1a6b50;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+    -fx-padding: 12 24 12 24;
+}
+
+.context-menu .menu-item:disabled {
+    -fx-text-fill: #999999;
+    -fx-opacity: 0.6;
+}
+
+.context-menu .separator {
+    -fx-padding: 2 0 2 0;
+}
+
+

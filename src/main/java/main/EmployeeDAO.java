@@ -1,7 +1,10 @@
 package main;
 
-import java.sql.*;
-import java.time.LocalDateTime;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -104,19 +107,23 @@ public class EmployeeDAO {
         }
     }
 
-    /**
-     * Utility: insert sample attendance row (useful for testing).
-     * Not required for production—kept here so you can programmatically add test data.
-     */
-    public boolean insertAttendanceNow(String username) {
-        String sql = "INSERT INTO attendance (username, login_time) VALUES (?, datetime('now'))";
-        try (Connection conn = DriverManager.getConnection(DB_URL);
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, username);
-            return ps.executeUpdate() > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
+/**
+ * Delete a user from the database by username.
+ * Returns true if deletion was successful.
+ */
+public boolean deleteUserByUsername(String username) {
+    String sql = "DELETE FROM users WHERE username = ?";
+    
+    try (Connection conn = DriverManager.getConnection(DB_URL);
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+        
+        ps.setString(1, username);
+        int deleted = ps.executeUpdate();
+        return deleted > 0; 
+        
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
     }
+}
 }

@@ -265,7 +265,7 @@ public class SettingsController {
                 
                 // TODO: Implement password change logic
                 // This would require verifying old password and updating database
-                showAlert(Alert.AlertType.INFORMATION, "Success", "Password changed successfully!\n(Feature coming soon)");
+                showAlert(Alert.AlertType.INFORMATION, "Success", "Password changed successfully!\n(Feature coming soon hehe)");
             }
         });
     }

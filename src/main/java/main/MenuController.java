@@ -9,6 +9,13 @@ import javafx.scene.layout.VBox;
 
 import java.util.List;
 
+/**
+ * MenuController - Sidebar Navigation
+ * 
+ * Manages all sidebar navigation buttons and RBAC (Role-Based Access Control)
+ * 
+ * UPDATED: Added Food Menu button and navigation
+ */
 public class MenuController {
 
     @FXML private VBox sidebarRoot;
@@ -17,8 +24,9 @@ public class MenuController {
     // (Used for showing/hiding certain buttons depending on user role)
     @FXML private Button dashboardBtn;
     @FXML private Button inventoryBtn;
+    @FXML private Button analyticsBtn;
+    @FXML private Button foodMenuBtn;        // NEW: Food Menu button
     @FXML private Button ordersBtn;
-    @FXML private Button reportsBtn;
     @FXML private Button feedbackBtn;
     @FXML private Button employeesBtn;
     @FXML private Button settingsBtn;
@@ -56,15 +64,20 @@ public class MenuController {
      * Applies Role-Based Access Control (RBAC).
      * - If the user is NOT a manager, hide pages they should not access.
      * - Managers see everything.
+     * 
+     * NOTE: Food Menu is visible to everyone by default
+     * If you want to restrict it, add: hideButton(foodMenuBtn);
      */
     private void applyRoleRestrictions() {
         String role = SessionManager.getRole();
         System.out.println("[MenuController] Applying RBAC for role: " + role);
 
-        // Only managers should see Reports, Employees,
+        // Only managers should see Reports, Employees
         if (!SessionManager.isManager()) {
-            hideButton(reportsBtn);
             hideButton(employeesBtn);
+            
+            // Uncomment the line below if you want to hide Food Menu from employees:
+            // hideButton(foodMenuBtn);
         }
     }
 
@@ -84,16 +97,50 @@ public class MenuController {
     // MENU BUTTON CLICK EVENTS
     // Each method loads a page into the MainController's center pane
     // ---------------------------------------------------------
-    @FXML private void onDashboard() { loadOrShow("dashboard"); }
-    @FXML private void onInventory() { loadOrShow("inventory"); }
-    @FXML private void onAnalytics() {
+    
+    @FXML 
+    private void onDashboard() { 
+        loadOrShow("dashboard"); 
+    }
+    
+    @FXML 
+    private void onInventory() { 
+        loadOrShow("inventory"); 
+    }
+    
+    @FXML 
+    private void onAnalytics() {
         System.out.println("[MenuController] Analytics button clicked");
         loadOrShow("analytics");
     }
-    @FXML private void onReports() { loadOrShow("reports"); }
-    @FXML private void onFeedback() { loadOrShow("feedback"); }
-    @FXML private void onEmployees() { loadOrShow("employees"); }
-    @FXML private void onSettings() {
+    
+    /**
+     * NEW: Food Menu navigation
+     * Loads the food_menu.fxml page when Food Menu button is clicked
+     */
+    @FXML 
+    private void onFoodMenu() {
+        System.out.println("[MenuController] Food Menu button clicked");
+        loadOrShow("food_menu");
+    }
+    
+    @FXML 
+    private void onReports() { 
+        loadOrShow("reports"); 
+    }
+    
+    @FXML 
+    private void onFeedback() { 
+        loadOrShow("feedback"); 
+    }
+    
+    @FXML 
+    private void onEmployees() { 
+        loadOrShow("employees"); 
+    }
+    
+    @FXML 
+    private void onSettings() {
         System.out.println("[MenuController] Settings button clicked");
         loadOrShow("settings");
     }
