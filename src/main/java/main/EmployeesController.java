@@ -82,12 +82,36 @@ public class EmployeesController {
 
     {
         btn.setStyle("-fx-background-color: transparent;"
-                + "-fx-font-size: 18px;"
-                + "-fx-text-fill: #444;"
-                + "-fx-cursor: hand;");
+                + "-fx-font-size: 22px;"
+                + "-fx-text-fill: #228866;"
+                + "-fx-cursor: hand;"
+                + "-fx-padding: 6 10 6 10;"
+                + "-fx-font-weight: bold;"
+                + "-fx-focus-color: transparent;"
+                + "-fx-faint-focus-color: transparent;");
+        
+        btn.setOnMouseEntered(e -> btn.setStyle("-fx-background-color: #d4f1e9;"
+                + "-fx-font-size: 22px;"
+                + "-fx-text-fill: #114F3A;"
+                + "-fx-cursor: hand;"
+                + "-fx-padding: 6 10 6 10;"
+                + "-fx-font-weight: bold;"
+                + "-fx-border-radius: 6;"
+                + "-fx-background-radius: 6;"
+                + "-fx-focus-color: transparent;"
+                + "-fx-faint-focus-color: transparent;"));
+        
+        btn.setOnMouseExited(e -> btn.setStyle("-fx-background-color: transparent;"
+                + "-fx-font-size: 22px;"
+                + "-fx-text-fill: #228866;"
+                + "-fx-cursor: hand;"
+                + "-fx-padding: 6 10 6 10;"
+                + "-fx-font-weight: bold;"
+                + "-fx-focus-color: transparent;"
+                + "-fx-faint-focus-color: transparent;"));
 
-        MenuItem editItem = new MenuItem("Edit");
-        MenuItem removeItem = new MenuItem("Remove");
+        MenuItem editItem = new MenuItem("✏ Edit");
+        MenuItem removeItem = new MenuItem("🗑 Delete");
 
         editItem.setOnAction(e -> {
     int rowIndex = getIndex();
@@ -98,20 +122,61 @@ public class EmployeesController {
     // Create dialog
     Dialog<Employee> dialog = new Dialog<>();
     dialog.setTitle("Edit Employee");
+    dialog.setHeaderText(null);
+    dialog.setResizable(true);
+    dialog.setWidth(500);
+    dialog.setHeight(320);
+    
     ButtonType saveButtonType = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
     dialog.getDialogPane().getButtonTypes().addAll(saveButtonType, ButtonType.CANCEL);
 
-    // Form fields
+    // Style the dialog pane - clean appearance
+    dialog.getDialogPane().setStyle(
+        "-fx-padding: 25; " +
+        "-fx-background-color: #ffffff;"
+    );
+
+    // Style buttons after dialog is shown
+    Platform.runLater(() -> {
+        for (javafx.scene.Node node : dialog.getDialogPane().lookupAll(".button")) {
+            if (node instanceof javafx.scene.control.Button) {
+                javafx.scene.control.Button btn = (javafx.scene.control.Button) node;
+                btn.setPrefHeight(42);
+                btn.setPrefWidth(120);
+                if (btn.getText().equals("Save")) {
+                    btn.setStyle("-fx-font-size: 13; -fx-padding: 10 32 10 32; -fx-background-color: #228866; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 6; -fx-background-radius: 6; -fx-cursor: hand; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 4, 0, 0, 2);");
+                } else if (btn.getText().equals("Cancel")) {
+                    btn.setStyle("-fx-font-size: 13; -fx-padding: 10 32 10 32; -fx-background-color: #f5f5f5; -fx-text-fill: #333; -fx-font-weight: bold; -fx-border-radius: 6; -fx-background-radius: 6; -fx-cursor: hand; -fx-border-color: #ddd; -fx-border-width: 1;");
+                }
+            }
+        }
+    });
+
+    // Form fields with much better styling
     GridPane grid = new GridPane();
-    grid.setHgap(10);
-    grid.setVgap(10);
+    grid.setHgap(20);
+    grid.setVgap(20);
+    grid.setStyle("-fx-padding: 10 0 10 0; -fx-background-color: transparent;");
 
+    Label usernameLabel = new Label("Username:");
+    usernameLabel.setStyle("-fx-font-size: 13; -fx-font-weight: bold; -fx-text-fill: #114F3A; -fx-min-width: 100;");
+    
     TextField usernameField = new TextField(employee.getUsername());
-    TextField roleField = new TextField(employee.getRole());
+    usernameField.setStyle("-fx-font-size: 13; -fx-padding: 12 14 12 14; -fx-border-radius: 5; -fx-border-color: #ddd; -fx-background-color: #fafafa; -fx-background-radius: 5; -fx-border-width: 1; -fx-text-fill: #333;");
+    usernameField.setPrefWidth(280);
+    
+    Label roleLabel = new Label("Role:");
+    roleLabel.setStyle("-fx-font-size: 13; -fx-font-weight: bold; -fx-text-fill: #114F3A; -fx-min-width: 100;");
+    
+    ComboBox<String> roleField = new ComboBox<>();
+    roleField.setItems(FXCollections.observableArrayList("employee", "manager"));
+    roleField.setValue(employee.getRole());
+    roleField.setStyle("-fx-font-size: 13; -fx-padding: 12 14 12 14; -fx-border-radius: 5; -fx-border-color: #ddd; -fx-background-color: #fafafa; -fx-background-radius: 5; -fx-border-width: 1; -fx-text-fill: #333;");
+    roleField.setPrefWidth(280);
 
-    grid.add(new Label("Username:"), 0, 0);
+    grid.add(usernameLabel, 0, 0);
     grid.add(usernameField, 1, 0);
-    grid.add(new Label("Role:"), 0, 1);
+    grid.add(roleLabel, 0, 1);
     grid.add(roleField, 1, 1);
 
     dialog.getDialogPane().setContent(grid);
@@ -120,7 +185,7 @@ public class EmployeesController {
     dialog.setResultConverter(dialogButton -> {
         if (dialogButton == saveButtonType) {
             String newUsername = usernameField.getText().trim();
-            String newRole = roleField.getText().trim();
+            String newRole = roleField.getValue() != null ? roleField.getValue().trim() : employee.getRole();
             if (newUsername.isEmpty()) newUsername = employee.getUsername();
             if (newRole.isEmpty()) newRole = employee.getRole();
 
@@ -169,8 +234,11 @@ public class EmployeesController {
 });
 
         menu.getItems().addAll(editItem, removeItem);
+        menu.setStyle("-fx-font-size: 13; -fx-font-family: 'Segoe UI', Arial;");
 
-        btn.setOnAction(e -> menu.show(btn, Side.BOTTOM, 0, 0));
+        btn.setOnAction(e -> {
+            menu.show(btn, javafx.geometry.Side.BOTTOM, 0, 8);
+        });
     }
 
     @Override
