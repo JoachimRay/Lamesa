@@ -36,150 +36,117 @@
             spacing="12">
     </VBox>
 
-<!-- This is where the Dashboard will be seen -->
-     <HBox layoutX="80.0" layoutY="60.0" prefHeight="76.0" prefWidth="1300.0">
+<!-- This is where the Dashboard will be seen with the DatePicker-->
+     <HBox layoutX="10.0" layoutY="60.0" prefHeight="76.0" prefWidth="1300.0" style="-fx-spacing: 500">
          <children>
-            <VBox prefHeight="71.0" prefWidth="500.0" style="-fx-padding: 0;">
+            <VBox prefHeight="71.0" prefWidth="384.0" style="-fx-padding: 0;">
                <children>
-                  <Label prefHeight="45.0" prefWidth="250.0" text="Dashboard" style="-fx-text-fill: #114F3A; -fx-font-weight: bold;">
+                  <Label prefHeight="38.0" prefWidth="152.0" text="Dashboard">
                      <font>
-                        <Font size="36.0" />
+                        <Font size="31.0" />
                      </font>
                   </Label>
-                  <HBox spacing="0">
-                     <children>
-                        <Label text="Hi, " style="-fx-text-fill: #666;">
-                           <font><Font size="18.0" /></font>
-                        </Label>
-                        <Label fx:id="usernameLabel" style="-fx-text-fill: #114F3A; -fx-font-weight: bold;">
-                           <font><Font size="18.0" /></font>
-                        </Label>
-                        <Label text="! Welcome Back to Lamesa" style="-fx-text-fill: #666;">
-                           <font><Font size="18.0" /></font>
-                        </Label>
-                     </children>
-                  </HBox>
+                  <Label fx:id= "welcomeLabel" prefHeight="22.0" prefWidth="384.0">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Label>
                </children>
             </VBox>
+            <Pane prefHeight="76.0" prefWidth="293.0">
+               <children>
+                  <Rectangle arcHeight="50.0" arcWidth="50.0" fill="WHITE" height="76.0" stroke="BLACK" strokeType="INSIDE" width="293.0" />
+                  <DatePicker fx:id="datePicker" opacity="0.0" prefHeight="76.0" prefWidth="293.0"/>
+                  <ImageView fitHeight="48.0" fitWidth="48.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/date_icon.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="34.0" fitWidth="34.0" layoutX="21.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/calendar_icon.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="256.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/down_icon.png" />
+                     </image>
+                  </ImageView>
+                  <Label text="Filter Date" layoutX="125.0" layoutY="10.0">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="date" layoutX="133.0" layoutY="29.0" text="Label" />
+               </children>
+            </Pane>
          </children>
       </HBox>
           
-         <!-- Here are the stats - 4 cards properly centered -->
-         <HBox spacing="25" alignment="TOP_LEFT" layoutX="60.0" layoutY="160.0" prefHeight="200.0" prefWidth="1400.0">
+         <!-- Here are the stats -->
+         <HBox spacing="50" alignment="TOP_LEFT" layoutX="10.0" layoutY="220.0" prefHeight="172.0" prefWidth="1230.0">
            <children>
-             <!-- Card 1: Total Orders Year to Date -->
-             <Pane prefHeight="200.0" prefWidth="320.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 8.0, 0.0, 0, 2);">
+             <Pane prefHeight="172.0" prefWidth="250.0">
                 <children>
-                   <Rectangle arcHeight="20.0" arcWidth="20.0" fill="WHITE" height="200.0" stroke="TRANSPARENT" strokeType="INSIDE" width="320.0" />
-                   <Text layoutY="165" text="Year to Date" textAlignment="CENTER" wrappingWidth="320" fill="#999">
+                   <Rectangle arcHeight="20.0" arcWidth="20.0" fill="WHITE" height="172.0" stroke="TRANSPARENT" strokeType="INSIDE" width="250.0" />
+                   <Text fx:id="totalOrdersText" layoutY="70" fill="BLACK" textAlignment="CENTER" wrappingWidth="250">
                       <font>
-                         <Font name="System" size="12.0" />
+                         <Font name="System Bold" size="32.0" />
                       </font>
                    </Text>
-                   <Text fx:id="totalOrdersYearText" layoutY="85" fill="#333" textAlignment="CENTER" wrappingWidth="320">
+                   <Text layoutX="80.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Orders">
                       <font>
-                         <Font name="System Bold" size="48.0" />
-                      </font>
-                   </Text>
-                   <Text layoutX="0.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Orders" textAlignment="CENTER" wrappingWidth="320">
-                      <font>
-                         <Font name="System" size="16.0" />
+                         <Font name="Arial" size="18.0" />
                       </font>
                    </Text>
                 </children>
              </Pane>
-             <!-- Card 2: Total Employees -->
-             <Pane prefHeight="200.0" prefWidth="320.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 8.0, 0.0, 0, 2);">
+             <Pane prefHeight="172.0" prefWidth="250.0">
                 <children>
-                   <Rectangle arcHeight="20.0" arcWidth="20.0" fill="WHITE" height="200.0" stroke="TRANSPARENT" strokeType="INSIDE" width="320.0" />
-                   <Text layoutY="165" text="Total Staff" textAlignment="CENTER" wrappingWidth="320" fill="#999">
+                   <Rectangle arcHeight="20.0" arcWidth="20.0" fill="WHITE" height="172.0" stroke="TRANSPARENT" strokeType="INSIDE" width="250.0" />
+                   <Text fx:id="totalDeliveredText" layoutY="70" fill="BLACK" textAlignment="CENTER" wrappingWidth="250">
                       <font>
-                         <Font name="System" size="12.0" />
+                         <Font name="System Bold" size="32.0" />
                       </font>
                    </Text>
-                   <Text fx:id="activeEmployeesText" layoutY="85" fill="#333" textAlignment="CENTER" wrappingWidth="320">
+                   <Text layoutX="80.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Delivered">
                       <font>
-                         <Font name="System Bold" size="48.0" />
-                      </font>
-                   </Text>
-                   <Text layoutX="0.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Employees" textAlignment="CENTER" wrappingWidth="320">
-                      <font>
-                         <Font name="System" size="16.0" />
+                         <Font name="Arial" size="18.0" />
                       </font>
                    </Text>
                 </children>
              </Pane>
-             <!-- Card 3: Total Meals Sold -->
-             <Pane prefHeight="200.0" prefWidth="320.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 8.0, 0.0, 0, 2);">
+             <Pane prefHeight="172.0" prefWidth="250.0">
                 <children>
-                   <Rectangle arcHeight="20.0" arcWidth="20.0" fill="WHITE" height="200.0" stroke="TRANSPARENT" strokeType="INSIDE" width="320.0" />
-                   <Text layoutY="165" text="This Month" textAlignment="CENTER" wrappingWidth="320" fill="#999">
+                   <Rectangle arcHeight="20.0" arcWidth="20.0" fill="WHITE" height="172.0" stroke="TRANSPARENT" strokeType="INSIDE" width="250.0" />
+                   <Text layoutX="80.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Canceled">
                       <font>
-                         <Font name="System" size="12.0" />
+                         <Font name="Arial" size="18.0" />
                       </font>
                    </Text>
-                   <Text layoutX="0.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Meals Sold" textAlignment="CENTER" wrappingWidth="320">
+                   <Text fx:id="totalCanceledText" layoutY="70" fill="BLACK" textAlignment="CENTER" wrappingWidth="250">
                       <font>
-                         <Font name="System" size="16.0" />
-                      </font>
-                   </Text>
-                   <Text fx:id="mealsSoldText" layoutY="85" fill="#333" textAlignment="CENTER" wrappingWidth="320">
-                      <font>
-                         <Font name="System Bold" size="48.0" />
+                         <Font name="System Bold" size="32.0" />
                       </font>
                    </Text>
                 </children>
              </Pane>
-             <!-- Card 4: Total Revenue -->
-             <Pane prefHeight="200.0" prefWidth="320.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 8.0, 0.0, 0, 2);">
+             <Pane prefHeight="172.0" prefWidth="250.0">
                 <children>
-                   <Rectangle arcHeight="20.0" arcWidth="20.0" fill="WHITE" height="200.0" stroke="TRANSPARENT" strokeType="INSIDE" width="320.0" />
-                   <Text fx:id="totalRevenueText" layoutY="85" fill="#114F3A" textAlignment="CENTER" wrappingWidth="320">
+                   <Rectangle arcHeight="20.0" arcWidth="20.0" fill="WHITE" height="172.0" stroke="TRANSPARENT" strokeType="INSIDE" width="250.0" />
+                   <Text fx:id="totalRevenueText" layoutY="70" fill="BLACK" textAlignment="CENTER" wrappingWidth="250">
                       <font>
-                         <Font name="System Bold" size="40.0" />
+                         <Font name="System Bold" size="32.0" />
                       </font>
                    </Text>
-                   <Text layoutX="0.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Revenue" textAlignment="CENTER" wrappingWidth="320">
+                   <Text layoutX="80.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Revenue">
                       <font>
-                         <Font name="System" size="16.0" />
-                      </font>
-                   </Text>
-                   <Text layoutY="165" text="This Month" textAlignment="CENTER" wrappingWidth="320" fill="#999">
-                      <font>
-                         <Font name="System" size="12.0" />
+                         <Font name="Arial" size="18.0" />
                       </font>
                    </Text>
                 </children>
              </Pane>
            </children>
          </HBox>
-
-         <!-- Low Stock Alerts Section -->
-         <Pane layoutX="60.0" layoutY="390.0" prefHeight="330.0" prefWidth="665.0">
-            <children>
-               <Rectangle arcHeight="20.0" arcWidth="20.0" fill="WHITE" height="330.0" stroke="TRANSPARENT" strokeType="INSIDE" width="665.0" />
-               <Text layoutX="20.0" layoutY="35.0" text="Low Stock Alerts" fill="#333">
-                  <font>
-                     <Font name="System Bold" size="18.0" />
-                  </font>
-               </Text>
-               <VBox layoutX="20.0" layoutY="50.0" prefHeight="260.0" prefWidth="625.0" spacing="8.0" fx:id="lowStockVBox">
-               </VBox>
-            </children>
-         </Pane>
-
-         <!-- Staff Performance Section -->
-         <Pane layoutX="750.0" layoutY="390.0" prefHeight="330.0" prefWidth="665.0">
-            <children>
-               <Rectangle arcHeight="20.0" arcWidth="20.0" fill="WHITE" height="330.0" stroke="TRANSPARENT" strokeType="INSIDE" width="665.0" />
-               <Text layoutX="20.0" layoutY="35.0" text="Staff Performance" fill="#333">
-                  <font>
-                     <Font name="System Bold" size="18.0" />
-                  </font>
-               </Text>
-               <VBox layoutX="20.0" layoutY="50.0" prefHeight="260.0" prefWidth="625.0" spacing="8.0" fx:id="staffPerformanceVBox">
-               </VBox>
-            </children>
-         </Pane>
   </children>
 </AnchorPane>
