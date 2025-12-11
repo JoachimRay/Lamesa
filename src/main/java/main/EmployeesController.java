@@ -4,8 +4,10 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Side;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.GridPane;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -32,6 +34,8 @@ public class EmployeesController {
     @FXML private TableColumn<Employee, String> roleColumn;
     @FXML private TableColumn<Employee, String> lastLoginColumn;
     @FXML private TableColumn<Employee, String> shiftStatusColumn;
+    @FXML private TableColumn<Employee, Void> actionsColumn;
+
 
     // Search field and filter dropdown
     @FXML private TextField searchField;
@@ -71,6 +75,113 @@ public class EmployeesController {
                 }
             }
         });
+        actionsColumn.setCellFactory(col -> new TableCell<Employee, Void>() {
+
+    private final Button btn = new Button("⋮");
+    private final ContextMenu menu = new ContextMenu();
+
+    {
+        btn.setStyle("-fx-background-color: transparent;"
+                + "-fx-font-size: 18px;"
+                + "-fx-text-fill: #444;"
+                + "-fx-cursor: hand;");
+
+        MenuItem editItem = new MenuItem("Edit");
+        MenuItem removeItem = new MenuItem("Remove");
+
+        editItem.setOnAction(e -> {
+    int rowIndex = getIndex();
+    if (rowIndex < 0 || rowIndex >= getTableView().getItems().size()) return;
+
+    Employee employee = getTableView().getItems().get(rowIndex);
+
+    // Create dialog
+    Dialog<Employee> dialog = new Dialog<>();
+    dialog.setTitle("Edit Employee");
+    ButtonType saveButtonType = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
+    dialog.getDialogPane().getButtonTypes().addAll(saveButtonType, ButtonType.CANCEL);
+
+    // Form fields
+    GridPane grid = new GridPane();
+    grid.setHgap(10);
+    grid.setVgap(10);
+
+    TextField usernameField = new TextField(employee.getUsername());
+    TextField roleField = new TextField(employee.getRole());
+
+    grid.add(new Label("Username:"), 0, 0);
+    grid.add(usernameField, 1, 0);
+    grid.add(new Label("Role:"), 0, 1);
+    grid.add(roleField, 1, 1);
+
+    dialog.getDialogPane().setContent(grid);
+
+    // Convert result to a new Employee instance when Save is clicked
+    dialog.setResultConverter(dialogButton -> {
+        if (dialogButton == saveButtonType) {
+            String newUsername = usernameField.getText().trim();
+            String newRole = roleField.getText().trim();
+            if (newUsername.isEmpty()) newUsername = employee.getUsername();
+            if (newRole.isEmpty()) newRole = employee.getRole();
+
+            // Preserve lastLogin and shiftStatus
+            return new Employee(newUsername, newRole, employee.getLastLogin(), employee.getShiftStatus());
+        }
+        return null;
+    });
+
+    // Show dialog and apply changes
+    dialog.showAndWait().ifPresent(edited -> {
+        // Replace in the backing data list (keeps TableView bindings simple)
+        int dataIndex = data.indexOf(employee);
+        if (dataIndex >= 0) {
+            data.set(dataIndex, edited);
+            filterEmployees(); // refresh filtered view
+            System.out.println("Edited: " + edited.getUsername());
+        }
+    });
+});
+
+
+    removeItem.setOnAction(e -> {
+    Employee employee = getTableView().getItems().get(getIndex());
+
+    Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+    confirm.setTitle("Confirm Remove");
+    confirm.setHeaderText(null);
+    confirm.setContentText("Remove employee: " + employee.getUsername() + "?");
+
+    if (confirm.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
+        // Delete from database first
+        boolean deleted = dao.deleteUserByUsername(employee.getUsername());
+        
+        if (deleted) {
+            // Only remove from UI if database deletion succeeded
+            data.remove(employee);
+            filterEmployees();
+            showAlert(Alert.AlertType.INFORMATION, "Success", 
+                     "Employee removed successfully.");
+        } else {
+            showAlert(Alert.AlertType.ERROR, "Error", 
+                     "Failed to remove employee from database.");
+        }
+    }
+});
+
+        menu.getItems().addAll(editItem, removeItem);
+
+        btn.setOnAction(e -> menu.show(btn, Side.BOTTOM, 0, 0));
+    }
+
+    @Override
+    protected void updateItem(Void item, boolean empty) {
+        super.updateItem(item, empty);
+        setGraphic(empty ? null : btn);
+        setText(null);
+    }
+});
+
+
 
         // 3) Setup role filter ComboBox with custom cell factory
         roleFilterCombo.setItems(FXCollections.observableArrayList("All", "manager", "employee"));

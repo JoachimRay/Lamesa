@@ -38,6 +38,8 @@
             <TableColumn fx:id="roleColumn" prefWidth="150" text="Role" />
             <TableColumn fx:id="lastLoginColumn" prefWidth="220" text="Last Login" />
             <TableColumn fx:id="shiftStatusColumn" prefWidth="180" text="Shift Status" />
+            <TableColumn fx:id="actionsColumn" prefWidth="60" text=""/>
+
         </columns>
     </TableView>
 
