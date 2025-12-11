@@ -69,6 +69,19 @@ database/lamesa.db
 
 --- 
 
+# Employee & Manager Use Cases 
+
+- Employee: Only has access of the following:
+ - Dashboard
+ - Inventory
+ - Food Menu
+
+- Manager: Has specific access of the following:
+ - Employees: Staff management features
+
+     
+--- 
+
 # How To Run 
 
 If using Maven:
