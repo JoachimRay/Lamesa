@@ -1,0 +1,193 @@
+/* Food Menu Page Styles */
+
+/* Page title */
+.menu-title {
+    -fx-font-size: 32;
+    -fx-font-weight: bold;
+    -fx-text-fill: #114F3A;
+}
+
+/* Search field */
+.search-field {
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+    -fx-padding: 8 12;
+    -fx-border-color: #ddd;
+    -fx-border-width: 1;
+    -fx-background-color: white;
+    -fx-font-size: 12;
+    -fx-pref-width: 250;
+    -fx-max-width: 250;
+    -fx-margin-left: 120;
+}
+
+/* Search field when focused */
+.search-field:focused {
+    -fx-border-color: #228866;
+    -fx-border-width: 2;
+    -fx-background-color: white;
+}
+
+/* Add New button */
+.add-new-btn {
+    -fx-background-color: #114F3A;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 13;
+    -fx-padding: 10 20;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+}
+
+/* Add New button hover */
+.add-new-btn:hover {
+    -fx-background-color: #0d3d2e;
+}
+
+/* Add New button pressed */
+.add-new-btn:pressed {
+    -fx-background-color: #0a2f23;
+}
+
+/* Filter section label */
+/* Filter section */
+.filter-section {
+    -fx-padding: 0;
+}
+
+.filter-label {
+    -fx-font-size: 13;
+    -fx-font-weight: bold;
+    -fx-text-fill: #114F3A;
+}
+
+/* Filter toggle buttons - card only shows on hover */
+.filter-toggle {
+    -fx-background-color: transparent;
+    -fx-text-fill: #333;
+    -fx-padding: 9 16;
+    -fx-background-radius: 6;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-cursor: hand;
+    -fx-font-size: 13;
+}
+
+/* Filter toggle button shows green background and white text on hover */
+.filter-toggle:hover {
+    -fx-background-color: #228866;
+    -fx-text-fill: white;
+    -fx-border-color: transparent;
+}
+
+/* Filter toggle button when selected */
+.filter-toggle:selected {
+    -fx-background-color: #228866;
+    -fx-text-fill: white;
+    -fx-border-color: #228866;
+}
+
+/* Filter toggle button selected and hover */
+.filter-toggle:selected:hover {
+    -fx-background-color: #1a6b50;
+    -fx-border-color: #1a6b50;
+}
+
+/* Filter toggle button selected and hover */
+.filter-toggle:selected:hover {
+    -fx-background-color: #1a6b50;
+    -fx-border-color: #1a6b50;
+}
+
+/* Vertical separator between category and type filters */
+.filter-separator {
+    -fx-background-color: #ddd;
+}
+
+/* Scroll pane container */
+.food-scroll-pane {
+    -fx-background: transparent;
+    -fx-background-color: transparent;
+}
+
+/* Scroll pane viewport */
+.food-scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+/* Flow pane that holds food cards */
+.food-cards-pane {
+    -fx-padding: 10;
+    -fx-background-color: transparent;
+}
+
+/* Individual food card */
+.food-card {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-padding: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 2);
+    -fx-cursor: hand;
+}
+
+/* Food card hover effect */
+.food-card:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0, 0, 3);
+}
+
+/* Food card image */
+.food-card-image {
+    -fx-background-radius: 8;
+}
+
+/* Food card meal name */
+.food-card-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #114F3A;
+}
+
+/* Food card description text */
+.food-card-description {
+    -fx-font-size: 11px;
+    -fx-text-fill: #666;
+    -fx-wrap-text: true;
+}
+
+/* Food card bottom row */
+.food-card-bottom {
+    -fx-padding: 5 0 0 0;
+}
+
+/* Edit info link */
+.food-card-edit {
+    -fx-font-size: 12px;
+    -fx-text-fill: #228866;
+    -fx-underline: true;
+    -fx-cursor: hand;
+}
+
+/* Edit info link hover */
+.food-card-edit:hover {
+    -fx-text-fill: #114F3A;
+}
+
+/* Delete link */
+.food-card-delete {
+    -fx-font-size: 12px;
+    -fx-text-fill: #e74c3c;
+    -fx-underline: true;
+    -fx-cursor: hand;
+}
+
+/* Delete link hover */
+.food-card-delete:hover {
+    -fx-text-fill: #c0392b;
+}
+
+/* Price label */
+.food-card-price {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #114F3A;
+}

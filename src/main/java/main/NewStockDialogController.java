@@ -36,8 +36,8 @@ public class NewStockDialogController {
     @FXML
     public void initialize() {
         productNameCombo.setItems(loadProducts());
-        instructionCombo.setItems(FXCollections.observableArrayList("Out of Stock", "Low in Stock", "High in Stock"));
-        statusCombo.setItems(FXCollections.observableArrayList("No Action Required", "Pending", "Completed"));
+        instructionCombo.setItems(FXCollections.observableArrayList("Low in Stock", "High in Stock"));
+        statusCombo.setItems(FXCollections.observableArrayList("Available", "Action Required"));
     }
 
     private ObservableList<String> loadProducts() {
@@ -65,43 +65,68 @@ public class NewStockDialogController {
     @FXML
     private void handleOkay() {
         String product = productNameCombo.getValue();
-        String instruction = instructionCombo.getValue();
         String status = statusCombo.getValue();
         int stock = Integer.parseInt(stockField.getText());
 
-        String category = "";
-        String type = "";
         String dbUrl = "jdbc:sqlite:database/lamesa.db";
 
-        // Step 1: Get category and type from meal table
+        // Step 1: Get meal_id from meal table
+        int mealId = -1;
         try(Connection conn = DriverManager.getConnection(dbUrl)) {
-            String sql = "SELECT category, type FROM meal WHERE name = ?";
+            String sql = "SELECT meal_id FROM meal WHERE name = ?";
 
             try(PreparedStatement ps = conn.prepareStatement(sql)) {
                 ps.setString(1, product);
                 ResultSet rs = ps.executeQuery();
                 if (rs.next()) {
-                    category = rs.getString("category");
-                    type = rs.getString("type");
+                    mealId = rs.getInt("meal_id");
                 }
             }
         } catch (SQLException e) {
-            System.out.println("[NewStockDialogController] ERROR: " + e.getMessage());
+            System.out.println("[NewStockDialogController] ERROR getting meal_id: " + e.getMessage());
         }
 
-        // Step 2: Insert into inventory table
+        if (mealId == -1) {
+            System.out.println("[NewStockDialogController] ERROR: Meal not found: " + product);
+            return;
+        }
+
+        // Step 2: Check if inventory entry exists for this meal, update or insert
         try (Connection conn = DriverManager.getConnection(dbUrl)) {
-            String insertSQL = "INSERT INTO inventory (product_name, category, type, instruction, stock_quantity, status) VALUES (?, ?, ?, ?, ?, ?)";
-            try (PreparedStatement ps = conn.prepareStatement(insertSQL)) {
-                ps.setString(1, product);
-                ps.setString(2, category);
-                ps.setString(3, type);
-                ps.setString(4, instruction);
-                ps.setInt(5, stock);
-                ps.setString(6, status);
-                ps.executeUpdate();
-                System.out.println("[NewStockDialogController] Inserted: " + product);
-            } 
+            // First check if inventory entry exists for this meal
+            String checkSQL = "SELECT inventory_id FROM inventory WHERE meal_id = ?";
+            int inventoryId = -1;
+            
+            try (PreparedStatement ps = conn.prepareStatement(checkSQL)) {
+                ps.setInt(1, mealId);
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    inventoryId = rs.getInt("inventory_id");
+                }
+            }
+            
+            // If exists, update; otherwise insert
+            if (inventoryId != -1) {
+                // Update existing inventory entry
+                String updateSQL = "UPDATE inventory SET stock_quantity = ?, status = ?, date_added = DATE('now') WHERE inventory_id = ?";
+                try (PreparedStatement ps = conn.prepareStatement(updateSQL)) {
+                    ps.setInt(1, stock);
+                    ps.setString(2, status);
+                    ps.setInt(3, inventoryId);
+                    ps.executeUpdate();
+                    System.out.println("[NewStockDialogController] Updated stock: " + product + " | Quantity: " + stock);
+                }
+            } else {
+                // Insert new inventory entry
+                String insertSQL = "INSERT INTO inventory (meal_id, stock_quantity, status, date_added) VALUES (?, ?, ?, DATE('now'))";
+                try (PreparedStatement ps = conn.prepareStatement(insertSQL)) {
+                    ps.setInt(1, mealId);
+                    ps.setInt(2, stock);
+                    ps.setString(3, status);
+                    ps.executeUpdate();
+                    System.out.println("[NewStockDialogController] Added new stock: " + product + " | Quantity: " + stock);
+                }
+            }
         } catch (SQLException e) {
             System.out.println("[NewStockDialogController] ERROR: " + e.getMessage());
         }

@@ -12,9 +12,11 @@ public class InventoryItem {
     private String instruction;
     private int stockQuantity;
     private String status;
+    private String dateAdded;
+    private boolean selected;
 
     // Constructor
-    public InventoryItem(int id, String productName, String category, String type, String instruction, int stockQuantity, String status) {
+    public InventoryItem(int id, String productName, String category, String type, String instruction, int stockQuantity, String status, String dateAdded) {
         this.id = id;
         this.productName = productName;
         this.category = category;
@@ -22,6 +24,7 @@ public class InventoryItem {
         this.instruction = instruction;
         this.stockQuantity = stockQuantity;
         this.status = status;
+        this.dateAdded = dateAdded;
     }
 
     // Getters
@@ -81,5 +84,21 @@ public class InventoryItem {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getDateAdded() {
+        return dateAdded;
+    }
+
+    public void setDateAdded(String dateAdded) {
+        this.dateAdded = dateAdded;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 }

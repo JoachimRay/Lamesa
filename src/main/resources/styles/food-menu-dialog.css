@@ -1,0 +1,125 @@
+/* Food Menu Dialog Styles */
+
+.menu-dialog-root {
+    -fx-background-color: #f5f5f5;
+}
+
+/* Image container */
+.image-container {
+    -fx-background-color: #fafafa;
+    -fx-border-color: #ddd;
+    -fx-border-width: 2;
+    -fx-border-style: dashed;
+    -fx-border-radius: 8;
+    -fx-cursor: hand;
+}
+
+.image-container:hover {
+    -fx-background-color: #f0f0f0;
+    -fx-border-color: #228866;
+}
+
+.upload-label {
+    -fx-text-fill: #999;
+    -fx-font-size: 13;
+    -fx-font-weight: bold;
+}
+
+/* Dialog labels */
+.dialog-label {
+    -fx-font-size: 12;
+    -fx-font-weight: bold;
+    -fx-text-fill: #114F3A;
+}
+
+/* Dialog text field */
+.dialog-field {
+    -fx-font-size: 12;
+    -fx-padding: 10 12;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-border-color: #ddd;
+    -fx-border-width: 1;
+    -fx-background-color: white;
+    -fx-text-fill: #333;
+}
+
+.dialog-field:focused {
+    -fx-border-color: #228866;
+    -fx-border-width: 2;
+    -fx-background-color: white;
+}
+
+/* Dialog choice box */
+.dialog-choice {
+    -fx-font-size: 12;
+    -fx-padding: 10 12;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-border-color: #ddd;
+    -fx-border-width: 1;
+    -fx-background-color: white;
+}
+
+.dialog-choice:focused {
+    -fx-border-color: #228866;
+    -fx-border-width: 2;
+}
+
+/* Dialog text area */
+.dialog-text-area {
+    -fx-font-size: 12;
+    -fx-padding: 10 12;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-border-color: #ddd;
+    -fx-border-width: 1;
+    -fx-background-color: white;
+    -fx-text-fill: #333;
+    -fx-control-inner-background: white;
+}
+
+.dialog-text-area:focused {
+    -fx-border-color: #228866;
+    -fx-border-width: 2;
+}
+
+/* Add Meal button (Okay) */
+.dialog-okay-btn {
+    -fx-background-color: #114F3A;
+    -fx-text-fill: white;
+    -fx-font-size: 13;
+    -fx-font-weight: bold;
+    -fx-padding: 10 20;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+}
+
+.dialog-okay-btn:hover {
+    -fx-background-color: #0d3d2e;
+}
+
+.dialog-okay-btn:pressed {
+    -fx-background-color: #0a2f23;
+}
+
+/* Cancel button */
+.dialog-cancel-btn {
+    -fx-background-color: #999;
+    -fx-text-fill: white;
+    -fx-font-size: 13;
+    -fx-font-weight: bold;
+    -fx-padding: 10 20;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+}
+
+.dialog-cancel-btn:hover {
+    -fx-background-color: #777;
+}
+
+.dialog-cancel-btn:pressed {
+    -fx-background-color: #555;
+}
