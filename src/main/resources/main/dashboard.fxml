@@ -72,6 +72,11 @@
                         <Image url="@../assets/down_icon.png" />
                      </image>
                   </ImageView>
+                  <Label text="Filter Date" layoutX="125.0" layoutY="10.0">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
                   <Label fx:id="date" layoutX="133.0" layoutY="29.0" text="Label" />
                </children>
             </Pane>
@@ -94,13 +99,11 @@
                          <Font name="Arial" size="18.0" />
                       </font>
                    </Text>
-                   <Text layoutY="140" text="4% (30 days)" textAlignment="CENTER" wrappingWidth="250"/>
                 </children>
              </Pane>
              <Pane prefHeight="172.0" prefWidth="250.0">
                 <children>
                    <Rectangle arcHeight="20.0" arcWidth="20.0" fill="WHITE" height="172.0" stroke="TRANSPARENT" strokeType="INSIDE" width="250.0" />
-                   <Text layoutY="140" text="4% (30 days)" textAlignment="CENTER" wrappingWidth="250"/>
                    <Text fx:id="totalDeliveredText" layoutY="70" fill="BLACK" textAlignment="CENTER" wrappingWidth="250">
                       <font>
                          <Font name="System Bold" size="32.0" />
@@ -116,7 +119,6 @@
              <Pane prefHeight="172.0" prefWidth="250.0">
                 <children>
                    <Rectangle arcHeight="20.0" arcWidth="20.0" fill="WHITE" height="172.0" stroke="TRANSPARENT" strokeType="INSIDE" width="250.0" />
-                   <Text layoutY="140" text="4% (30 days)" textAlignment="CENTER" wrappingWidth="250" />
                    <Text layoutX="80.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Canceled">
                       <font>
                          <Font name="Arial" size="18.0" />
@@ -142,7 +144,6 @@
                          <Font name="Arial" size="18.0" />
                       </font>
                    </Text>
-                   <Text layoutY="140" text="4% (30 days)" textAlignment="CENTER" wrappingWidth="250" />
                 </children>
              </Pane>
            </children>
